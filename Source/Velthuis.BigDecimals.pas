@@ -1290,7 +1290,7 @@ begin
   if IsInfinite(S) or IsNan(S) then
     Error(ecInvalidArg, ['Single']);
 
-  if S = 0.0 then
+  if S = 0.0 then //FI:W542 Direct floating-point comparison
   begin
     Self := BigDecimal.Zero;
     Exit;
@@ -1312,7 +1312,7 @@ begin
   if IsInfinite(D) or IsNan(D) then
     Error(ecInvalidArg, ['Double']);
 
-  if D = 0.0 then
+  if D = 0.0 then //FI:W542 Direct floating-point comparison
   begin
     Self := BigDecimal.Zero;
     Exit;

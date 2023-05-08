@@ -2251,7 +2251,7 @@ class function BigDecimal.Sqr(const Value: BigDecimal): BigDecimal;
 begin
   Result.Init;
   Result.FValue := BigInteger.Sqr(Value.FValue);
-  Result.FScale := RangeCheckedScale(Value.FScale + Value.FScale);
+  Result.FScale := RangeCheckedScale(Value.FScale + Value.FScale); //FI:W510 Values on both sides of the operator are equal
 end;
 
 function BigDecimal.Sqr: BigDecimal;

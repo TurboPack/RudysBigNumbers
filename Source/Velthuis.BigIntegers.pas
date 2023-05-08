@@ -9559,7 +9559,7 @@ begin
   Middle := (ValueUpper * ValueLower) shl 1;
 
   // Can't simply move these values into place, because they still overlap when shifted.
-  Result := Upper shl (NDiv2Shift + NDiv2Shift) + Middle shl NDiv2Shift + Lower;
+  Result := Upper shl (NDiv2Shift + NDiv2Shift) + Middle shl NDiv2Shift + Lower; //FI:W510 Values on both sides of the operator are equal
   Result.FSize := Result.FSize and SizeMask;
 end;
 

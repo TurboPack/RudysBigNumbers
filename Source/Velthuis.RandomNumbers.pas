@@ -20,6 +20,7 @@ interface
 
 type
   IRandom = interface
+    ['{15F68D4A-E34D-4A30-B3F4-899D6E134386}']
     function NextInteger: Integer; overload;
     function NextInteger(MaxValue: Integer): Integer; overload;
     function NextInteger(MinValue, MaxValue: Integer): Integer; overload;

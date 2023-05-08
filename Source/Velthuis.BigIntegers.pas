@@ -10961,7 +10961,8 @@ var
   Q, R: BigInteger;
 begin
   if RightLower.FData <> nil then
-    ;
+    ; // TODO: Why empty then block, is this old debug code
+
   Q := BigInteger.Zero;
   R := BigInteger.Zero;
   if (LeftUpperMid shr N) = RightUpper then

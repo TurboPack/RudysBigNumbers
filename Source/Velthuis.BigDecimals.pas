@@ -915,6 +915,12 @@ end;
 //                                                                                                      //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+procedure BigDecimal.Init;
+begin
+  FScale := 0;
+  FPrecision := 0;
+end;
+
 class function BigDecimal.Add(const Left, Right: BigDecimal): BigDecimal;
 var
   L, R: BigInteger;
@@ -1798,12 +1804,6 @@ end;
 class operator BigDecimal.Implicit(const UnscaledValue: BigInteger): BigDecimal;
 begin
   Result.Create(UnscaledValue);
-end;
-
-procedure BigDecimal.Init;
-begin
-  FScale := 0;
-  FPrecision := 0;
 end;
 
 {$IFDEF HasClassConstructors}

@@ -933,7 +933,7 @@ begin
   BigRational.OneFourth := BigRational.Create(BigInteger.One, BigInteger(4));
   BigRational.OneThird := BigRational.Create(BigInteger.One, BigInteger(3));
   BigRational.OneHalf := BigRational.Create(BigInteger.One, BigInteger(2));
-  BigRational.TwoThirds := BigRational.OneThird + BigRational.OneThird;
+  BigRational.TwoThirds := BigRational.OneThird + BigRational.OneThird; //FI:W510 Values on both sides of the operator are equal
   BigRational.ThreeFourths := BigRational.OneHalf + BigRational.OneFourth;
   BigRational.One := BigRational.Create(BigInteger.One, BigInteger.One);
   BigRational.Ten := BigRational.Create(BigInteger.Ten, BigInteger.One);

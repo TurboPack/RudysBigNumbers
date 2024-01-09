@@ -14,7 +14,7 @@
 
 unit Velthuis.FloatUtils;
 
-{ Note: in newer versions of Delphi, most of these functions are superceded by functions in the
+{ Note: in newer versions of Delphi, most of these functions are superseded by functions in the
         record helpers for floating point types. This unit is made to make provide the
         functions for several older versions as well.
 }

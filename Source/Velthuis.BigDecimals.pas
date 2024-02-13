@@ -611,6 +611,24 @@ type
     ///  -1 is Left is matheamtically less than Right.</summary>
     class function Compare(const Left, Right: BigDecimal): TValueSign; static;
 
+    /// <summary>Returns the natural logarithm of the BigInteger value as Double.</summary>
+    class function LnDouble(const Value: BigInteger): Double; overload; static;
+
+    /// <summary>Returns the natural logarithm of the BigDecimal value as Double.</summary>
+    class function LnDouble(const Value: BigDecimal): Double; overload; static;
+
+    /// <summary>Returns the natural logarithm of the current BigDecimal as Double.</summary>
+    function LnDouble: Double; overload;
+
+    /// <summary>Returns the natural logarithm of the BigInteger value.</summary>
+    class function Ln(const Value: BigInteger): BigDecimal; overload; static;
+
+    /// <summary>Returns the natural logarithm of the BigDecimal value.</summary>
+    class function Ln(const Value: BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Returns the natural logarithm of the BigDecimal value.</summary>
+    function Ln: BigDecimal; overload;
+
     /// <summary>Returns the maximum of the two given BigDecimal values.</summary>
     class function Max(const Left, Right: BigDecimal): BigDecimal; static;
 
@@ -729,6 +747,27 @@ type
     /// <summary>Returns the reciprocal of the current BigDecimal, using the given precision</summary>
     function Reciprocal: BigDecimal; overload;
 
+    /// <summary>Returns the sine of the given BigDecimal.</summary>
+    class function Sin(ARadians : BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Returns the sine of the current BigDecimal.</summary>
+    function Sin: BigDecimal; overload;
+
+    /// <summary>Returns the cosine of the given BigDecimal.</summary>
+    class function Cos(ARadians : BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Returns the cosine of the current BigDecimal.</summary>
+    function Cos: BigDecimal; overload;
+
+    /// <summary>The reverse of BigDecimal.Ln. Returns e^Value, for very large Value, as BigDecimal
+    class function Exp(const b: Double): BigDecimal; overload; static;
+
+    /// <summary>The reverse of BigDecimal.Ln. Returns e^Value, for very large Value, as BigDecimal
+    class function Exp(const b: BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>The reverse of BigDecimal.Ln. Returns e^Value, for very large Value, as BigDecimal
+    function Exp: BigDecimal; overload;
+
     /// <summary>Returns a new BigDecimal with all trailing zeroes (up to the preferred scale) removed from the
     /// current BigDecimal. No significant digits will be removed and the numerical value of the result compares
     /// as equal to the original value.</summary>
@@ -772,6 +811,17 @@ type
     /// <remarks>This uses the given FormatSettings for the decimal point Char.</remarks>
     function ToString(const Settings: TFormatSettings): string; overload;
 
+    /// <summary>Returns the string interpretation of the specified BigInteger in numeric base 10.</summary>
+    function ToDecimalString: string;
+
+    /// <summary>Returns the string interpretation of the specified BigInteger in numeric base 16.</summary>
+    function ToHexString: string;
+
+    /// <summary>Returns the string interpretation of the specified BigInteger in numeric base 2.</summary>
+    function ToBinaryString: string;
+
+    /// <summary>Returns the string interpretation of the specified BigInteger in numeric base 8.</summary>
+    function ToOctalString: string;
 
     /// <summary>Returns the sum of self and given parameter. The new scale is Max(Self.Scale, Right.Scale).</summary>
     function AddSelf(const Right: BigDecimal): BigDecimal;
@@ -786,7 +836,6 @@ type
     /// <para>The preferred new scale is Self.Scale - Divisor.Scale. Removes any trailing zero digits to
     /// approach that preferred scale without altering the significant digits.</para></summary>
     function DivideSelf(const Divisor: BigDecimal): BigDecimal;
-
 
     // -- Class properties --
 
@@ -1163,6 +1212,81 @@ begin
     R := Right.FValue;
   end;
   Result := BigInteger.Compare(L, R);
+end;
+
+// http://stackoverflow.com/a/7982137/95954
+// Or: ln(a) = ln(a / 2^k) + k * ln(2)
+class function BigDecimal.LnDouble(const Value: BigInteger): Double;
+var
+  ExtraBits: Integer;
+  NewInt: BigInteger;
+begin
+  if Value.IsNegative then
+    Exit(System.Math.NaN)
+  else if Value.IsZero then
+    Exit(System.Math.NegInfinity);
+  ExtraBits := Value.BitLength - 1022;
+  if ExtraBits > 0 then
+    NewInt := Value shr ExtraBits
+  else
+    NewInt := Value;
+  Result := System.Ln(NewInt.AsDouble);
+  if ExtraBits > 0 then
+    Result := Result + ExtraBits * System.Ln(2.0){FLog2};
+end;
+
+function BigDecimal.LnDouble: Double;
+begin
+  Result := LnDouble(Self);
+end;
+
+class function BigDecimal.LnDouble(const Value: BigDecimal): Double;
+var
+  ExtraBits: Integer;
+  NewInt: BigInteger;
+begin
+  if Value.IsNegative then
+    Exit(System.Math.NaN)
+  else if Value.IsZero then
+    Exit(System.Math.NegInfinity);
+
+  NewInt := Value.RoundTo( 0 ).AsBigInteger;
+  ExtraBits := NewInt.BitLength - 1022;
+  if ExtraBits > 0 then
+    NewInt := NewInt shr ExtraBits;
+  Result := System.Ln(NewInt.AsDouble);
+  if ExtraBits > 0 then
+    Result := Result + ExtraBits * System.Ln(2.0){FLog2};
+end;
+
+class function BigDecimal.Ln(const Value: BigInteger): BigDecimal;
+begin
+  Result := LnDouble(Value);
+//  Result := Result.RoundTo(2);
+end;
+
+class function BigDecimal.Ln(const Value: BigDecimal): BigDecimal;
+var
+  ExtraBits: Integer;
+  NewInt: BigInteger;
+begin
+  if Value.IsNegative then
+    Exit(System.Math.NaN)
+  else if Value.IsZero then
+    Exit(System.Math.NegInfinity);
+
+  NewInt := Value.RoundTo( 0 ).AsBigInteger;
+  ExtraBits := NewInt.BitLength - 1022;
+  if ExtraBits > 0 then
+    NewInt := NewInt shr ExtraBits;
+  Result := System.Ln(NewInt.AsDouble);
+  if ExtraBits > 0 then
+    Result := Result + ExtraBits * System.Ln(2.0){FLog2};
+end;
+
+function BigDecimal.Ln: BigDecimal;
+begin
+  Result := Ln(Self);
 end;
 
 // Converts Value to components for binary FP format, with Significand, binary Exponent and Sign. Significand
@@ -2132,6 +2256,219 @@ begin
   Result := Divide(BigDecimal.One, Self, DefaultPrecision, DefaultRoundingMode);
 end;
 
+// FastSin from https://github.com/neslib/FastMath/blob/master/FastMath/Neslib.FastMath.Pascal.inc
+class function BigDecimal.Sin(ARadians : BigDecimal): BigDecimal;
+const
+  FOPI = 1.27323954473516;
+  SINCOF_P0 = -1.9515295891E-4;
+  SINCOF_P1 = 8.3321608736E-3;
+  SINCOF_P2 = -1.6666654611E-1;
+  COSCOF_P0 = 2.443315711809948E-005;
+  COSCOF_P1 = -1.388731625493765E-003;
+  COSCOF_P2 = 4.166664568298827E-002;
+var
+  bNegative : Boolean;
+  X, Y, Z: BigDecimal; // Single
+  J: BigInteger; // Integer
+begin
+  bNegative := ARadians.IsNegative;
+  if bNegative then
+    X := -ARadians
+  else
+    X := ARadians;
+
+//  J := System.Trunc(FOPI * X);
+  Y := FOPI * X;
+  J := Y.Int.AsBigInteger;
+  J := (J + 1) and (not 1);
+  Y := J;
+
+  J := J and 7;
+  if (J > 3) then
+  begin
+    bNegative := bNegative xor true;
+    Dec(J, 4);
+  end;
+
+  X := X - Y * (0.25 * Pi);
+  Z := X * X;
+  if (J = 1) or (J = 2) then
+  begin
+    Y := COSCOF_P0 * Z + COSCOF_P1;
+    Y := Y * Z + COSCOF_P2;
+    Y := Y * (Z * Z);
+    Y := Y - 0.5 * Z + 1;
+  end
+  else
+  begin
+    Y := SINCOF_P0 * Z + SINCOF_P1;
+    Y := Y * Z + SINCOF_P2;
+    Y := Y * (Z * X);
+    Y := Y + X;
+  end;
+
+  if bNegative then
+    Result := -Y
+  else
+    Result := Y;
+end;
+
+function BigDecimal.Sin: BigDecimal;
+begin
+  result := Sin(self);
+end;
+
+// FastCos from https://github.com/neslib/FastMath/blob/master/FastMath/Neslib.FastMath.Pascal.inc
+class function BigDecimal.Cos(ARadians : BigDecimal): BigDecimal;
+const
+  FOPI = 1.27323954473516;
+  SINCOF_P0 = -1.9515295891E-4;
+  SINCOF_P1 = 8.3321608736E-3;
+  SINCOF_P2 = -1.6666654611E-1;
+  COSCOF_P0 = 2.443315711809948E-005;
+  COSCOF_P1 = -1.388731625493765E-003;
+  COSCOF_P2 = 4.166664568298827E-002;
+var
+  bNegative : Boolean;
+  X, Y, Z: BigDecimal; // Single
+  J: BigInteger; // Integer
+begin
+  if ARadians.IsNegative then
+    X := -ARadians
+  else
+    X := ARadians;
+
+  bNegative := false;
+//  J := System.Trunc(FOPI * X);
+  Y := FOPI * X;
+  J := Y.Int.AsBigInteger;
+  J := (J + 1) and (not 1);
+  Y := J;
+
+  J := J and 7;
+  if (J > 3) then
+  begin
+    bNegative := true;
+    Dec(J, 4);
+  end;
+
+  if (J > 1) then
+    bNegative := bNegative xor true;
+
+  X := X - Y * (0.25 * Pi);
+  Z := X * X;
+  if (J = 1) or (J = 2) then
+  begin
+    Y := SINCOF_P0 * Z + SINCOF_P1;
+    Y := Y * Z + SINCOF_P2;
+    Y := Y * (Z * X);
+    Y := Y + X;
+  end
+  else
+  begin
+    Y := COSCOF_P0 * Z + COSCOF_P1;
+    Y := Y * Z + COSCOF_P2;
+    Y := Y * (Z * Z);
+    Y := Y - 0.5 * Z + 1;
+  end;
+
+  if bNegative then
+    Result := -Y
+  else
+    Result := Y;
+end;
+
+function BigDecimal.Cos: BigDecimal;
+begin
+  result := Cos(self);
+end;
+
+// https://stackoverflow.com/a/7982137/95954
+class function BigDecimal.Exp(const b: Double): BigDecimal;
+var
+  bc, b2, c: Double;
+  t: Integer;
+  FLog2 : Double;
+begin
+  if IsNan(b) or IsInfinite(b) then
+    Error(ecInvalidArg, ['Double']);
+  bc := 680.0;
+  if b < bc then
+    Exit(BigDecimal(System.Exp(b)));
+  // I think this can be simplified:
+  c := b - bc;
+
+  FLog2 := System.Ln(2.0){FLog2};
+
+  t := System.Math.Ceil(c / FLog2);
+  c := t * FLog2;
+  b2 := b - c;
+  Result := BigInteger(System.Exp(b2)) shl t;
+end;
+
+class function BigDecimal.Exp(const b: BigDecimal): BigDecimal;
+var
+  bc, b2, c : BigDecimal;
+  t: UInt64;
+  FLog2 : BigDecimal; // Double;
+begin
+//  if IsNan(b) or IsInfinite(b) then
+//    Error(ecInvalidArg, ['Double']);
+  bc := 680.0;
+  if b < bc then
+    Exit(BigDecimal(System.Exp(b.AsDouble)));
+  // I think this can be simplified:
+  c := b - bc;
+
+  FLog2 := System.Ln(2.0){FLog2};
+  t := BigDecimal( c / FLog2 ).Ceil.AsUInt64; // System.Math.Ceil(c / FLog2);
+  c := t * FLog2;
+  b2 := b - c;
+  Result := ( BigInteger(System.Exp(b2.AsDouble)) shl t );
+end;
+
+function BigDecimal.Exp: BigDecimal;
+begin
+  result := Exp(self);
+end;
+
+{
+// FastExp from https://github.com/neslib/FastMath/blob/master/FastMath/Neslib.FastMath.Pascal.inc
+class function BigDecimal.Exp(const A: Single): BigDecimal;
+const
+  EXP_CST = 2139095040.0;
+var
+  Val, B: Single;
+  IVal: Integer;
+  XU, XU2: record
+    case Byte of
+      0: (I: Integer);
+      1: (S: Single);
+  end;
+begin
+  Val := 12102203.1615614 * A + 1065353216.0;
+
+  if (Val >= EXP_CST) then
+    Val := EXP_CST;
+
+  if (Val > 0) then
+    IVal := System.Trunc(Val)
+  else
+    IVal := 0;
+
+  XU.I := IVal and $7F800000;
+  XU2.I := (IVal and $007FFFFF) or $3F800000;
+  B := XU2.S;
+
+  Result := XU.S *
+    ( 0.509964287281036376953125 + B *
+    ( 0.3120158612728118896484375 + B *
+    ( 0.1666135489940643310546875 + B *
+    (-2.12528370320796966552734375e-3 + B *
+      1.3534179888665676116943359375e-2))));
+end;
+}
+
 class function BigDecimal.Remainder(const Left, Right: BigDecimal): BigDecimal;
 var
   LQuotient: BigDecimal;
@@ -2389,6 +2726,26 @@ begin
       PlainText := '-' + PlainText;
     Result := PlainText;
   end;
+end;
+
+function BigDecimal.ToBinaryString: string;
+begin
+  Result := FValue.ToString(2);
+end;
+
+function BigDecimal.ToOctalString: string;
+begin
+  Result := FValue.ToString(8);
+end;
+
+function BigDecimal.ToDecimalString: string;
+begin
+  Result := FValue.ToString(10);
+end;
+
+function BigDecimal.ToHexString: string;
+begin
+  Result := FValue.ToString(16);
 end;
 
 function BigDecimal.Trunc: Int64;

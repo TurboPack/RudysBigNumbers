@@ -759,6 +759,27 @@ type
     /// <summary>Returns the cosine of the current BigDecimal.</summary>
     function Cos: BigDecimal; overload;
 
+    /// <summary>Returns the sine and cosine of the given BigDecimal.</summary>
+    class procedure SinCos(const ARadians: BigDecimal; out ASin, ACos: BigDecimal); overload; static;
+
+    /// <summary>Returns the sine and cosine of the current BigDecimal.</summary>
+    procedure SinCos(out ASin, ACos: BigDecimal); overload;
+
+    /// <summary>Returns the sine and cosine of the given Single.</summary>
+    class function Tan(const ARadians: Single): BigDecimal; overload; static;
+
+    /// <summary>Returns the sine and cosine of the given BigDecimal.</summary>
+    class function Tan(const ARadians: BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Returns the sine and cosine of the current BigDecimal.</summary>
+    function Tan: BigDecimal; overload;
+
+    /// <summary>Returns the arc-tangens of the given Singles.</summary>
+    class function ArcTan2(const Y, X: Single): BigDecimal; overload; static;
+
+    /// <summary>Returns the arc-tangens of the current BigDecimal.</summary>
+    class function ArcTan2(const Y, X: BigDecimal): BigDecimal; overload; static;
+
     /// <summary>The reverse of BigDecimal.Ln. Returns e^Value, for very large Value, as BigDecimal
     class function Exp(const b: Double): BigDecimal; overload; static;
 
@@ -2381,6 +2402,170 @@ end;
 function BigDecimal.Cos: BigDecimal;
 begin
   result := Cos(self);
+end;
+
+// FastSinCos from https://github.com/neslib/FastMath/blob/master/FastMath/Neslib.FastMath.Pascal.inc
+class procedure BigDecimal.SinCos(const ARadians: BigDecimal; out ASin, ACos: BigDecimal);
+const
+  FOPI = 1.27323954473516;
+  SINCOF_P0 = -1.9515295891E-4;
+  SINCOF_P1 = 8.3321608736E-3;
+  SINCOF_P2 = -1.6666654611E-1;
+  COSCOF_P0 = 2.443315711809948E-005;
+  COSCOF_P1 = -1.388731625493765E-003;
+  COSCOF_P2 = 4.166664568298827E-002;
+var
+  X, Y, Y2, Z: BigDecimal; // Single;
+  J: BigInteger; // Integer;
+  bSignSin,
+  bSignCos : Boolean;
+  bSwapSignBitSin : Boolean;
+begin
+  bSignSin := ARadians.IsNegative;
+  if bSignSin then
+    X := -ARadians
+  else
+    X := ARadians;
+
+//  J := (System.Trunc(FOPI * X) + 1) and (not 1);
+  J := ( (FOPI * X).Int{Trunc}.AsBigInteger + 1) and (not 1);
+  Y := J;
+
+  bSwapSignBitSin := (J and 4) > 0;
+
+  X := X - Y * (0.25 * Pi);
+  bSignCos := (4 and (not (J - 2))) > 0;
+  bSignSin := bSignSin xor bSwapSignBitSin;
+
+  Z := X * X;
+
+  Y := COSCOF_P0 * Z + COSCOF_P1;
+  Y := Y * Z + COSCOF_P2;
+  Y := Y * (Z * Z) - (0.5 * Z) + 1;
+
+  Y2 := SINCOF_P0 * Z + SINCOF_P1;
+  Y2 := Y2 * Z + SINCOF_P2;
+  Y2 := Y2 * (Z * X) + X;
+
+  if ((J and 2) = 0) then
+  begin
+    if bSignSin then
+      ASin := -Y2
+    else
+      ASin := Y2;
+
+    if bSignCos then
+      ACos := -Y
+    else
+      ACos := Y;
+  end
+  else
+  begin
+    if bSignSin then
+      ASin := -Y
+    else
+      ASin := Y;
+
+    if bSignCos then
+      ACos := -Y2
+    else
+      ACos := Y2;
+  end;
+end;
+
+procedure BigDecimal.SinCos(out ASin, ACos: BigDecimal);
+begin
+  SinCos(self, ASin, ACos);
+end;
+
+// FastTan from https://github.com/neslib/FastMath/blob/master/FastMath/Neslib.FastMath.Common.inc
+class function BigDecimal.Tan(const ARadians: Single): BigDecimal;
+var
+  S, C: BigDecimal;
+begin
+  SinCos(ARadians, S, C);
+  Result := ( S / C ).RoundTo( -2, rmNearestUp );
+end;
+
+class function BigDecimal.Tan(const ARadians: BigDecimal): BigDecimal;
+var
+  S, C: BigDecimal;
+begin
+  SinCos(ARadians, S, C);
+  Result := ( S / C ).RoundTo( -2, rmNearestUp );
+end;
+
+function BigDecimal.Tan: BigDecimal;
+begin
+  Result := Tan(self);
+end;
+
+// FastArcTan2 from https://github.com/neslib/FastMath/blob/master/FastMath/Neslib.FastMath.Common.inc
+class function BigDecimal.ArcTan2(const Y, X: Single): BigDecimal;
+var
+  Z: BigDecimal;
+begin
+  if (X = 0) then
+  begin
+    if (Y > 0) then
+      Exit(0.5 * Pi);
+    if (Y = 0) then
+      Exit(0);
+    Exit(-0.5 * Pi);
+  end;
+
+  Z := Y / X;
+  if (Z.Abs < 1) then
+  begin
+    Result := Z / (1.0 + 0.28 * Z * Z);
+    if (X < 0) then
+    begin
+      if (Y < 0) then
+        Result := Result - Pi
+      else
+        Result := Result + Pi;
+    end;
+  end
+  else
+  begin
+    Result := (0.5 * Pi) - Z / (Z * Z + 0.28);
+    if (Y < 0) then
+      Result := Result - Pi;
+  end;
+end;
+
+// FastArcTan2 from https://github.com/neslib/FastMath/blob/master/FastMath/Neslib.FastMath.Common.inc
+class function BigDecimal.ArcTan2(const Y, X: BigDecimal): BigDecimal;
+var
+  Z: BigDecimal;
+begin
+  if (X = 0) then
+  begin
+    if (Y > 0) then
+      Exit(0.5 * Pi);
+    if (Y = 0) then
+      Exit(0);
+    Exit(-0.5 * Pi);
+  end;
+
+  Z := Y / X;
+  if (Abs(Z) < 1) then
+  begin
+    Result := Z / (1.0 + 0.28 * Z * Z);
+    if (X < 0) then
+    begin
+      if (Y < 0) then
+        Result := Result - Pi
+      else
+        Result := Result + Pi;
+    end;
+  end
+  else
+  begin
+    Result := (0.5 * Pi) - Z / (Z * Z + 0.28);
+    if (Y < 0) then
+      Result := Result - Pi;
+  end;
 end;
 
 // https://stackoverflow.com/a/7982137/95954

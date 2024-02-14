@@ -765,19 +765,28 @@ type
     /// <summary>Returns the sine and cosine of the current BigDecimal.</summary>
     procedure SinCos(out ASin, ACos: BigDecimal); overload;
 
-    /// <summary>Returns the sine and cosine of the given Single.</summary>
+    /// <summary>Returns the tangens of the given Single.</summary>
     class function Tan(const ARadians: Single): BigDecimal; overload; static;
 
-    /// <summary>Returns the sine and cosine of the given BigDecimal.</summary>
+    /// <summary>Returns the tangens of the given BigDecimal.</summary>
     class function Tan(const ARadians: BigDecimal): BigDecimal; overload; static;
 
-    /// <summary>Returns the sine and cosine of the current BigDecimal.</summary>
+    /// <summary>Returns the tangens of the current BigDecimal.</summary>
     function Tan: BigDecimal; overload;
+
+    /// <summary>Returns the arc-tangens of the given Double.</summary>
+    class function ArcTan(const X: Double): BigDecimal; overload; static;
+
+    /// <summary>Returns the arc-tangens of the given BigDecimal.</summary>
+    class function ArcTan(const X: BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Returns the arc-tangens of the current BigDecimal.</summary>
+    function ArcTan: BigDecimal; overload;
 
     /// <summary>Returns the arc-tangens of the given Singles.</summary>
     class function ArcTan2(const Y, X: Single): BigDecimal; overload; static;
 
-    /// <summary>Returns the arc-tangens of the current BigDecimal.</summary>
+    /// <summary>Returns the arc-tangens of the current BigDecimals.</summary>
     class function ArcTan2(const Y, X: BigDecimal): BigDecimal; overload; static;
 
     /// <summary>The reverse of BigDecimal.Ln. Returns e^Value, for very large Value, as BigDecimal
@@ -1275,7 +1284,7 @@ begin
   ExtraBits := NewInt.BitLength - 1022;
   if ExtraBits > 0 then
     NewInt := NewInt shr ExtraBits;
-  Result := System.Ln(NewInt.AsDouble);
+  Result := System.Ln(NewInt.AsDouble + Value.Frac.AsDouble);
   if ExtraBits > 0 then
     Result := Result + ExtraBits * System.Ln(2.0){FLog2};
 end;
@@ -1283,7 +1292,6 @@ end;
 class function BigDecimal.Ln(const Value: BigInteger): BigDecimal;
 begin
   Result := LnDouble(Value);
-//  Result := Result.RoundTo(2);
 end;
 
 class function BigDecimal.Ln(const Value: BigDecimal): BigDecimal;
@@ -1300,7 +1308,7 @@ begin
   ExtraBits := NewInt.BitLength - 1022;
   if ExtraBits > 0 then
     NewInt := NewInt shr ExtraBits;
-  Result := System.Ln(NewInt.AsDouble);
+  Result := System.Ln(NewInt.AsDouble + Value.Frac.AsDouble);
   if ExtraBits > 0 then
     Result := Result + ExtraBits * System.Ln(2.0){FLog2};
 end;
@@ -2484,7 +2492,7 @@ var
   S, C: BigDecimal;
 begin
   SinCos(ARadians, S, C);
-  Result := ( S / C ).RoundTo( -2, rmNearestUp );
+  Result := ( S / C );
 end;
 
 class function BigDecimal.Tan(const ARadians: BigDecimal): BigDecimal;
@@ -2492,12 +2500,64 @@ var
   S, C: BigDecimal;
 begin
   SinCos(ARadians, S, C);
-  Result := ( S / C ).RoundTo( -2, rmNearestUp );
+  Result := ( S / C );
 end;
 
 function BigDecimal.Tan: BigDecimal;
 begin
   Result := Tan(self);
+end;
+
+// ArcTan From https://users.dcc.uchile.cl/~rbaeza/handbook/algs/6/623.arctan.p.html
+// https://www.dewresearch.com/Help/Delphi/MtxVec/Math387_SQRTEPS.html
+// https://www.dewresearch.com/Help/Delphi/MtxVec/Math387_EPS.html
+class function BigDecimal.ArcTan(const X: Double): BigDecimal;
+const
+  EPS = 2.220446049250313E-16;
+  SQRTEPS = 1.4901161194e-08; // SQRT( EPS )
+var
+  q, s, v, w : BigDecimal;
+begin
+  s := SQRTEPS;
+  v := x / ( 1 + BigDecimal( 1 + x * x ).Sqrt );
+  q := 1;
+  while ( 1 - s > EPS ) do
+    begin
+    q := 2 * q / ( 1 + s );
+    w := 2 * s * v / ( 1 + v * v );
+    w := w / ( 1 + BigDecimal( 1 - w * w ).Sqrt );
+    w := ( v + w ) / ( 1 - v * w );
+    v := w / ( 1 + BigDecimal( 1 + w * w ).Sqrt );
+    s := 2 * S.Sqrt / ( 1 + s );
+    end;
+  result := q * BigDecimal( ( 1 + v ) / ( 1 - v ) ).Ln;
+end;
+
+class function BigDecimal.ArcTan(const X: BigDecimal): BigDecimal;
+const
+  EPS = 2.220446049250313E-16;
+  SQRTEPS = 1.4901161194e-08; // SQRT( EPS )
+var
+  q, s, v, w : BigDecimal;
+begin
+  s := SQRTEPS;
+  v := x / ( 1 + BigDecimal( 1 + x * x ).Sqrt );
+  q := 1;
+  while ( 1 - s > EPS ) do
+    begin
+    q := 2 * q / ( 1 + s );
+    w := 2 * s * v / ( 1 + v * v );
+    w := w / ( 1 + BigDecimal( 1 - w * w ).Sqrt );
+    w := ( v + w ) / ( 1 - v * w );
+    v := w / ( 1 + BigDecimal( 1 + w * w ).Sqrt );
+    s := 2 * S.Sqrt / ( 1 + s );
+    end;
+  result := q * BigDecimal( ( 1 + v ) / ( 1 - v ) ).Ln;
+end;
+
+function BigDecimal.ArcTan: BigDecimal;
+begin
+  result := ArcTan(self);
 end;
 
 // FastArcTan2 from https://github.com/neslib/FastMath/blob/master/FastMath/Neslib.FastMath.Common.inc
@@ -2533,6 +2593,8 @@ begin
       Result := Result - Pi;
   end;
 end;
+
+
 
 // FastArcTan2 from https://github.com/neslib/FastMath/blob/master/FastMath/Neslib.FastMath.Common.inc
 class function BigDecimal.ArcTan2(const Y, X: BigDecimal): BigDecimal;

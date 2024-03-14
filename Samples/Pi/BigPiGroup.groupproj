@@ -12,6 +12,8 @@
         <Projects Include="Tests\BigPiTests.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="..\..\BigNumbers.dproj">
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -47,14 +49,23 @@
     <Target Name="BigPiTests:Make">
         <MSBuild Projects="Tests\BigPiTests.dproj" Targets="Make"/>
     </Target>
+    <Target Name="BigNumbers">
+        <MSBuild Projects="..\..\BigNumbers.dproj"/>
+    </Target>
+    <Target Name="BigNumbers:Clean">
+        <MSBuild Projects="..\..\BigNumbers.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="BigNumbers:Make">
+        <MSBuild Projects="..\..\BigNumbers.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="BigPiConsole;BigPiFMX;BigPiTests"/>
+        <CallTarget Targets="BigPiConsole;BigPiFMX;BigPiTests;BigNumbers"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="BigPiConsole:Clean;BigPiFMX:Clean;BigPiTests:Clean"/>
+        <CallTarget Targets="BigPiConsole:Clean;BigPiFMX:Clean;BigPiTests:Clean;BigNumbers:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="BigPiConsole:Make;BigPiFMX:Make;BigPiTests:Make"/>
+        <CallTarget Targets="BigPiConsole:Make;BigPiFMX:Make;BigPiTests:Make;BigNumbers:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

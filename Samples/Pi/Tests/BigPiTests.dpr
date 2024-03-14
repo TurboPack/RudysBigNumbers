@@ -21,9 +21,9 @@ uses
   DUnitX.TestFramework,
   BigPiChudnovskyTests in 'BigPiChudnovskyTests.pas',
   BBPpiTests in 'BBPpiTests.pas',
-  BigPi in '..\BigPi.pas',
   BigPiHashTestCaseProvider in 'BigPiHashTestCaseProvider.pas',
-  BigPiTestsCommon in 'BigPiTestsCommon.pas';
+  BigPiTestsCommon in 'BigPiTestsCommon.pas',
+  BigPi in '..\BigPi.pas';
 
 { keep comment here to protect the following conditional from being removed by the IDE when adding a unit }
 {$IFNDEF TESTINSIGHT}

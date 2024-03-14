@@ -13,6 +13,7 @@
             <Dependencies/>
         </Projects>
         <Projects Include="..\..\BigNumbers.dproj">
+            <Dependencies/>
         </Projects>
     </ItemGroup>
     <ProjectExtensions>

@@ -22,6 +22,7 @@ type
     procedure HashCheck(const Digits : Integer;const Hash : String);
     [Test]
     procedure Check1000Digits();
+    [Test]
     procedure CompareCallbackToResult;
   end;
 

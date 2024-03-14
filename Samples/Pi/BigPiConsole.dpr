@@ -19,25 +19,27 @@ uses
   Velthuis.BigIntegers,
   BigPi in 'BigPi.pas';
 
-procedure TimeChudnovskyPi(digits: UInt64);
+function TimeChudnovskyPi(digits: UInt64): Int64;
 begin
   var sw := TStopwatch.StartNew;
   var pi := Chudnovsky(digits);
   sw.Stop;
   writeln(Format('%6d'#9'%d',[digits,sw.ElapsedTicks]));
+  Result := sw.ElapsedTicks;
 end;
 
-procedure TimeBBPPi(digits: UInt64);
+function TimeBBPPi(digits: UInt64): Int64;
 begin
   var sw := TStopwatch.StartNew;
   var pi := BBPpi(digits);
   sw.Stop;
   writeln(Format('%6d'#9'%d',[digits,sw.ElapsedTicks]));
+  Result := sw.ElapsedTicks;
 end;
 
 procedure HashPi(digits: UInt64);
 begin
-  var pi := DigitsToString(BBPpi(digits));
+  var pi := DigitsToString(BBPpi(digits)).Insert(1,'.');
   Assert(Length(pi) = Succ(digits),Format('Expected %d digits but found %d digits',[succ(digits),Length(pi)]));
   var hash := THashMD5.GetHashString(pi);
   Writeln(Format('%d,%s', [digits, hash]));
@@ -61,7 +63,7 @@ end;
 procedure CompareDigits(digits: UInt64);
 begin
   Write('Digits    : ', digits);
-  var BBP := DigitsToString(BBPpi(digits));
+  var BBP := DigitsToString(BBPpi(digits)).Insert(1,'.');
   var chud := Chudnovsky(digits).ToString;
   var firstError := CheckDigits(BBP,Chud);
   if firstError = 0 then
@@ -78,19 +80,36 @@ procedure GenValueTable;
 begin
   for var i := 1 to 9 do CompareDigits(i * 100);
   for var i := 1 to 10 do CompareDigits(i * 1000);
-
 end;
 
+var firstChunk: Boolean = True;
+procedure WritelnCallBack(Chunk: TDigits);
+begin
+  var digits: String;
+  if firstChunk then
+  begin
+    digits := DigitsToString(Chunk).Insert(1,'.');
+    firstChunk := False;
+  end
+  else
+    digits := DigitsToString(Chunk);
+
+  // slow down the output for demonstration purposes
+  for var i := low(digits) to High(digits) do
+  begin
+    Write(digits[i]);
+    sleep(100);
+  end;
+end;
+
+const Places = 10000;
 begin
   ReportMemoryLeaksOnShutdown := True;
   try
-    GenValueTable;
-//    var digits := 10000;
-//    Writeln(Format('Digits: %d', [Digits]));
-//    Writeln('Chudnovsky');
-//    Writeln(Chudnovsky(digits).ToString);
-//    Writeln('Bailey-Borwein-Plouffe');
-//    Writeln(DigitsToString(BBPpi(Digits)));
+
+    BBPpi(Places, WritelnCallBack);
+    Writeln;
+
   except
     on E: Exception do
       Writeln(E.ClassName, ': ', E.Message);

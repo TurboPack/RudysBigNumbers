@@ -16,14 +16,16 @@ uses
 
 type TDigits = Array of Byte;
 const MaxUnit64 = 18_446_744_073_709_551_615;
+const CallBackChunkSize = 64;
+type TChunkCallBack = reference to Procedure(Chunk: TDigits);
 
-function BBPpi(Places: UInt64): TDigits;
+function BBPpi(Places: UInt64; CallBack: TChunkCallBack = nil): TDigits;
 function Chudnovsky(Places: Integer): BigDecimal;
-function DigitsToString(Digits: TDigits): String;
+function DigitsToString(digits: TDigits): String;
 
 implementation
 
-function BBPpi(Places: UInt64): TDigits;
+function BBPpi(Places: UInt64; CallBack: TChunkCallback = nil): TDigits;
 // Bailey-Borwein-Plouffe
 begin
   SetLength(Result, Places);
@@ -36,16 +38,32 @@ begin
   var n := BigInteger.Create(3);
   var l := BigInteger.Create(3);
 
+  var buffer: TDigits;
+  SetLength(buffer, CallbackChunkSize);
+  var bufferIdx: Integer := 0;
+
   while true do
   begin
     if 4*q+r-t < n*t then
     begin
       result[idx] := n.AsInt64; // It is just a byte
       inc(idx);
-      //write(n.ToString[1]);
+
+      if Assigned(Callback) then
+      begin
+        buffer[bufferIdx] := n.AsInt64;
+        inc(bufferIdx);
+        // Check if buffer is full, then call callback and reset bufferIdx
+        if bufferIdx = CallbackChunkSize then
+        begin
+          Callback(buffer); // Call the callback with the buffer
+          bufferIdx := 0; // Reset buffer index
+        end;
+      end;
+
       if idx >= places then break;
       var newR := 10 * (r - n * t);
-      n := ((10 * (3 * q + r)) div t) - 10 * n;
+      n := (10 * (3 * q + r)) div t - 10 * n;
       q := q * 10;
       r := newR;
     end
@@ -60,6 +78,13 @@ begin
       n := newN;
       r := newR;
     end;
+  end;
+
+  // Handle remaining buffer
+  if (bufferIdx > 0) and Assigned(CallBack) then
+  begin
+    SetLength(buffer, bufferIdx); // Resize buffer to actual used size before callback
+    CallBack(buffer);
   end;
 end;
 
@@ -94,12 +119,9 @@ end;
 
 function DigitsToString(digits: TDigits): String;
 begin
-  SetLength(Result, Length(Digits));
-  for var idx: Integer := 0 to pred(Length(Digits)) do
-  begin
-    Result[idx+1] := Digits[idx].ToString[1];
-  end;
-  Result := Result.Insert(1,'.');
+  SetLength(Result, Length(digits));
+  for var idx := Low(digits) to High(digits) do
+    Result[idx + 1] := Chr(digits[idx] + Ord('0'));
 end;
 
 end.

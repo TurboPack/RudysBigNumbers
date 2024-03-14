@@ -18,6 +18,9 @@
         <Projects Include="BigRationals\BigRationalDevelopmentTests.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="..\Samples\Pi\Tests\BigPiTests.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -71,14 +74,23 @@
     <Target Name="BigRationalDevelopmentTests:Make">
         <MSBuild Projects="BigRationals\BigRationalDevelopmentTests.dproj" Targets="Make"/>
     </Target>
+    <Target Name="BigPiTests">
+        <MSBuild Projects="..\Samples\Pi\Tests\BigPiTests.dproj"/>
+    </Target>
+    <Target Name="BigPiTests:Clean">
+        <MSBuild Projects="..\Samples\Pi\Tests\BigPiTests.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="BigPiTests:Make">
+        <MSBuild Projects="..\Samples\Pi\Tests\BigPiTests.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="BigNumberVisualizers;BigNumVisualizers;BigIntegerDevelopmentTests;BigDecimalDevelopmentTests;BigRationalDevelopmentTests"/>
+        <CallTarget Targets="BigNumberVisualizers;BigNumVisualizers;BigIntegerDevelopmentTests;BigDecimalDevelopmentTests;BigRationalDevelopmentTests;BigPiTests"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="BigNumberVisualizers:Clean;BigNumVisualizers:Clean;BigIntegerDevelopmentTests:Clean;BigDecimalDevelopmentTests:Clean;BigRationalDevelopmentTests:Clean"/>
+        <CallTarget Targets="BigNumberVisualizers:Clean;BigNumVisualizers:Clean;BigIntegerDevelopmentTests:Clean;BigDecimalDevelopmentTests:Clean;BigRationalDevelopmentTests:Clean;BigPiTests:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="BigNumberVisualizers:Make;BigNumVisualizers:Make;BigIntegerDevelopmentTests:Make;BigDecimalDevelopmentTests:Make;BigRationalDevelopmentTests:Make"/>
+        <CallTarget Targets="BigNumberVisualizers:Make;BigNumVisualizers:Make;BigIntegerDevelopmentTests:Make;BigDecimalDevelopmentTests:Make;BigRationalDevelopmentTests:Make;BigPiTests:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

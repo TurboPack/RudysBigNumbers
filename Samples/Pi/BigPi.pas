@@ -15,7 +15,7 @@ uses
   Velthuis.BigIntegers;
 
 type TDigits = Array of Byte;
-const MaxUnit64 = 18_446_744_073_709_551_615;
+//const MaxUnit64 = 18_446_744_073_709_551_615;
 const CallBackChunkSize = 64;
 type TChunkCallBack = reference to Procedure(Chunk: TDigits);
 

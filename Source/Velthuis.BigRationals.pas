@@ -542,7 +542,7 @@ begin
   if IsInfinite(Value) or IsNaN(Value) then
     Error(ecInvalidArg, ['Double']);
 
-  if Value = 0.0 then
+  if Value = 0.0 then //FI:W542 Direct floating-point comparison
   begin
     FNumerator := BigInteger.Zero;
     FDenominator := BigInteger.One;
@@ -629,7 +629,7 @@ begin
     // raise EOverflow.CreateFmt('Value %g cannot be converted to an integer ratio', [Value]);
   end;
 
-  if Value = 0.0 then
+  if Value = 0.0 then //FI:W542 Direct floating-point comparison
   begin
     FNumerator := BigInteger.Zero;
     FDenominator := BigInteger.One;
@@ -647,12 +647,14 @@ begin
     begin
       A := Trunc(Value);
       Rest := Value - A;
-      if Rest = 0.0 then
+
+      if Rest = 0.0 then //FI:W542 Direct floating-point comparison
       begin
         FNumerator := A;
         FDenominator := 1;
         Exit;
       end;
+
       Inverse := 1.0 / Rest;
       K[2] := A;
       H[2] := 1;
@@ -663,8 +665,10 @@ begin
     begin
       A := Trunc(Inverse);
       Rest := Inverse - A;
-      if Rest = 0.0 then
+
+      if Rest = 0.0 then //FI:W542 Direct floating-point comparison
         Rest := Epsilon;
+
       Inverse := 1.0 / Rest;
       if I = 1 then
       begin
@@ -933,7 +937,7 @@ begin
   BigRational.OneFourth := BigRational.Create(BigInteger.One, BigInteger(4));
   BigRational.OneThird := BigRational.Create(BigInteger.One, BigInteger(3));
   BigRational.OneHalf := BigRational.Create(BigInteger.One, BigInteger(2));
-  BigRational.TwoThirds := BigRational.OneThird + BigRational.OneThird;
+  BigRational.TwoThirds := BigRational.OneThird + BigRational.OneThird; //FI:W510 Values on both sides of the operator are equal
   BigRational.ThreeFourths := BigRational.OneHalf + BigRational.OneFourth;
   BigRational.One := BigRational.Create(BigInteger.One, BigInteger.One);
   BigRational.Ten := BigRational.Create(BigInteger.Ten, BigInteger.One);

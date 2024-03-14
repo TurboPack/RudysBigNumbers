@@ -915,6 +915,12 @@ end;
 //                                                                                                      //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+procedure BigDecimal.Init;
+begin
+  FScale := 0;
+  FPrecision := 0;
+end;
+
 class function BigDecimal.Add(const Left, Right: BigDecimal): BigDecimal;
 var
   L, R: BigInteger;
@@ -1284,7 +1290,7 @@ begin
   if IsInfinite(S) or IsNan(S) then
     Error(ecInvalidArg, ['Single']);
 
-  if S = 0.0 then
+  if S = 0.0 then //FI:W542 Direct floating-point comparison
   begin
     Self := BigDecimal.Zero;
     Exit;
@@ -1306,7 +1312,7 @@ begin
   if IsInfinite(D) or IsNan(D) then
     Error(ecInvalidArg, ['Double']);
 
-  if D = 0.0 then
+  if D = 0.0 then //FI:W542 Direct floating-point comparison
   begin
     Self := BigDecimal.Zero;
     Exit;
@@ -1800,12 +1806,6 @@ begin
   Result.Create(UnscaledValue);
 end;
 
-procedure BigDecimal.Init;
-begin
-  FScale := 0;
-  FPrecision := 0;
-end;
-
 {$IFDEF HasClassConstructors}
 class constructor BigDecimal.InitClass;
 {$ELSE}
@@ -2251,7 +2251,7 @@ class function BigDecimal.Sqr(const Value: BigDecimal): BigDecimal;
 begin
   Result.Init;
   Result.FValue := BigInteger.Sqr(Value.FValue);
-  Result.FScale := RangeCheckedScale(Value.FScale + Value.FScale);
+  Result.FScale := RangeCheckedScale(Value.FScale + Value.FScale); //FI:W510 Values on both sides of the operator are equal
 end;
 
 function BigDecimal.Sqr: BigDecimal;

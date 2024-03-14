@@ -5322,7 +5322,7 @@ end;
 ///  number of digits that corresponds with it is 9: MaxDigits). These 9 digits form a section. Since these fit     ///
 ///  in a UInt32, simple conversion can be done by dividing a UInt32 repeatedly by 10, which is considerably        ///
 ///  faster than dividing a BigInteger by 10. That is why conversion is done in multiples of a section. FWIW, in    ///
-///  64 bit code, the maxium power of 10 that fits in a UInt64 is 19, so in that case, a section for base 10 is     ///
+///  64 bit code, the maximum power of 10 that fits in a UInt64 is 19, so in that case, a section for base 10 is     ///
 ///  19 digits.                                                                                                     ///
 ///                                                                                                                 ///
 ///  See bases.inc for MaxPower, MaxDigits and MaxFactor for each base and NativeUInt size.                         ///
@@ -9565,7 +9565,7 @@ begin
   Middle := (ValueUpper * ValueLower) shl 1;
 
   // Can't simply move these values into place, because they still overlap when shifted.
-  Result := Upper shl (NDiv2Shift + NDiv2Shift) + Middle shl NDiv2Shift + Lower;
+  Result := Upper shl (NDiv2Shift + NDiv2Shift) + Middle shl NDiv2Shift + Lower; //FI:W510 Values on both sides of the operator are equal
   Result.FSize := Result.FSize and SizeMask;
 end;
 
@@ -10972,7 +10972,8 @@ var
   Q, R: BigInteger;
 begin
   if RightLower.FData <> nil then
-    ;
+    ; // TODO: Why empty then block, is this old debug code
+
   Q := BigInteger.Zero;
   R := BigInteger.Zero;
   if (LeftUpperMid shr N) = RightUpper then

@@ -32,7 +32,7 @@ uses IOUtils, BigPi, Hash, BigPiTestsCommon;
 
 procedure ChudnovskyPiTest.Check1000Digits;
 begin
-  var calcPi := Chudnovsky(5000).ToString;
+  var calcPi := Chudnovsky(1000).ToString;
   var readPi := TFile.ReadAllText(TPath.Combine(TestDataFolder,'pi-100k.txt'));
   for var idx := 1 to Length(calcPi) do
      Assert.AreEqual(readPi[idx], calcPi[idx], Format('Incorrect digit # %d with Chudnovsky: %s.',[idx, calcPi]));

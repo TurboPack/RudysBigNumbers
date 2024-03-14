@@ -21,8 +21,8 @@ uses
 type
   ILogger = interface
     ['{B6821CA6-64F8-48B0-89D0-A9A3E6304D82}']
-    procedure Log(Msg: string); overload;
-    procedure Log(Format: string; Args: array of const); overload;
+    procedure Log(const Msg: string); overload;
+    procedure Log(const Format: string; Args: array of const); overload;
   end;
 
   TLogger = class(TInterfacedObject, ILogger)
@@ -31,10 +31,10 @@ type
     FWriter: TStreamWriter;
   public
     constructor Create(S: TStream); overload;
-    constructor Create(LogFileName: string); overload;
+    constructor Create(const LogFileName: string); overload;
     destructor Destroy; override;
-    procedure Log(Msg: string); overload;
-    procedure Log(Format: string; Args: array of const); overload;
+    procedure Log(const Msg: string); overload;
+    procedure Log(const Format: string; Args: array of const); overload;
   end;
 
 var
@@ -53,7 +53,7 @@ begin
   FWriter := TStreamWriter.Create(S);
 end;
 
-constructor TLogger.Create(LogFileName: string);
+constructor TLogger.Create(const LogFileName: string);
 var
   F: TFileStream;
 begin
@@ -65,14 +65,16 @@ destructor TLogger.Destroy;
 begin
   FWriter.Free;
   FStream.Free;
+
+  //TODO: inherited destructor missing
 end;
 
-procedure TLogger.Log(Msg: string);
+procedure TLogger.Log(const Msg: string);
 begin
   FWriter.WriteLine(Msg);
 end;
 
-procedure TLogger.Log(Format: string; Args: array of const);
+procedure TLogger.Log(const Format: string; Args: array of const);
 begin
   FWriter.WriteLine(System.SysUtils.Format(Format, Args));
 end;

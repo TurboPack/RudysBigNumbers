@@ -20,6 +20,7 @@ interface
 
 type
   IRandom = interface
+    ['{15F68D4A-E34D-4A30-B3F4-899D6E134386}']
     function NextInteger: Integer; overload;
     function NextInteger(MaxValue: Integer): Integer; overload;
     function NextInteger(MinValue, MaxValue: Integer): Integer; overload;
@@ -165,6 +166,7 @@ begin
   Head := Length(Bytes) div SizeOf(Int32);
   Tail := Length(Bytes) mod SizeOf(Int32);
   N := 0;
+
   for I := 1 to Head do
   begin
     Rnd := Next(32);
@@ -174,7 +176,9 @@ begin
     Bytes[N + 3] := Byte(Rnd shr 24);
     Inc(N, 4);
   end;
+
   Rnd := Next(32);
+
   for I := 1 to Tail do
   begin
     Bytes[N] := Byte(Rnd);
@@ -201,18 +205,31 @@ begin
 end;
 
 function TRandomBase.NextInteger(MinValue, MaxValue: Integer): Integer;
+
+  procedure RaiseValueZeroOrPositive;
+  begin
+    raise EArgumentException.Create('MinValue must be positive or 0');
+  end;
+
 begin
   if MinValue < 0 then
-    raise EArgumentException.Create('MinValue must be positive or 0');
+    RaiseValueZeroOrPositive;
+
   Result := MinValue + NextInteger(MaxValue - MinValue);
 end;
 
 function TRandomBase.NextInteger(MaxValue: Integer): Integer;
+
+  procedure RaiseParameterZero;
+  begin
+    raise EArgumentException.Create('MaxValue not be 0');
+  end;
+
 var
   Bits: Integer;
 begin
   if MaxValue = 0 then
-    raise EArgumentException.Create('MaxValue not be 0');
+    RaiseParameterZero;
 
   if IsPowerOfTwo(MaxValue) then
   begin
@@ -242,6 +259,7 @@ begin
   Head := Length(Bytes) div SizeOf(UInt64);
   Tail := Length(Bytes) mod SizeOf(UInt64);
   N := 0;
+
   for I := 1 to Head do
   begin
     Rnd := Next64(64);
@@ -255,7 +273,9 @@ begin
     Bytes[N + 7] := Byte(Rnd shr 56);
     Inc(N, 8);
   end;
+
   Rnd := Next64(64);
+
   for I := 1 to Tail do
   begin
     Bytes[N] := Byte(Rnd);

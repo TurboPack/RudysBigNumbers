@@ -27,14 +27,14 @@ type
     fHashes: TList<TPiHash>;
   public
     constructor Create; override;
-      //Get the amount of cases we are creating
-      function GetCaseCount(const methodName : string) : Integer; override;
-      //Get the name of the cases, depending on the Test-Function
-      function GetCaseName(const methodName : string; const caseNumber : integer) : string; override;
-      //Get the Params for calling the Test-Function;Be aware of the order !
-      function GetCaseParams(const methodName : string ; const caseNumber : integer) : TValuearray; override;
-      //Cleanup the instance
-      Destructor Destroy;override;
+    //Get the amount of cases we are creating
+    function GetCaseCount(const methodName : string) : Integer; override;
+    //Get the name of the cases, depending on the Test-Function
+    function GetCaseName(const methodName : string; const caseNumber : integer) : string; override;
+    //Get the Params for calling the Test-Function;Be aware of the order !
+    function GetCaseParams(const methodName : string ; const caseNumber : integer) : TValuearray; override;
+    //Cleanup the instance
+    Destructor Destroy;override;
 
   end;
 

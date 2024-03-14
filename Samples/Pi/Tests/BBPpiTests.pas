@@ -22,31 +22,51 @@ type
     procedure HashCheck(const Digits : Integer;const Hash : String);
     [Test]
     procedure Check1000Digits();
+    [Test]
+    procedure CompareCallbackToResult;
   end;
 
 implementation
 
-uses IOUtils, BigPi, Hash, BigPiTestsCommon;
+uses
+  IOUtils, BigPi,Hash, BigPiTestsCommon;
 
 { BBPpiTest }
 
 procedure BBPpiTest.Check1000Digits;
 begin
-  var calcPi := DigitsToString(BBPpi(1000));
+  var calcPi := DigitsToString(BBPpi(1000)).Insert(1,'.');
   var readPi := TFile.ReadAllText(TPath.Combine(TestDataFolder,'pi-100k.txt'));
   for var idx := 1 to Length(calcPi) do
      Assert.AreEqual(readPi[idx], calcPi[idx], Format('Incorrect digit # %d with BBPpi: %s',[idx, calcPi]));
+end;
+
+procedure BBPpiTest.CompareCallbackToResult;
+begin
+  var CallBackString := '';
+  var CallBackStringBuilder: TChunkCallBack := procedure(Chunk: TDigits)
+  begin
+    CallBackString := CallBackString + DigitsToString(Chunk);
+  end;
+
+  var calcPi := DigitsToString(BBPpi(100, CallBackStringBuilder));
+  Assert.AreEqual(calcPi, CallBackString);
 end;
 
 procedure BBPpiTest.HashCheck(const Digits: Integer; const Hash: String);
 begin
   if digits > 10000 then exit;
 
-  var pi := DigitsToString(BBPpi(Digits));
+  var pi := DigitsToString(BBPpi(Digits)).Insert(1,'.');
   // one more digit for the decimal point
-  Assert.AreEqual(Succ(Digits), length(pi));
+  var expectedLength := Succ(Digits);
+  var actualLength := length(pi);
+  Assert.AreEqual(expectedLength, actualLength,
+    Format('For %d digits, was expecting one more for the decimal, '+
+     'but received %d.',[digits, actualLength]));
   var calcHash := THashMD5.GetHashString(pi);
-  Assert.AreEqual(hash, calcHash, Format('Incorrect hash for %d digits with BBPpi. ',[digits]))
+  Assert.AreEqual(hash, calcHash,
+    Format('Incorrect hash for %d digits with BBPpi. ',[digits]))
 end;
 
 end.

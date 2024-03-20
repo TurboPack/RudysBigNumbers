@@ -9,12 +9,15 @@ program BigPiFMX;
 uses
   System.StartUpCopy,
   FMX.Forms,
+  FMX.Skia,
   BigPiFMXMain in 'BigPiFMXMain.pas' {BigPiGui},
-  BigPi in 'BigPi.pas';
+  BigPi in 'BigPi.pas',
+  BackgroundPi in 'BackgroundPi.pas';
 
 {$R *.res}
 
 begin
+  GlobalUseSkia := True;
   Application.Initialize;
   Application.CreateForm(TBigPiGui, BigPiGui);
   Application.Run;

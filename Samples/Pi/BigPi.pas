@@ -19,18 +19,18 @@ type TDigits = Array of Byte;
 const CallBackChunkSize = 64;
 type TChunkCallBack = reference to Procedure(Chunk: TDigits);
 
-function BBPpi(Places: UInt64; CallBack: TChunkCallBack = nil): TDigits;
+function BBPpi(Places: UInt64; CallBack: TChunkCallBack = nil): BigInteger;
 function Chudnovsky(Places: Integer): BigDecimal;
 function DigitsToString(digits: TDigits): String;
 
 implementation
 
-function BBPpi(Places: UInt64; CallBack: TChunkCallback = nil): TDigits;
+function BBPpi(Places: UInt64; CallBack: TChunkCallback = nil): BigInteger;
 // Bailey-Borwein-Plouffe
 begin
-  SetLength(Result, Places);
+  Result := 0;
 
-  var idx: Uint64 := 0;
+  var idx: NativeInt := 0;
   var q := BigInteger.One;
   var r := BigInteger.Zero;
   var t := BigInteger.One;
@@ -46,7 +46,8 @@ begin
   begin
     if 4*q+r-t < n*t then
     begin
-      result[idx] := n.AsInt64; // It is just a byte
+      Result := Result * 10 + n.AsInt64; // It is just a byte
+      //result[idx] :=
       inc(idx);
 
       if Assigned(Callback) then
@@ -121,7 +122,7 @@ function DigitsToString(digits: TDigits): String;
 begin
   SetLength(Result, Length(digits));
   for var idx := Low(digits) to High(digits) do
-    Result[idx + 1] := Chr(digits[idx] + Ord('0'));
+    Result[idx + 1] := Char(digits[idx] + Ord('0'));
 end;
 
 end.

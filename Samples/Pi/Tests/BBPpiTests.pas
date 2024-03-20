@@ -35,7 +35,7 @@ uses
 
 procedure BBPpiTest.Check1000Digits;
 begin
-  var calcPi := DigitsToString(BBPpi(1000)).Insert(1,'.');
+  var calcPi := BBPpi(1000).ToString.Insert(1,'.');
   var readPi := TFile.ReadAllText(TPath.Combine(TestDataFolder,'pi-100k.txt'));
   for var idx := 1 to Length(calcPi) do
      Assert.AreEqual(readPi[idx], calcPi[idx], Format('Incorrect digit # %d with BBPpi: %s',[idx, calcPi]));
@@ -49,7 +49,7 @@ begin
     CallBackString := CallBackString + DigitsToString(Chunk);
   end;
 
-  var calcPi := DigitsToString(BBPpi(100, CallBackStringBuilder));
+  var calcPi := BBPpi(100, CallBackStringBuilder).ToString;
   Assert.AreEqual(calcPi, CallBackString);
 end;
 
@@ -57,7 +57,7 @@ procedure BBPpiTest.HashCheck(const Digits: Integer; const Hash: String);
 begin
   if digits > 10000 then exit;
 
-  var pi := DigitsToString(BBPpi(Digits)).Insert(1,'.');
+  var pi := BBPpi(Digits).ToString.Insert(1,'.');
   // one more digit for the decimal point
   var expectedLength := Succ(Digits);
   var actualLength := length(pi);

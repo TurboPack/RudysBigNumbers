@@ -55,9 +55,12 @@ function CheckDigits(const Digits1, Digits2: string): UInt64;
 begin
   Assert(Length(Digits1) = Length(Digits2),
     'Calls to Check Digits should include two strings with the same length.');
-  for var idx := 1 to Length(Digits1) do
-    if Digits1[idx] <> Digits2[idx] then exit(idx);
-  Result := 0;
+  
+	for var idx := 1 to Length(Digits1) do
+    if Digits1[idx] <> Digits2[idx] then 
+		  Exit(idx);
+  
+	Result := 0;
 end;
 
 procedure CompareDigits(digits: UInt64);
@@ -95,10 +98,10 @@ begin
     digits := DigitsToString(Chunk);
 
   // slow down the output for demonstration purposes
-  for var i := low(digits) to High(digits) do
+  for var i := Low(digits) to High(digits) do
   begin
     Write(digits[i]);
-    sleep(100);
+    Sleep(100);
   end;
 end;
 

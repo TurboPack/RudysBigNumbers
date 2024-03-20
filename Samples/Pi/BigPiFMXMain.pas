@@ -46,8 +46,8 @@ uses BigPi;
 
 procedure TBigPiGui.Button1Click(Sender: TObject);
 begin
-  bbpMemo.Text := DigitsToString(BBPpi(trunc(digitsEdit.Value)));
-  chudnovskyMemo.Text := Chudnovsky(trunc(digitsEdit.Value)).ToString;
+  bbpMemo.Text := DigitsToString(BBPpi(Trunc(digitsEdit.Value)));
+  chudnovskyMemo.Text := Chudnovsky(Trunc(digitsEdit.Value)).ToString;
 end;
 
 end.

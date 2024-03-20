@@ -30,7 +30,7 @@ const
   CSmallintBits = CWordBits - 1;
 
   // Note: up to XE8, Longword and Longint were fixed sizes (32 bit). This has changed in XE8.
-  CLongwordBits = CByteBits * SizeOf(Longword);
+  CLongwordBits = CByteBits * SizeOf(LongWord);
   CLongintBits  = CLongwordBits - 1;
 
   // Note: up to XE8, Integer and Cardinal were platform dependent. This has changed in XE8.

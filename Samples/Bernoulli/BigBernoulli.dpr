@@ -27,7 +27,7 @@ uses
   // Experimental
   Velthuis.BigRationals;
 
-function Bernoulli(n: Uint64): BigRational;
+function Bernoulli(n: UInt64): BigRational;
 begin
   var a: TArray<BigRational>;
   SetLength(a, n + 1);

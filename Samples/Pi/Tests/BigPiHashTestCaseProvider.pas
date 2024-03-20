@@ -28,14 +28,13 @@ type
   public
     constructor Create; override;
     //Get the amount of cases we are creating
-    function GetCaseCount(const methodName : string) : Integer; override;
+    function GetCaseCount(const methodName: string): Integer; override;
     //Get the name of the cases, depending on the Test-Function
-    function GetCaseName(const methodName : string; const caseNumber : integer) : string; override;
+    function GetCaseName(const methodName: string; const caseNumber: Integer): string; override;
     //Get the Params for calling the Test-Function;Be aware of the order !
-    function GetCaseParams(const methodName : string ; const caseNumber : integer) : TValuearray; override;
+    function GetCaseParams(const methodName: string; const caseNumber: Integer): TValuearray; override;
     //Cleanup the instance
-    Destructor Destroy;override;
-
+    Destructor Destroy; override;
   end;
 
 implementation
@@ -77,15 +76,16 @@ begin
 end;
 
 function TPiHashProvider.GetCaseName(const methodName: string;
-  const caseNumber: integer): string;
+  const caseNumber: Integer): string;
 begin
-  Result := Format('Calculate %d digits',[fHashes[caseNumber].Digits]);
+  Result := Format('Calculate %d digits', [fHashes[caseNumber].Digits]);
 end;
 
 function TPiHashProvider.GetCaseParams(const methodName: string;
-  const caseNumber: integer): TValuearray;
+  const caseNumber: Integer): TValuearray;
 begin
   SetLength(Result,2);
+	
   Result[0] := fHashes[caseNumber].Digits;
   Result[1] := fHashes[caseNumber].Hash;
 end;

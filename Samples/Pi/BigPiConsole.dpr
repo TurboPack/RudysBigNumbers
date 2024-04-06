@@ -39,8 +39,9 @@ end;
 
 procedure HashPi(digits: UInt64);
 begin
-  var pi := DigitsToString(BBPpi(digits)).Insert(1,'.');
-  Assert(Length(pi) = Succ(digits),Format('Expected %d digits but found %d digits',[succ(digits),Length(pi)]));
+  var pi := BBPpi(digits).ToString.Insert(1,'.');
+  Assert(Length(pi) = Succ(digits),
+    Format('Expected %d digits but found %d digits',[succ(digits),Length(pi)]));
   var hash := THashMD5.GetHashString(pi);
   Writeln(Format('%d,%s', [digits, hash]));
 end;
@@ -63,7 +64,7 @@ end;
 procedure CompareDigits(digits: UInt64);
 begin
   Write('Digits    : ', digits);
-  var BBP := DigitsToString(BBPpi(digits)).Insert(1,'.');
+  var BBP := BBPpi(digits).ToString.Insert(1,'.');
   var chud := Chudnovsky(digits).ToString;
   var firstError := CheckDigits(BBP,Chud);
   if firstError = 0 then
@@ -107,7 +108,9 @@ begin
   ReportMemoryLeaksOnShutdown := True;
   try
 
-    BBPpi(Places, WritelnCallBack);
+    //BBPpi(Places, WritelnCallBack);
+    Writeln(BBPpi(80).ToString.Insert(1,'.'));
+    Writeln(Chudnovsky(80).ToString);
     Writeln;
 
   except

@@ -176,8 +176,7 @@ type
   private
     type
       // Error codes to be used when calling the private static BigDecimal.Error method.
-      TErrorCode = (ecParse, ecDivByZero, ecConversion, ecOverflow, ecUnderflow, ecInvalidArg, ecRounding, ecExponent);
-
+      TErrorCode = (ecParse, ecDivByZero, ecConversion, ecOverflow, ecUnderflow, ecInvalidArg, ecRounding, ecExponent, ecInvalidOperation);
     var
       // The unscaled value of the BigDecimal.
       FValue: BigInteger;
@@ -611,6 +610,54 @@ type
     ///  -1 is Left is matheamtically less than Right.</summary>
     class function Compare(const Left, Right: BigDecimal): TValueSign; static;
 
+    /// <summary>Indicates whether two values are (approximately) equal. </summary>
+    class function SameValue(const A, B: BigDecimal; Epsilon: Extended = 0): Boolean; overload; static;
+
+    /// <summary>Indicates whether two values are (approximately) equal. </summary>
+    class function SameValue(const A, B: BigDecimal; Epsilon: BigDecimal): Boolean; overload; static;
+
+    /// <summary>Returns the natural logarithm of the BigInteger value as Double.</summary>
+    class function LnDouble(const Value: BigInteger): Double; overload; static;
+
+    /// <summary>Returns the natural logarithm of the BigDecimal value as Double.</summary>
+    class function LnDouble(const Value: BigDecimal): Double; overload; static;
+
+    /// <summary>Returns the natural logarithm of the current BigDecimal as Double.</summary>
+    function LnDouble: Double; overload;
+
+    /// <summary>Returns the natural logarithm of the BigInteger value.</summary>
+    class function Ln(const Value: BigInteger): BigDecimal; overload; static;
+
+    /// <summary>Returns the natural logarithm of the BigDecimal value.</summary>
+    class function Ln(const Value: BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Returns the natural logarithm of the BigDecimal value.</summary>
+    function Ln: BigDecimal; overload;
+
+    /// <summary>Returns the natural log of (X+1)</summary>
+    class function LnXP1( Value : BigDecimal ): BigDecimal; overload; static;
+
+    /// <summary>Returns the natural log of the BigDecimal+1.</summary>
+    function LnXP1: BigDecimal; overload;
+
+    /// <summary>Returns the logarithm to the specified base of the BigDecimal value.</summary>
+    class function Log(const Value: BigDecimal; Base: BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Returns the logarithm to the specified base of the current BigDecimal.</summary>
+    function Log(Base: BigDecimal): BigDecimal; overload;
+
+    /// <summary>Returns the logarithm to base 2 of the BigDecimal value.</summary>
+    class function Log2(const Value: BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Returns the logarithm to base 2 of the current BigDecimal.</summary>
+    function Log2: BigDecimal; overload;
+
+    /// <summary>Returns the logarithm to base 10 of the BigDecimal value.</summary>
+    class function Log10(const Value: BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Returns the logarithm to base 10 of the current BigDecimal.</summary>
+    function Log10: BigDecimal; overload;
+
     /// <summary>Returns the maximum of the two given BigDecimal values.</summary>
     class function Max(const Left, Right: BigDecimal): BigDecimal; static;
 
@@ -729,6 +776,246 @@ type
     /// <summary>Returns the reciprocal of the current BigDecimal, using the given precision</summary>
     function Reciprocal: BigDecimal; overload;
 
+    /// <summary>Returns the sine of the given BigDecimal.</summary>
+    class function Sin(ARadians : BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Returns the sine of the current BigDecimal.</summary>
+    function Sin: BigDecimal; overload;
+
+    /// <summary>Returns the cosine of the given BigDecimal.</summary>
+    class function Cos(ARadians : BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Returns the cosine of the current BigDecimal.</summary>
+    function Cos: BigDecimal; overload;
+
+    /// <summary>Returns the sine and cosine of the given BigDecimal.</summary>
+    class procedure SinCos(const ARadians: BigDecimal; out ASin, ACos: BigDecimal); overload; static;
+
+    /// <summary>Returns the sine and cosine of the current BigDecimal.</summary>
+    procedure SinCos(out ASin, ACos: BigDecimal); overload;
+
+    /// <summary>Returns the tangens of the given Single.</summary>
+    class function Tan(const ARadians: Single): BigDecimal; overload; static;
+
+    /// <summary>Returns the tangens of the given BigDecimal.</summary>
+    class function Tan(const ARadians: BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Returns the tangens of the current BigDecimal.</summary>
+    function Tan: BigDecimal; overload;
+
+    /// <summary>Returns the cotangens of the given BigDecimal.</summary>
+    class function CoTan(const X: BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Returns the cotangens of the current BigDecimal.</summary>
+    function CoTan: BigDecimal; overload;
+
+    /// <summary>Returns the arc-tangens of the given Double.</summary>
+    class function ArcTan(const X: Double): BigDecimal; overload; static;
+
+    /// <summary>Returns the arc-tangens of the given BigDecimal.</summary>
+    class function ArcTan(const X: BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Returns the arc-tangens of the current BigDecimal.</summary>
+    function ArcTan: BigDecimal; overload;
+
+    /// <summary>Returns the arc-tangens of the given Singles.</summary>
+    class function ArcTan2(const Y, X: Single): BigDecimal; overload; static;
+
+    /// <summary>Returns the arc-tangens of the current BigDecimals.</summary>
+    class function ArcTan2(const Y, X: BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Returns the secant of the given BigDecimal.</summary>
+    class function Secant(const X: BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Returns the secant of the current BigDecimal.</summary>
+    function Secant: BigDecimal; overload;
+
+    /// <summary>Returns the cosecant of the given BigDecimal.</summary>
+    class function CoSecant(const X: BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Returns the cosecant of the current BigDecimal.</summary>
+    function CoSecant: BigDecimal; overload;
+
+    /// <summary>Calculates the inverse cosine of a given number.</summary>
+    class function ArcCos(const X : BigDecimal) : BigDecimal; overload; static;
+
+    /// <summary>Calculates the inverse cosine of the current BigDecimal.</summary>
+    function ArcCos : BigDecimal; overload;
+
+    /// <summary>Calculates the inverse sine of a given number.</summary>
+    class function ArcSin(const X : BigDecimal) : BigDecimal; overload; static;
+
+    /// <summary>Calculates the inverse sine of a the current BigDecimal.</summary>
+    function ArcSin : BigDecimal; overload;
+
+    /// <summary>Calculates the inverse hyperbolic tangent of a given number.</summary>
+    class function ArcTanh(const X: BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Calculates the inverse hyperbolic tangent of the current BigDecimal.</summary>
+    function ArcTanh : BigDecimal; overload;
+
+    /// <summary>Calculates the inverse secant of a given number.</summary>
+    class function ArcSec(const X : BigDecimal) : BigDecimal; overload; static;
+
+    /// <summary>Calculates the inverse secant of the current BigDecimal.</summary>
+    function ArcSec : BigDecimal; overload;
+
+    /// <summary>Calculates the inverse cosecant of a given number.</summary>
+    class function ArcCsc(const X: BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Calculates the inverse cosecant of the current BigDecimal.</summary>
+    function ArcCsc : BigDecimal; overload;
+
+    /// <summary>Calculates the inverse hyperbolic cotangent of a given number.</summary>
+    class function ArcCotH(const X: BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Calculates the inverse hyperbolic cotangent of the current BigDecimal.</summary>
+    function ArcCotH : BigDecimal; overload;
+
+    /// <summary>Calculates the inverse hyperbolic secant of a given number.</summary>
+    class function ArcSecH(const X: BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Calculates the inverse hyperbolic secant of the current BigDecimal.</summary>
+    function ArcSecH : BigDecimal; overload;
+
+    /// <summary>Calculates the inverse hyperbolic cosecant of a given number.</summary>
+    class function ArcCscH(const X: BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Calculates the inverse hyperbolic cosecant of the current BigDecimalr.</summary>
+    function ArcCscH : BigDecimal; overload;
+
+    /// <summary>Calculates the length of the hypotenuse.</summary>
+    class function Hypot(const X, Y: BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Calculates the length of the hypotenuse.</summary>
+    class function Hypot(const X, Y, Z: BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Calculates the hyperbolic cosine of an angle.</summary>
+    class function CosH(const X : BigDecimal) : BigDecimal; overload; static;
+
+    /// <summary>Calculates the hyperbolic cosine of the current BigDecimal.</summary>
+    function CosH : BigDecimal; overload;
+
+    /// <summary>Returns the hyperbolic sine of an angle.</summary>
+    class function SinH(const X : BigDecimal) : BigDecimal; overload; static;
+
+    /// <summary>Returns the hyperbolic sine of the current BigDecimal.</summary>
+    function SinH : BigDecimal; overload;
+
+    /// <summary>Returns the hyperbolic tangent of X.</summary>
+    class function TanH(const X : BigDecimal) : BigDecimal; overload; static;
+    /// <summary>Returns the hyperbolic tangent of the current BigDecimal.</summary>
+    function TanH : BigDecimal; overload;
+
+    /// <summary>Calculates the inverse hyperbolic cosine of a given number.</summary>
+    class function ArcCosH(const X : BigDecimal) : BigDecimal; overload; static;
+
+    /// <summary>Calculates the inverse hyperbolic cosine of the current BigDecimal.</summary>
+    function ArcCosH : BigDecimal; overload;
+
+    /// <summary>Calculates the inverse hyperbolic sine of a given number.</summary>
+    class function ArcSinH(const X : BigDecimal) : BigDecimal; overload; static;
+
+    /// <summary>Calculates the inverse hyperbolic sine of the current BigDecimal.</summary>
+    function ArcSinH : BigDecimal; overload;
+
+    /// <summary>Calculates the hyperbolic cotangent of an angle.</summary>
+    class function CotH(const X : BigDecimal) : BigDecimal; overload; static;
+    /// <summary>Calculates the hyperbolic cotangent of the current BigDecimal.</summary>
+    function CotH : BigDecimal; overload;
+
+    /// <summary>Calculates the hyperbolic secant of an angle.</summary>
+    class function SecH(const X : BigDecimal) : BigDecimal; overload; static;
+    /// <summary>Calculates the hyperbolic secant of the current BigDecimal.</summary>
+    function SecH : BigDecimal; overload;
+
+    /// <summary>Calculates the inverse cotangent of a given number.</summary>
+    class function ArcCot(const X : BigDecimal) : BigDecimal; overload; static;
+
+    /// <summary>Calculates the inverse cotangent of the current BigDecimal.</summary>
+    function ArcCot : BigDecimal; overload;
+
+    /// <summary>Returns the value of a degree measurement expressed in radians.</summary>
+    class function DegToRad(const Degrees: BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Returns the value of a degree measurement expressed in radians.</summary>
+    function DegToRad : BigDecimal; overload;
+
+    /// <summary>Converts radians to degrees.</summary>
+    class function RadToDeg(const Radians: BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Converts radians to degrees.</summary>
+    function RadToDeg : BigDecimal; overload;
+
+    /// <summary>Converts grad measurements to radians.</summary>
+    class function GradToRad(const Grads: BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Converts grad measurements to radians.</summary>
+    function GradToRad : BigDecimal; overload;
+
+    /// <summary>Converts radians to grads.</summary>
+    class function RadToGrad(const Radians: BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Converts radians to grads.</summary>
+    function RadToGrad : BigDecimal; overload;
+
+    /// <summary>Converts grad measurements to degrees.</summary>
+    class function GradToDeg(const Grads: BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Converts grad measurements to degrees.</summary>
+    function GradToDeg : BigDecimal; overload;
+
+    /// <summary>Converts grad measurements to cycles.</summary>
+    class function GradToCycle(const Grads: BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Converts grad measurements to cycles.</summary>
+    function GradToCycle : BigDecimal; overload;
+
+    /// <summary>Converts an angle measurement from cycles to degrees.</summary>
+    class function CycleToDeg(const Cycles: BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Converts an angle measurement from cycles to degrees.</summary>
+    function CycleToDeg : BigDecimal; overload;
+
+    /// <summary>Converts an angle measurement from cycles to grads.</summary>
+    class function CycleToGrad(const Cycles: BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Converts an angle measurement from cycles to grads.</summary>
+    function CycleToGrad : BigDecimal; overload;
+
+    /// <summary>Converts an angle measurement from cycles to radians.</summary>
+    class function CycleToRad(const Cycles: BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Converts an angle measurement from cycles to radians.</summary>
+    function CycleToRad : BigDecimal; overload;
+
+    /// <summary>Converts radians to cycles.</summary>
+    class function RadToCycle(const Radians: BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Converts radians to cycles.</summary>
+    function RadToCycle : BigDecimal; overload;
+
+    /// <summary>Returns the value of a degree measurement expressed in grads.</summary>
+    class function DegToGrad(const Degrees: BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Returns the value of a degree measurement expressed in grads.</summary>
+    function DegToGrad : BigDecimal; overload;
+
+    /// <summary>Returns the value of a degree measurement expressed in cycles.</summary>
+    class function DegToCycle(const Degrees: BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>Returns the value of a degree measurement expressed in cycles.</summary>
+    function DegToCycle : BigDecimal; overload;
+
+    /// <summary>The reverse of BigDecimal.Ln. Returns e^Value, for very large Value, as BigDecimal
+    class function Exp(const b: Double): BigDecimal; overload; static;
+
+    /// <summary>The reverse of BigDecimal.Ln. Returns e^Value, for very large Value, as BigDecimal
+    class function Exp(const b: BigDecimal): BigDecimal; overload; static;
+
+    /// <summary>The reverse of BigDecimal.Ln. Returns e^Value, for very large Value, as BigDecimal
+    function Exp: BigDecimal; overload;
+
     /// <summary>Returns a new BigDecimal with all trailing zeroes (up to the preferred scale) removed from the
     /// current BigDecimal. No significant digits will be removed and the numerical value of the result compares
     /// as equal to the original value.</summary>
@@ -772,6 +1059,17 @@ type
     /// <remarks>This uses the given FormatSettings for the decimal point Char.</remarks>
     function ToString(const Settings: TFormatSettings): string; overload;
 
+    /// <summary>Returns the string interpretation of the specified BigInteger in numeric base 10.</summary>
+    function ToDecimalString: string;
+
+    /// <summary>Returns the string interpretation of the specified BigInteger in numeric base 16.</summary>
+    function ToHexString: string;
+
+    /// <summary>Returns the string interpretation of the specified BigInteger in numeric base 2.</summary>
+    function ToBinaryString: string;
+
+    /// <summary>Returns the string interpretation of the specified BigInteger in numeric base 8.</summary>
+    function ToOctalString: string;
 
     /// <summary>Returns the sum of self and given parameter. The new scale is Max(Self.Scale, Right.Scale).</summary>
     function AddSelf(const Right: BigDecimal): BigDecimal;
@@ -786,7 +1084,6 @@ type
     /// <para>The preferred new scale is Self.Scale - Divisor.Scale. Removes any trailing zero digits to
     /// approach that preferred scale without altering the significant digits.</para></summary>
     function DivideSelf(const Divisor: BigDecimal): BigDecimal;
-
 
     // -- Class properties --
 
@@ -1169,6 +1466,161 @@ begin
     R := Right.FValue;
   end;
   Result := BigInteger.Compare(L, R);
+end;
+
+class function BigDecimal.SameValue(const A, B: BigDecimal; Epsilon: Extended = 0): Boolean;
+const
+  FuzzFactor = 1000;
+//  Resolution   = 1E-15 * FuzzFactor;
+  Resolution = 1E-19 * FuzzFactor;
+var
+  eps : BigDecimal;
+begin
+  if Epsilon = 0 then
+    begin
+    eps := A.ABS;
+    if ( eps > B.ABS ) then
+      eps := B.ABS;
+
+    Epsilon := BigDecimal( eps * Resolution ).AsDouble;
+    if ( Epsilon < Resolution ) then
+      Epsilon := Resolution;
+    end;
+  if A > B then
+    Result := (A - B) <= Epsilon
+  else
+    Result := (B - A) <= Epsilon;
+end;
+
+class function BigDecimal.SameValue(const A, B: BigDecimal; Epsilon: BigDecimal): Boolean;
+const
+  FuzzFactor = 1000;
+//  Resolution   = 1E-15 * FuzzFactor;
+  Resolution = 1E-19 * FuzzFactor;
+begin
+  if Epsilon = 0 then
+    begin
+    Epsilon := BigDecimal.Max( BigDecimal.Min(A.Abs, B.Abs) * Resolution, Resolution);
+    end;
+
+  if A > B then
+    Result := (A - B) <= Epsilon
+  else
+    Result := (B - A) <= Epsilon;
+end;
+
+// http://stackoverflow.com/a/7982137/95954
+// Or: ln(a) = ln(a / 2^k) + k * ln(2)
+class function BigDecimal.LnDouble(const Value: BigInteger): Double;
+var
+  ExtraBits: Integer;
+  NewInt: BigInteger;
+begin
+  if Value.IsNegative then
+    Exit(System.Math.NaN)
+  else if Value.IsZero then
+    Exit(System.Math.NegInfinity);
+  ExtraBits := Value.BitLength - 1022;
+  if ExtraBits > 0 then
+    NewInt := Value shr ExtraBits
+  else
+    NewInt := Value;
+  Result := System.Ln(NewInt.AsDouble);
+  if ExtraBits > 0 then
+    Result := Result + ExtraBits * System.Ln(2.0){FLog2};
+end;
+
+function BigDecimal.LnDouble: Double;
+begin
+  Result := LnDouble(Self);
+end;
+
+class function BigDecimal.LnDouble(const Value: BigDecimal): Double;
+var
+  ExtraBits: Integer;
+  NewInt: BigInteger;
+begin
+  if Value.IsNegative then
+    Exit(System.Math.NaN)
+  else if Value.IsZero then
+    Exit(System.Math.NegInfinity);
+
+  NewInt := Value.RoundTo( 0 ).AsBigInteger;
+  ExtraBits := NewInt.BitLength - 1022;
+  if ExtraBits > 0 then
+    NewInt := NewInt shr ExtraBits;
+  Result := System.Ln(NewInt.AsDouble + Value.Frac.AsDouble);
+  if ExtraBits > 0 then
+    Result := Result + ExtraBits * System.Ln(2.0){FLog2};
+end;
+
+class function BigDecimal.Ln(const Value: BigInteger): BigDecimal;
+begin
+  Result := LnDouble(Value);
+end;
+
+class function BigDecimal.Ln(const Value: BigDecimal): BigDecimal;
+var
+  ExtraBits: Integer;
+  NewInt: BigInteger;
+begin
+  if Value.IsNegative then
+    Exit(System.Math.NaN)
+  else if Value.IsZero then
+    Exit(System.Math.NegInfinity);
+
+  NewInt := Value.RoundTo( 0 ).AsBigInteger;
+  ExtraBits := NewInt.BitLength - 1022;
+  if ExtraBits > 0 then
+    NewInt := NewInt shr ExtraBits;
+  Result := System.Ln(NewInt.AsDouble + Value.Frac.AsDouble);
+  if ExtraBits > 0 then
+    Result := Result + ExtraBits * System.Ln(2.0){FLog2};
+end;
+
+function BigDecimal.Ln: BigDecimal;
+begin
+  Result := Ln(Self);
+end;
+
+class function BigDecimal.LnXP1( Value : BigDecimal ): BigDecimal;
+begin
+  Result := Ln(Value);
+end;
+
+function BigDecimal.LnXP1: BigDecimal;
+begin
+  Result := Ln(Self);
+end;
+
+class function BigDecimal.Log(const Value: BigDecimal; Base: BigDecimal): BigDecimal;
+begin
+  Result := BigDecimal.Ln(Value) / Base.Ln;
+end;
+
+class function BigDecimal.Log10(const Value: BigDecimal): BigDecimal;
+begin
+  Result := Log(Value, 10.0);
+end;
+
+class function BigDecimal.Log2(const Value: BigDecimal): BigDecimal;
+begin
+  Result := Log(Value, 2.0);
+end;
+
+function BigDecimal.Log(Base: BigDecimal): BigDecimal;
+begin
+  Result := Log(Self, Base);
+end;
+
+function BigDecimal.Log10: BigDecimal;
+begin
+  Result := Log(Self, 10.0);
+end;
+
+function BigDecimal.Log2: BigDecimal;
+begin
+  Result := Log(Self, 2.0);
 end;
 
 // Converts Value to components for binary FP format, with Significand, binary Exponent and Sign. Significand
@@ -2132,6 +2584,871 @@ begin
   Result := Divide(BigDecimal.One, Self, DefaultPrecision, DefaultRoundingMode);
 end;
 
+// FastSin from https://github.com/neslib/FastMath/blob/master/FastMath/Neslib.FastMath.Pascal.inc
+class function BigDecimal.Sin(ARadians : BigDecimal): BigDecimal;
+const
+  FOPI = 1.27323954473516;
+  SINCOF_P0 = -1.9515295891E-4;
+  SINCOF_P1 = 8.3321608736E-3;
+  SINCOF_P2 = -1.6666654611E-1;
+  COSCOF_P0 = 2.443315711809948E-005;
+  COSCOF_P1 = -1.388731625493765E-003;
+  COSCOF_P2 = 4.166664568298827E-002;
+var
+  bNegative : Boolean;
+  X, Y, Z: BigDecimal; // Single
+  J: BigInteger; // Integer
+begin
+  bNegative := ARadians.IsNegative;
+  if bNegative then
+    X := -ARadians
+  else
+    X := ARadians;
+
+//  J := System.Trunc(FOPI * X);
+  Y := FOPI * X;
+  J := Y.Int.AsBigInteger;
+  J := (J + 1) and (not 1);
+  Y := J;
+
+  J := J and 7;
+  if (J > 3) then
+  begin
+    bNegative := bNegative xor true;
+    Dec(J, 4);
+  end;
+
+  X := X - Y * (0.25 * Pi);
+  Z := X * X;
+  if (J = 1) or (J = 2) then
+  begin
+    Y := COSCOF_P0 * Z + COSCOF_P1;
+    Y := Y * Z + COSCOF_P2;
+    Y := Y * (Z * Z);
+    Y := Y - 0.5 * Z + 1;
+  end
+  else
+  begin
+    Y := SINCOF_P0 * Z + SINCOF_P1;
+    Y := Y * Z + SINCOF_P2;
+    Y := Y * (Z * X);
+    Y := Y + X;
+  end;
+
+  if bNegative then
+    Result := -Y
+  else
+    Result := Y;
+end;
+
+function BigDecimal.Sin: BigDecimal;
+begin
+  result := Sin(self);
+end;
+
+// FastCos from https://github.com/neslib/FastMath/blob/master/FastMath/Neslib.FastMath.Pascal.inc
+class function BigDecimal.Cos(ARadians : BigDecimal): BigDecimal;
+const
+  FOPI = 1.27323954473516;
+  SINCOF_P0 = -1.9515295891E-4;
+  SINCOF_P1 = 8.3321608736E-3;
+  SINCOF_P2 = -1.6666654611E-1;
+  COSCOF_P0 = 2.443315711809948E-005;
+  COSCOF_P1 = -1.388731625493765E-003;
+  COSCOF_P2 = 4.166664568298827E-002;
+var
+  bNegative : Boolean;
+  X, Y, Z: BigDecimal; // Single
+  J: BigInteger; // Integer
+begin
+  if ARadians.IsNegative then
+    X := -ARadians
+  else
+    X := ARadians;
+
+  bNegative := false;
+//  J := System.Trunc(FOPI * X);
+  Y := FOPI * X;
+  J := Y.Int.AsBigInteger;
+  J := (J + 1) and (not 1);
+  Y := J;
+
+  J := J and 7;
+  if (J > 3) then
+  begin
+    bNegative := true;
+    Dec(J, 4);
+  end;
+
+  if (J > 1) then
+    bNegative := bNegative xor true;
+
+  X := X - Y * (0.25 * Pi);
+  Z := X * X;
+  if (J = 1) or (J = 2) then
+  begin
+    Y := SINCOF_P0 * Z + SINCOF_P1;
+    Y := Y * Z + SINCOF_P2;
+    Y := Y * (Z * X);
+    Y := Y + X;
+  end
+  else
+  begin
+    Y := COSCOF_P0 * Z + COSCOF_P1;
+    Y := Y * Z + COSCOF_P2;
+    Y := Y * (Z * Z);
+    Y := Y - 0.5 * Z + 1;
+  end;
+
+  if bNegative then
+    Result := -Y
+  else
+    Result := Y;
+end;
+
+function BigDecimal.Cos: BigDecimal;
+begin
+  result := Cos(self);
+end;
+
+// FastSinCos from https://github.com/neslib/FastMath/blob/master/FastMath/Neslib.FastMath.Pascal.inc
+class procedure BigDecimal.SinCos(const ARadians: BigDecimal; out ASin, ACos: BigDecimal);
+const
+  FOPI = 1.27323954473516;
+  SINCOF_P0 = -1.9515295891E-4;
+  SINCOF_P1 = 8.3321608736E-3;
+  SINCOF_P2 = -1.6666654611E-1;
+  COSCOF_P0 = 2.443315711809948E-005;
+  COSCOF_P1 = -1.388731625493765E-003;
+  COSCOF_P2 = 4.166664568298827E-002;
+var
+  X, Y, Y2, Z: BigDecimal; // Single;
+  J: BigInteger; // Integer;
+  bSignSin,
+  bSignCos : Boolean;
+  bSwapSignBitSin : Boolean;
+begin
+  bSignSin := ARadians.IsNegative;
+  if bSignSin then
+    X := -ARadians
+  else
+    X := ARadians;
+
+//  J := (System.Trunc(FOPI * X) + 1) and (not 1);
+  J := ( (FOPI * X).Int{Trunc}.AsBigInteger + 1) and (not 1);
+  Y := J;
+
+  bSwapSignBitSin := (J and 4) > 0;
+
+  X := X - Y * (0.25 * Pi);
+  bSignCos := (4 and (not (J - 2))) > 0;
+  bSignSin := bSignSin xor bSwapSignBitSin;
+
+  Z := X * X;
+
+  Y := COSCOF_P0 * Z + COSCOF_P1;
+  Y := Y * Z + COSCOF_P2;
+  Y := Y * (Z * Z) - (0.5 * Z) + 1;
+
+  Y2 := SINCOF_P0 * Z + SINCOF_P1;
+  Y2 := Y2 * Z + SINCOF_P2;
+  Y2 := Y2 * (Z * X) + X;
+
+  if ((J and 2) = 0) then
+  begin
+    if bSignSin then
+      ASin := -Y2
+    else
+      ASin := Y2;
+
+    if bSignCos then
+      ACos := -Y
+    else
+      ACos := Y;
+  end
+  else
+  begin
+    if bSignSin then
+      ASin := -Y
+    else
+      ASin := Y;
+
+    if bSignCos then
+      ACos := -Y2
+    else
+      ACos := Y2;
+  end;
+end;
+
+procedure BigDecimal.SinCos(out ASin, ACos: BigDecimal);
+begin
+  SinCos(self, ASin, ACos);
+end;
+
+// FastTan from https://github.com/neslib/FastMath/blob/master/FastMath/Neslib.FastMath.Common.inc
+class function BigDecimal.Tan(const ARadians: Single): BigDecimal;
+var
+  S, C: BigDecimal;
+begin
+  SinCos(ARadians, S, C);
+  Result := ( S / C );
+end;
+
+class function BigDecimal.Tan(const ARadians: BigDecimal): BigDecimal;
+var
+  S, C: BigDecimal;
+begin
+  SinCos(ARadians, S, C);
+  Result := ( S / C );
+end;
+
+function BigDecimal.Tan: BigDecimal;
+begin
+  Result := Tan(self);
+end;
+
+class function BigDecimal.CoTan(const X: BigDecimal): BigDecimal;
+begin
+  Result := 1 / Tan(X);
+end;
+
+function BigDecimal.CoTan: BigDecimal;
+begin
+  Result := CoTan(self);
+end;
+
+// ArcTan From https://users.dcc.uchile.cl/~rbaeza/handbook/algs/6/623.arctan.p.html
+// https://www.dewresearch.com/Help/Delphi/MtxVec/Math387_SQRTEPS.html
+// https://www.dewresearch.com/Help/Delphi/MtxVec/Math387_EPS.html
+class function BigDecimal.ArcTan(const X: Double): BigDecimal;
+const
+  EPS = 2.220446049250313E-16;
+  SQRTEPS = 1.4901161194e-08; // SQRT( EPS )
+var
+  q, s, v, w : BigDecimal;
+begin
+  s := SQRTEPS;
+  v := x / ( 1 + BigDecimal( 1 + x * x ).Sqrt );
+  q := 1;
+  while ( 1 - s > EPS ) do
+    begin
+    q := 2 * q / ( 1 + s );
+    w := 2 * s * v / ( 1 + v * v );
+    w := w / ( 1 + BigDecimal( 1 - w * w ).Sqrt );
+    w := ( v + w ) / ( 1 - v * w );
+    v := w / ( 1 + BigDecimal( 1 + w * w ).Sqrt );
+    s := 2 * S.Sqrt / ( 1 + s );
+    end;
+  result := q * BigDecimal( ( 1 + v ) / ( 1 - v ) ).Ln;
+end;
+
+class function BigDecimal.ArcTan(const X: BigDecimal): BigDecimal;
+const
+  EPS = 2.220446049250313E-16;
+  SQRTEPS = 1.4901161194e-08; // SQRT( EPS )
+var
+  q, s, v, w : BigDecimal;
+begin
+  s := SQRTEPS;
+  v := x / ( 1 + BigDecimal( 1 + x * x ).Sqrt );
+  q := 1;
+  while ( 1 - s > EPS ) do
+    begin
+    q := 2 * q / ( 1 + s );
+    w := 2 * s * v / ( 1 + v * v );
+    w := w / ( 1 + BigDecimal( 1 - w * w ).Sqrt );
+    w := ( v + w ) / ( 1 - v * w );
+    v := w / ( 1 + BigDecimal( 1 + w * w ).Sqrt );
+    s := 2 * S.Sqrt / ( 1 + s );
+    end;
+  result := q * BigDecimal( ( 1 + v ) / ( 1 - v ) ).Ln;
+end;
+
+function BigDecimal.ArcTan: BigDecimal;
+begin
+  result := ArcTan(self);
+end;
+
+// FastArcTan2 from https://github.com/neslib/FastMath/blob/master/FastMath/Neslib.FastMath.Common.inc
+class function BigDecimal.ArcTan2(const Y, X: Single): BigDecimal;
+var
+  Z: BigDecimal;
+begin
+  if (X = 0) then
+  begin
+    if (Y > 0) then
+      Exit(0.5 * Pi);
+    if (Y = 0) then
+      Exit(0);
+    Exit(-0.5 * Pi);
+  end;
+
+  Z := Y / X;
+  if (Z.Abs < 1) then
+  begin
+    Result := Z / (1.0 + 0.28 * Z * Z);
+    if (X < 0) then
+    begin
+      if (Y < 0) then
+        Result := Result - Pi
+      else
+        Result := Result + Pi;
+    end;
+  end
+  else
+  begin
+    Result := (0.5 * Pi) - Z / (Z * Z + 0.28);
+    if (Y < 0) then
+      Result := Result - Pi;
+  end;
+end;
+
+
+
+// FastArcTan2 from https://github.com/neslib/FastMath/blob/master/FastMath/Neslib.FastMath.Common.inc
+class function BigDecimal.ArcTan2(const Y, X: BigDecimal): BigDecimal;
+var
+  Z: BigDecimal;
+begin
+  if (X = 0) then
+  begin
+    if (Y > 0) then
+      Exit(0.5 * Pi);
+    if (Y = 0) then
+      Exit(0);
+    Exit(-0.5 * Pi);
+  end;
+
+  Z := Y / X;
+  if (Abs(Z) < 1) then
+  begin
+    Result := Z / (1.0 + 0.28 * Z * Z);
+    if (X < 0) then
+    begin
+      if (Y < 0) then
+        Result := Result - Pi
+      else
+        Result := Result + Pi;
+    end;
+  end
+  else
+  begin
+    Result := (0.5 * Pi) - Z / (Z * Z + 0.28);
+    if (Y < 0) then
+      Result := Result - Pi;
+  end;
+end;
+
+class function BigDecimal.Secant(const X: BigDecimal): BigDecimal;
+begin
+  Result := 1 / Cos(X);
+end;
+
+function BigDecimal.Secant: BigDecimal;
+begin
+  Result := Secant(self);
+end;
+
+class function BigDecimal.CoSecant(const X: BigDecimal): BigDecimal;
+begin
+  Result := 1 / Sin(X);
+end;
+
+function BigDecimal.CoSecant: BigDecimal;
+begin
+  Result := Secant(self);
+end;
+
+class function BigDecimal.ArcCos(const X : BigDecimal) : BigDecimal;
+begin
+  Result := ArcTan2(Sqrt((1 + X) * (1 - X)), X);
+end;
+
+function BigDecimal.ArcCos : BigDecimal;
+begin
+  result := ArcCos(self);
+end;
+
+class function BigDecimal.ArcSin(const X : BigDecimal) : BigDecimal;
+begin
+  Result := ArcTan2(X, BigDecimal(Sqrt((1 + X) * (1 - X))));
+end;
+
+function BigDecimal.ArcSin : BigDecimal;
+begin
+  result := ArcSin(self);
+end;
+
+class function BigDecimal.ArcTanh(const X: BigDecimal): BigDecimal;
+begin
+  if BigDecimal.SameValue(X, 1) then
+//    Result := Infinity
+    Error(ecInvalidOperation, [])
+  else if BigDecimal.SameValue(X, -1) then
+    Result := NegInfinity
+  else
+    Result := 0.5 * Ln((1 + X) / (1 - X));
+end;
+
+function BigDecimal.ArcTanh : BigDecimal;
+begin
+  result := ArcTanh(self);
+end;
+
+class function BigDecimal.ArcSec(const X : BigDecimal) : BigDecimal;
+begin
+  if X.IsZero then
+//    Result := Infinity
+    Error(ecInvalidOperation, [])
+  else
+    Result := BigDecimal(1 / X).ArcCos;
+end;
+
+function BigDecimal.ArcSec : BigDecimal;
+begin
+  result := ArcSec(self);
+end;
+
+class function BigDecimal.ArcCsc(const X: BigDecimal): BigDecimal;
+begin
+  if X.IsZero then
+//    Result := Infinity
+    Error(ecInvalidOperation, [])
+  else
+    Result := BigDecimal(1 / X).ArcSin;
+end;
+
+function BigDecimal.ArcCsc : BigDecimal;
+begin
+  result := ArcCsc(self);
+end;
+
+class function BigDecimal.ArcCotH(const X: BigDecimal): BigDecimal;
+begin
+  if BigDecimal.SameValue(X, 1) then
+//    Result := Infinity
+    Error(ecInvalidOperation, [])
+  else if BigDecimal.SameValue(X, -1) then
+//    Result := NegInfinity
+    Error(ecInvalidOperation, [])
+  else
+    Result := 0.5 * BigDecimal((X + 1) / (X - 1)).Ln;
+end;
+
+function BigDecimal.ArcCotH : BigDecimal;
+begin
+  result := ArcCotH(self);
+end;
+
+class function BigDecimal.ArcSecH(const X: BigDecimal): BigDecimal;
+begin
+  if X.IsZero then
+//    Result := Infinity
+    Error(ecInvalidOperation, [])
+  else if BigDecimal.SameValue(X, 1) then
+    Result := 0
+  else
+    Result := BigDecimal((BigDecimal(1 - X * X).Sqrt + 1) / X).Ln;
+end;
+
+function BigDecimal.ArcSecH : BigDecimal;
+begin
+  result := ArcSecH(self);
+end;
+
+class function BigDecimal.ArcCscH(const X: BigDecimal): BigDecimal;
+begin
+  if X.IsZero then
+//    Result := Infinity
+    Error(ecInvalidOperation, [])
+  else
+    if X < 0 then
+      Result := BigDecimal((1 - BigDecimal(1 + X * X).Sqrt) / X).Ln
+    else
+      Result := BigDecimal((1 + BigDecimal(1 + X * X).Sqrt) / X).Ln;
+end;
+
+function BigDecimal.ArcCscH : BigDecimal;
+begin
+  result := ArcCscH(self);
+end;
+
+class function BigDecimal.Hypot(const X, Y: BigDecimal): BigDecimal;
+{ formula: Sqrt(X*X + Y*Y)
+  implemented as:  |Y|*Sqrt(1+Sqr(X/Y)), |X| < |Y| for greater precision }
+var
+  Temp, TempX, TempY: BigDecimal;
+begin
+  TempX := X.ABS;
+  TempY := Y.ABS;
+  if TempX > TempY then
+  begin
+    Temp := TempX;
+    TempX := TempY;
+    TempY := Temp;
+  end;
+  if TempX = 0 then
+    Result := TempY
+  else         // TempY > TempX, TempX <> 0, so TempY > 0
+    Result := TempY * BigDecimal(1 + BigDecimal(TempX/TempY).Sqr).Sqrt;
+end;
+
+class function BigDecimal.Hypot(const X, Y, Z: BigDecimal): BigDecimal;
+var
+  Temp, TempX, TempY, TempZ: BigDecimal;
+begin
+  TempX := Abs(X);
+  TempY := Abs(Y);
+  TempZ := Abs(Z);
+  if TempX > TempY then
+  begin
+    Temp := TempX;
+    TempX := TempY;
+    TempY := Temp;
+  end;
+  if TempY > TempZ then
+  begin
+    Temp := TempZ;
+    TempZ := TempY;
+    TempY := Temp;
+  end;
+  if tempZ = 0 then
+    Result := 0
+  else
+    Result := TempZ * BigDecimal( 1 + BigDecimal(TempX/TempZ).Sqr + BigDecimal(TempY/TempZ).Sqr ).Sqrt;
+end;
+
+class function BigDecimal.CosH(const X : BigDecimal) : BigDecimal;
+begin
+  if X.IsZero then
+    Result := 1
+  else
+    Result := (X.Exp + -X.Exp) / 2;
+end;
+
+function BigDecimal.CosH : BigDecimal;
+begin
+  result := CosH(self);
+end;
+
+class function BigDecimal.SinH(const X : BigDecimal) : BigDecimal;
+begin
+  if X.IsZero then
+    Result := 0
+  else
+    Result := (X.Exp - -X.Exp) / 2;
+end;
+
+function BigDecimal.SinH : BigDecimal;
+begin
+  result := SinH(self);
+end;
+
+{
+// FastTanH from https://gist.github.com/gooooloo/38b25a9107394522a0fffeb7294f416b
+class function BigDecimal.TanH(const X: BigDecimal): BigDecimal;
+const
+  EPS = 0.000001;
+var
+  eTilde, eTilde1 : BigDecimal;
+  sign : Integer;
+  x2, x4 : BigDecimal;
+begin
+  x2 := x * x;
+  x4 := x2 * x2;
+  eTilde := (1 + x.ABS + 0.5658 * x2 + 0.143 * x4);
+
+  eTilde1 := 1/eTilde;
+  if (x > EPS) then
+    sign := 1
+  else
+    begin
+    if (x > -EPS) then
+      sign := 0
+    else
+      sign := -1
+    end;
+
+  result := sign * (eTilde - eTilde1) / (eTilde + eTilde1);
+end;
+}
+
+// SlowTanH from https://gist.github.com/gooooloo/38b25a9107394522a0fffeb7294f416b
+class function BigDecimal.TanH(const X: BigDecimal): BigDecimal;
+var
+  exp, sigmoid : BigDecimal;
+begin
+  // tanh(x) = 2 * sigmoid(2x) - 1
+  // sigmoid(x) = exp(x) / (1 + exp(x))
+  exp := BigDecimal( 2 * x ).Exp;
+  sigmoid := exp / ( 1 + exp );
+  result := 2 * sigmoid - 1;
+end;
+
+function BigDecimal.TanH : BigDecimal;
+begin
+  result := TanH(self);
+end;
+
+class function BigDecimal.ArcCosH(const X : BigDecimal) : BigDecimal;
+begin
+  Result := BigDecimal(X + BigDecimal((X - 1) / (X + 1)).Sqrt * (X + 1)).Ln;
+end;
+
+function BigDecimal.ArcCosH : BigDecimal;
+begin
+  result := ArcCosH(self);
+end;
+
+class function BigDecimal.ArcSinH(const X : BigDecimal) : BigDecimal;
+begin
+  Result := BigDecimal(X + BigDecimal((X * X) + 1).Sqrt).Ln;
+end;
+
+function BigDecimal.ArcSinH : BigDecimal;
+begin
+  result := ArcSinH(self);
+end;
+
+class function BigDecimal.CotH(const X : BigDecimal) : BigDecimal;
+begin
+  Result := 1 / X.TanH;
+end;
+
+function BigDecimal.CotH : BigDecimal;
+begin
+  result := CotH(self);
+end;
+
+class function BigDecimal.SecH(const X : BigDecimal) : BigDecimal;
+begin
+  Result := 1 / X.CosH;
+end;
+
+function BigDecimal.SecH : BigDecimal;
+begin
+  result := SecH(self);
+end;
+
+class function BigDecimal.ArcCot(const X : BigDecimal) : BigDecimal;
+begin
+  if X.IsZero then
+    Result := PI / 2
+  else
+    Result := BigDecimal(1 / X).ArcTan;
+end;
+
+function BigDecimal.ArcCot : BigDecimal;
+begin
+  result := ArcCot(self);
+end;
+
+class function BigDecimal.DegToRad(const Degrees: BigDecimal): BigDecimal;
+begin
+  Result := Degrees * (PI / 180);
+end;
+
+function BigDecimal.DegToRad : BigDecimal;
+begin
+  result := DegToRad(self);
+end;
+
+class function BigDecimal.RadToDeg(const Radians: BigDecimal): BigDecimal;
+begin
+  Result := Radians * (180 / PI);
+end;
+
+function BigDecimal.RadToDeg : BigDecimal;
+begin
+  result := RadToDeg(self);
+end;
+
+class function BigDecimal.GradToRad(const Grads: BigDecimal): BigDecimal;
+begin
+  Result := Grads * (PI / 200);
+end;
+
+function BigDecimal.GradToRad : BigDecimal;
+begin
+  result := GradToRad(self);
+end;
+
+class function BigDecimal.RadToGrad(const Radians: BigDecimal): BigDecimal;
+begin
+  Result := Radians * (200 / PI);
+end;
+
+function BigDecimal.RadToGrad : BigDecimal;
+begin
+  result := RadToGrad(self);
+end;
+
+class function BigDecimal.GradToDeg(const Grads: BigDecimal): BigDecimal;
+begin
+  Result := Grads.GradToRad.RadToDeg;
+end;
+
+function BigDecimal.GradToDeg : BigDecimal;
+begin
+  result := GradToDeg(self);
+end;
+
+class function BigDecimal.GradToCycle(const Grads: BigDecimal): BigDecimal;
+begin
+  Result := Grads.GradToRad.RadToCycle;
+end;
+
+function BigDecimal.GradToCycle : BigDecimal;
+begin
+  result := GradToCycle(self);
+end;
+
+class function BigDecimal.CycleToDeg(const Cycles: BigDecimal): BigDecimal;
+begin
+  Result := Cycles.CycleToRad.RadToDeg;
+end;
+
+function BigDecimal.CycleToDeg : BigDecimal;
+begin
+  result := CycleToDeg(self);
+end;
+
+class function BigDecimal.CycleToGrad(const Cycles: BigDecimal): BigDecimal;
+begin
+  Result := Cycles.CycleToRad.RadToGrad;
+end;
+
+function BigDecimal.CycleToGrad : BigDecimal;
+begin
+  result := CycleToGrad(self);
+end;
+
+class function BigDecimal.CycleToRad(const Cycles: BigDecimal): BigDecimal;
+begin
+  Result := Cycles * (2 * PI);
+end;
+
+function BigDecimal.CycleToRad : BigDecimal;
+begin
+  result := CycleToRad(self);
+end;
+
+class function BigDecimal.RadToCycle(const Radians: BigDecimal): BigDecimal;
+begin
+  Result := Radians / (2 * PI);
+end;
+
+function BigDecimal.RadToCycle : BigDecimal;
+begin
+  result := RadToCycle(self);
+end;
+
+class function BigDecimal.DegToGrad(const Degrees: BigDecimal): BigDecimal;
+begin
+  Result := Degrees.DegToRad.RadToGrad;
+end;
+
+function BigDecimal.DegToGrad : BigDecimal;
+begin
+  result := DegToGrad(self);
+end;
+
+class function BigDecimal.DegToCycle(const Degrees: BigDecimal): BigDecimal;
+begin
+  Result := Degrees.DegToRad.RadToCycle;
+end;
+
+function BigDecimal.DegToCycle : BigDecimal;
+begin
+  result := DegToCycle(self);
+end;
+
+// https://stackoverflow.com/a/7982137/95954
+class function BigDecimal.Exp(const b: Double): BigDecimal;
+var
+  bc, b2, c: Double;
+  t: Integer;
+  FLog2 : Double;
+begin
+  if IsNan(b) or IsInfinite(b) then
+    Error(ecInvalidArg, ['Double']);
+  bc := 680.0;
+  if b < bc then
+    Exit(BigDecimal(System.Exp(b)));
+  // I think this can be simplified:
+  c := b - bc;
+
+  FLog2 := System.Ln(2.0){FLog2};
+
+  t := System.Math.Ceil(c / FLog2);
+  c := t * FLog2;
+  b2 := b - c;
+  Result := BigInteger(System.Exp(b2)) shl t;
+end;
+
+class function BigDecimal.Exp(const b: BigDecimal): BigDecimal;
+var
+  bc, b2, c : BigDecimal;
+  t: UInt64;
+  FLog2 : BigDecimal; // Double;
+begin
+//  if IsNan(b) or IsInfinite(b) then
+//    Error(ecInvalidArg, ['Double']);
+  bc := 680.0;
+  if b < bc then
+    Exit(BigDecimal(System.Exp(b.AsDouble)));
+  // I think this can be simplified:
+  c := b - bc;
+
+  FLog2 := System.Ln(2.0){FLog2};
+  t := BigDecimal( c / FLog2 ).Ceil.AsUInt64; // System.Math.Ceil(c / FLog2);
+  c := t * FLog2;
+  b2 := b - c;
+  Result := ( BigInteger(System.Exp(b2.AsDouble)) shl t );
+end;
+
+function BigDecimal.Exp: BigDecimal;
+begin
+  result := Exp(self);
+end;
+
+{
+// FastExp from https://github.com/neslib/FastMath/blob/master/FastMath/Neslib.FastMath.Pascal.inc
+class function BigDecimal.Exp(const A: Single): BigDecimal;
+const
+  EXP_CST = 2139095040.0;
+var
+  Val, B: Single;
+  IVal: Integer;
+  XU, XU2: record
+    case Byte of
+      0: (I: Integer);
+      1: (S: Single);
+  end;
+begin
+  Val := 12102203.1615614 * A + 1065353216.0;
+
+  if (Val >= EXP_CST) then
+    Val := EXP_CST;
+
+  if (Val > 0) then
+    IVal := System.Trunc(Val)
+  else
+    IVal := 0;
+
+  XU.I := IVal and $7F800000;
+  XU2.I := (IVal and $007FFFFF) or $3F800000;
+  B := XU2.S;
+
+  Result := XU.S *
+    ( 0.509964287281036376953125 + B *
+    ( 0.3120158612728118896484375 + B *
+    ( 0.1666135489940643310546875 + B *
+    (-2.12528370320796966552734375e-3 + B *
+      1.3534179888665676116943359375e-2))));
+end;
+}
+
 class function BigDecimal.Remainder(const Left, Right: BigDecimal): BigDecimal;
 var
   LQuotient: BigDecimal;
@@ -2389,6 +3706,26 @@ begin
       PlainText := '-' + PlainText;
     Result := PlainText;
   end;
+end;
+
+function BigDecimal.ToBinaryString: string;
+begin
+  Result := FValue.ToString(2);
+end;
+
+function BigDecimal.ToOctalString: string;
+begin
+  Result := FValue.ToString(8);
+end;
+
+function BigDecimal.ToDecimalString: string;
+begin
+  Result := FValue.ToString(10);
+end;
+
+function BigDecimal.ToHexString: string;
+begin
+  Result := FValue.ToString(16);
 end;
 
 function BigDecimal.Trunc: Int64;

@@ -7,6 +7,7 @@
         <MainSource>GenerateBaseConversionTables.dpr</MainSource>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <ProjectGuid>{CBB4210A-B306-4C86-BB51-7441324C6334}</ProjectGuid>
+        <ProjectName Condition="'$(ProjectName)'==''">GenerateBaseConversionTables</ProjectName>
         <ProjectVersion>20.1</ProjectVersion>
         <TargetedPlatforms>1</TargetedPlatforms>
     </PropertyGroup>

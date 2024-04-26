@@ -18,19 +18,25 @@ uses
 type
   TBigPiGui = class(TForm)
     Label1: TLabel;
-    Label2: TLabel;
-    bbpMemo: TMemo;
-    chudnovskyMemo: TMemo;
-    Layout1: TLayout;
-    Label3: TLabel;
-    digitsEdit: TSpinBox;
-    Button1: TButton;
-    Z: TLayout;
-    Path1: TPath;
+    piMemo: TMemo;
+    delayTrackBar: TTrackBar;
+    labelDigit: TLabel;
     ScaledLayout1: TScaledLayout;
-    procedure Button1Click(Sender: TObject);
+    delayLabel: TLabel;
+    labelCount: TLabel;
+    Label2: TLabel;
+    Layout1: TLayout;
+    Layout2: TLayout;
+    captionLabel: TLabel;
+    StyleBook1: TStyleBook;
+    procedure FormShow(Sender: TObject);
+    procedure UpdateUI(digit: char; count: Integer);
+    function GetDelay: Double;
+    procedure delayTrackBarChange(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
+    var background: TThread;
   public
     { Public declarations }
   end;
@@ -42,12 +48,48 @@ implementation
 
 {$R *.fmx}
 
-uses BigPi;
+uses
+  BackgroundPi, FMX.Text;
 
-procedure TBigPiGui.Button1Click(Sender: TObject);
+procedure TBigPiGui.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  bbpMemo.Text := DigitsToString(BBPpi(Trunc(digitsEdit.Value)));
-  chudnovskyMemo.Text := Chudnovsky(Trunc(digitsEdit.Value)).ToString;
+  background.Terminate;
+end;
+
+procedure TBigPiGui.FormShow(Sender: TObject);
+begin
+  captionLabel.Text := Caption;
+  captionLabel.Visible := True;
+  background := TBackgroundPi.Create(True);
+  TBackgroundPi(background).OnUIUpdate := UpdateUI;
+  TBackgroundPi(background).OnGetDelay := GetDelay;
+  background.FreeOnTerminate := True;
+  background.Start;
+end;
+
+function TBigPiGui.GetDelay: Double;
+begin
+  Result := 1;
+  if Application.Terminated then Exit;
+  Result := delayTrackBar.Value;
+end;
+
+procedure TBigPiGui.delayTrackBarChange(Sender: TObject);
+begin
+  if delayTrackBar.Value < delayTrackBar.Max/2 then
+    delayLabel.Align := TAlignLayout.Right
+  else
+    delayLabel.Align := TAlignLayout.Left;
+end;
+
+procedure TBigPiGui.UpdateUI(digit: char; count: Integer);
+begin
+  if Application.Terminated then exit;
+
+  labelCount.Text := Format('%.0n', [count + 0.0]);
+  labelDigit.Text := digit;
+  piMemo.GoToTextEnd;
+  piMemo.InsertAfter(piMemo.CaretPosition, digit, [TInsertOption.MoveCaret]);
 end;
 
 end.

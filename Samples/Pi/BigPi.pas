@@ -14,23 +14,23 @@ uses
   Velthuis.BigDecimals,
   Velthuis.BigIntegers;
 
-type TDigits = array of Byte;
+type TDigits = Array of Byte;
 //const MaxUnit64 = 18_446_744_073_709_551_615;
 const CallBackChunkSize = 64;
 type TChunkCallBack = reference to Procedure(Chunk: TDigits);
 
-function BBPpi(Places: UInt64; CallBack: TChunkCallBack = nil): TDigits;
+function BBPpi(Places: UInt64; CallBack: TChunkCallBack = nil): BigInteger;
 function Chudnovsky(Places: Integer): BigDecimal;
 function DigitsToString(digits: TDigits): String;
 
 implementation
 
-function BBPpi(Places: UInt64; CallBack: TChunkCallback = nil): TDigits;
+function BBPpi(Places: UInt64; CallBack: TChunkCallback = nil): BigInteger;
 // Bailey-Borwein-Plouffe
 begin
-  SetLength(Result, Places);
+  Result := 0;
 
-  var idx: Uint64 := 0;
+  var idx: NativeInt := 0;
   var q := BigInteger.One;
   var r := BigInteger.Zero;
   var t := BigInteger.One;
@@ -46,13 +46,14 @@ begin
   begin
     if 4*q+r-t < n*t then
     begin
-      Result[idx] := n.AsInt64; // It is just a byte
-      Inc(idx);
+      Result := Result * 10 + n.AsInt64; // It is just a byte
+      //result[idx] :=
+      inc(idx);
 
       if Assigned(Callback) then
       begin
         buffer[bufferIdx] := n.AsInt64;
-        Inc(bufferIdx);
+        inc(bufferIdx);
         // Check if buffer is full, then call callback and reset bufferIdx
         if bufferIdx = CallbackChunkSize then
         begin
@@ -61,9 +62,7 @@ begin
         end;
       end;
 
-      if idx >= places then 
-				Break;
-				
+      if idx >= places then break;
       var newR := 10 * (r - n * t);
       n := (10 * (3 * q + r)) div t - 10 * n;
       q := q * 10;
@@ -72,7 +71,7 @@ begin
     else
     begin
       var newR := (2 * q + r) * l;
-      var newN := (q * (7 * k) + 2 + (r * l)) div (t * l);
+      var newN := (q * (7 * k)+2+(r * l)) div (t * l);
       q := q * k;
       t := t * l;
       l := l + 2;
@@ -123,7 +122,7 @@ function DigitsToString(digits: TDigits): String;
 begin
   SetLength(Result, Length(digits));
   for var idx := Low(digits) to High(digits) do
-    Result[idx + 1] := Chr(digits[idx] + Ord('0'));
+    Result[idx + 1] := Char(digits[idx] + Ord('0'));
 end;
 
 end.

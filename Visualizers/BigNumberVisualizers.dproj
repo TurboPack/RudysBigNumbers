@@ -7,6 +7,7 @@
         <MainSource>BigNumberVisualizers.dpr</MainSource>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <ProjectGuid>{82F7D428-1B82-4DC7-A2A3-E6FC570D13D4}</ProjectGuid>
+        <ProjectName Condition="'$(ProjectName)'==''">BigNumberVisualizers</ProjectName>
         <ProjectVersion>20.1</ProjectVersion>
         <TargetedPlatforms>1</TargetedPlatforms>
     </PropertyGroup>

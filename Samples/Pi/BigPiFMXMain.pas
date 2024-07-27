@@ -13,14 +13,13 @@ uses
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
   FMX.Controls.Presentation, FMX.StdCtrls, FMX.Edit, FMX.Memo.Types,
   FMX.ScrollBox, FMX.Memo, FMX.EditBox, FMX.SpinBox, FMX.Layouts,
-  FMX.Objects;
+  FMX.Objects, System.Skia, FMX.Skia;
 
 type
   TBigPiGui = class(TForm)
     Label1: TLabel;
     piMemo: TMemo;
     delayTrackBar: TTrackBar;
-    labelDigit: TLabel;
     ScaledLayout1: TScaledLayout;
     delayLabel: TLabel;
     labelCount: TLabel;
@@ -29,14 +28,17 @@ type
     Layout2: TLayout;
     captionLabel: TLabel;
     StyleBook1: TStyleBook;
+    labelDigit: TLabel;
     procedure FormShow(Sender: TObject);
     procedure UpdateUI(digit: char; count: Integer);
     function GetDelay: Double;
     procedure delayTrackBarChange(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
     var background: TThread;
+    var lastCount: UInt64;
   public
     { Public declarations }
   end;
@@ -56,6 +58,11 @@ begin
   background.Terminate;
 end;
 
+procedure TBigPiGui.FormCreate(Sender: TObject);
+begin
+  lastCount := 0;
+end;
+
 procedure TBigPiGui.FormShow(Sender: TObject);
 begin
   captionLabel.Text := Caption;
@@ -63,7 +70,7 @@ begin
   background := TBackgroundPi.Create(True);
   TBackgroundPi(background).OnUIUpdate := UpdateUI;
   TBackgroundPi(background).OnGetDelay := GetDelay;
-  background.FreeOnTerminate := True;
+  background.FreeOnTerminate := False;
   background.Start;
 end;
 
@@ -85,11 +92,17 @@ end;
 procedure TBigPiGui.UpdateUI(digit: char; count: Integer);
 begin
   if Application.Terminated then exit;
+  if not assigned(Application.MainForm) then exit;
+
+  Assert(count = lastcount+1,
+    Format('Digits out of order. Exepcting digit # %d but received # %d.',[lastcount+1, count]));
+  lastCount := count;
 
   labelCount.Text := Format('%.0n', [count + 0.0]);
   labelDigit.Text := digit;
   piMemo.GoToTextEnd;
   piMemo.InsertAfter(piMemo.CaretPosition, digit, [TInsertOption.MoveCaret]);
+  piMemo.Repaint;
 end;
 
 end.

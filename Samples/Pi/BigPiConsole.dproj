@@ -7,6 +7,7 @@
         <MainSource>BigPiConsole.dpr</MainSource>
         <Platform Condition="'$(Platform)'==''">Win64</Platform>
         <ProjectGuid>{CE501707-319D-4A8B-ACE3-3B46CA1DEA52}</ProjectGuid>
+        <ProjectName Condition="'$(ProjectName)'==''">BigPiConsole</ProjectName>
         <ProjectVersion>20.1</ProjectVersion>
         <TargetedPlatforms>131</TargetedPlatforms>
     </PropertyGroup>

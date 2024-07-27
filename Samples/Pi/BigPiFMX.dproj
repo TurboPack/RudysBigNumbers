@@ -2,11 +2,12 @@
     <PropertyGroup>
         <Base>True</Base>
         <AppType>Application</AppType>
-        <Config Condition="'$(Config)'==''">Release</Config>
+        <Config Condition="'$(Config)'==''">Debug</Config>
         <FrameworkType>FMX</FrameworkType>
         <MainSource>BigPiFMX.dpr</MainSource>
-        <Platform Condition="'$(Platform)'==''">Win64</Platform>
+        <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <ProjectGuid>{FCF93126-F947-4890-BCFF-7C4FB0CE9BF6}</ProjectGuid>
+        <ProjectName Condition="'$(ProjectName)'==''">BigPiFMX</ProjectName>
         <ProjectVersion>20.1</ProjectVersion>
         <TargetedPlatforms>693267</TargetedPlatforms>
     </PropertyGroup>

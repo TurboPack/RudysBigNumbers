@@ -99,19 +99,19 @@ begin
   for var i := low(digits) to High(digits) do
   begin
     Write(digits[i]);
-    sleep(100);
+    sleep(10);
   end;
 end;
 
-const Places = 10000;
+const Places = 10000000;
 begin
   ReportMemoryLeaksOnShutdown := True;
   try
 
-    //BBPpi(Places, WritelnCallBack);
-    Writeln(BBPpi(80).ToString.Insert(1,'.'));
-    Writeln(Chudnovsky(80).ToString);
-    Writeln;
+    BBPpi(Places, WritelnCallBack);
+//    Writeln(BBPpi(80).ToString.Insert(1,'.'));
+//    Writeln(Chudnovsky(80).ToString);
+//    Writeln;
 
   except
     on E: Exception do

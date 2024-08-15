@@ -541,15 +541,16 @@ type
     ///   The size of the BigInteger is adjusted accordingly.</summary>
     /// <remarks>Note that this is an arithmetic shift, i.e. the sign is preserved. This is unlike normal
     ///   integer shifts in Delphi.</remarks>
-    class operator LeftShift(const Value: BigInteger; Shift: Integer): BigInteger;
+    class operator LeftShift(const Value: BigInteger; Shift: Integer): BigInteger; overload;
+    class operator LeftShift(const Value: BigInteger; Shift: BigInteger): BigInteger; overload;
 
     /// <summary>Shifts the specified BigInteger value the specified number of bits to the right (toward 0).
     ///   The size of the BigInteger is adjusted accordingly.</summary>
     /// <remarks>Note that this is an arithmetic shift, i.e. the sign is preserved. This is unlike normal
     ///   integer shifts in Delphi. This means that negative values do not finally end up as 0, but
     ///   as -1, since the sign bit is always shifted in.</remarks>
-    class operator RightShift(const Value: BigInteger; Shift: Integer): BigInteger;
-
+    class operator RightShift(const Value: BigInteger; Shift: Integer): BigInteger; overload;
+    class operator RightShift(const Value: BigInteger; Shift: BigInteger): BigInteger; overload;
 
     // -- Comparison operators --
 
@@ -8733,6 +8734,11 @@ begin
   ShiftLeft(Value, Shift, Result);
 end;
 
+class operator BigInteger.LeftShift(const Value: BigInteger; Shift: BigInteger): BigInteger;
+begin
+  ShiftLeft(Value, Shift.AsInteger, Result);
+end;
+
 class operator BigInteger.LessThan(const Left, Right: BigInteger): Boolean;
 begin
   Result := Compare(Left, Right) < 0;
@@ -10420,6 +10426,11 @@ end;
 class operator BigInteger.RightShift(const Value: BigInteger; Shift: Integer): BigInteger;
 begin
   ShiftRight(Value, Shift, Result);
+end;
+
+class operator BigInteger.RightShift(const Value: BigInteger; Shift: BigInteger): BigInteger;
+begin
+  ShiftRight(Value, Shift.AsInteger, Result);
 end;
 
 class operator BigInteger.Implicit(const Value: string): BigInteger;

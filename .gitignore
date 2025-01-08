@@ -31,7 +31,7 @@ Dev/**
 .DS_Store
 ._.DS_Store
 info.plist.TemplateOSX.xml
-*.dproj.local
+*.local
 *.dsk
 *.~dsk
 *.identcache

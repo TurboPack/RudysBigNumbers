@@ -56,12 +56,9 @@ function CheckDigits(const Digits1, Digits2: string): UInt64;
 begin
   Assert(Length(Digits1) = Length(Digits2),
     'Calls to Check Digits should include two strings with the same length.');
-  
-	for var idx := 1 to Length(Digits1) do
-    if Digits1[idx] <> Digits2[idx] then 
-		  Exit(idx);
-  
-	Result := 0;
+  for var idx := 1 to Length(Digits1) do
+    if Digits1[idx] <> Digits2[idx] then exit(idx);
+  Result := 0;
 end;
 
 procedure CompareDigits(digits: UInt64);
@@ -99,22 +96,22 @@ begin
     digits := DigitsToString(Chunk);
 
   // slow down the output for demonstration purposes
-  for var i := Low(digits) to High(digits) do
+  for var i := low(digits) to High(digits) do
   begin
     Write(digits[i]);
-    Sleep(100);
+    sleep(10);
   end;
 end;
 
-const Places = 10000;
+const Places = 10000000;
 begin
   ReportMemoryLeaksOnShutdown := True;
   try
 
-    //BBPpi(Places, WritelnCallBack);
-    Writeln(BBPpi(80).ToString.Insert(1,'.'));
-    Writeln(Chudnovsky(80).ToString);
-    Writeln;
+    BBPpi(Places, WritelnCallBack);
+//    Writeln(BBPpi(80).ToString.Insert(1,'.'));
+//    Writeln(Chudnovsky(80).ToString);
+//    Writeln;
 
   except
     on E: Exception do

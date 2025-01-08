@@ -3,7 +3,7 @@ object BigPiGui: TBigPiGui
   Top = 0
   Caption = 'All the Digits of Pi with Delphi'
   ClientHeight = 548
-  ClientWidth = 380
+  ClientWidth = 588
   Padding.Left = 10.000000000000000000
   Padding.Top = 10.000000000000000000
   Padding.Right = 10.000000000000000000
@@ -13,6 +13,7 @@ object BigPiGui: TBigPiGui
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
   OnClose = FormClose
   OnShow = FormShow
   DesignerMasterStyle = 3
@@ -24,7 +25,7 @@ object BigPiGui: TBigPiGui
     Margins.Bottom = 2.000000000000000000
     Position.X = 10.000000000000000000
     Position.Y = 533.200012207031300000
-    Size.Width = 360.000000000000000000
+    Size.Width = 568.000000000000000000
     Size.Height = 12.799987792968750000
     Size.PlatformDefault = False
     TextSettings.Font.Size = 10.000000000000000000
@@ -37,14 +38,14 @@ object BigPiGui: TBigPiGui
     Align = Top
     Position.X = 10.000000000000000000
     Position.Y = 10.000000000000000000
-    Size.Width = 360.000000000000000000
+    Size.Width = 568.000000000000000000
     Size.Height = 63.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 1
     object Label1: TLabel
       Align = Top
       Position.Y = 24.000000000000000000
-      Size.Width = 360.000000000000000000
+      Size.Width = 568.000000000000000000
       Size.Height = 31.000000000000000000
       Size.PlatformDefault = False
       TextSettings.Trimming = None
@@ -52,7 +53,7 @@ object BigPiGui: TBigPiGui
       TabOrder = 0
       object labelCount: TLabel
         Align = Right
-        Position.X = 278.000000000000000000
+        Position.X = 486.000000000000000000
         Size.Width = 82.000000000000000000
         Size.Height = 31.000000000000000000
         Size.PlatformDefault = False
@@ -65,7 +66,7 @@ object BigPiGui: TBigPiGui
       Align = Top
       CanParentFocus = True
       Orientation = Horizontal
-      Size.Width = 360.000000000000000000
+      Size.Width = 568.000000000000000000
       Size.Height = 24.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 2
@@ -74,7 +75,7 @@ object BigPiGui: TBigPiGui
       object delayLabel: TLabel
         Align = Right
         StyledSettings = [Family, Size, FontColor]
-        Position.X = 255.000000000000000000
+        Position.X = 463.000000000000000000
         Size.Width = 105.000000000000000000
         Size.Height = 24.000000000000000000
         Size.PlatformDefault = False
@@ -88,24 +89,26 @@ object BigPiGui: TBigPiGui
   end
   object Layout2: TLayout
     Align = Client
-    Size.Width = 360.000000000000000000
+    Size.Width = 568.000000000000000000
     Size.Height = 458.200012207031300000
     Size.PlatformDefault = False
     TabOrder = 2
     object piMemo: TMemo
       Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
       DataDetectorTypes = []
+      TextSettings.Font.StyleExt = {00040000000000000001000000}
       TextSettings.WordWrap = True
       Align = Client
-      Size.Width = 360.000000000000000000
+      Size.Width = 568.000000000000000000
       Size.Height = 458.200012207031300000
       Size.PlatformDefault = False
       TabOrder = 1
-      Viewport.Width = 354.000000000000000000
+      Viewport.Width = 562.000000000000000000
       Viewport.Height = 452.200000000000000000
     end
     object ScaledLayout1: TScaledLayout
       Align = Fit
+      Opacity = 0.500000000000000000
       OriginalWidth = 318.441528320312500000
       OriginalHeight = 458.200012207031300000
       Size.Width = 318.441528320312500000
@@ -114,11 +117,11 @@ object BigPiGui: TBigPiGui
       object labelDigit: TLabel
         Align = Client
         StyledSettings = [Family, FontColor]
-        Opacity = 0.500000000000000000
         Size.Width = 318.441528320312500000
         Size.Height = 458.200012207031300000
         Size.PlatformDefault = False
         TextSettings.Font.Size = 512.000000000000000000
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
         TextSettings.HorzAlign = Center
         TextSettings.Trimming = None
         Text = '8'
@@ -13115,7 +13118,7 @@ object BigPiGui: TBigPiGui
           6163697479050000000000000080FF3F0754726967676572060E497350726573
           7365643D7472756507456E61626C65640800000000}
       end>
-    Left = 39
-    Top = 265
+    Left = 31
+    Top = 273
   end
 end

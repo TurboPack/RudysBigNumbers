@@ -34,8 +34,11 @@ begin
     lastResult := Result;
     lastFactorial := lastFactorial * iteration;
     Result := (Result + BigDecimal.One / lastFactorial).RoundToPrecision(InternalPrecision);
-    if lastResult = Result then break;
-    inc(Iteration);
+    
+		if lastResult = Result then 
+			Break;
+    
+		Inc(Iteration);
   end;
   //Writeln(Format('%d digits took %d iterations',[Digits, iteration]));
   Result.DefaultRoundingMode := rmFloor;

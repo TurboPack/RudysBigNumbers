@@ -56,7 +56,7 @@ var
   DecimalPoint: Integer;
   Len: Integer;
 begin
-  if System.Math.IsNaN(F) then
+  if System.Math.IsNan(F) then
     Exit('NaN')
   else if IsNegativeInfinity(F) then
     Exit('NegInfinity')
@@ -117,7 +117,7 @@ var
   DecimalPoint: Integer;
   Len: Integer;
 begin
-  if System.Math.IsNaN(F) then
+  if System.Math.IsNan(F) then
     Exit('NaN')
   else if IsNegativeInfinity(F) then
     Exit('NegInfinity')

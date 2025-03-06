@@ -3030,7 +3030,7 @@ var
   Limbs: TMagnitude;
   Negative: Boolean;
 begin
-  Negative := Bytes[High(Bytes)] > Byte(High(Shortint));
+  Negative := Bytes[High(Bytes)] > Byte(High(ShortInt));
   SetLength(Limbs, (Length(Bytes) + 3) div 4);
   if Negative then
     Limbs[High(Limbs)] := TLimb(-1);
@@ -5041,7 +5041,7 @@ begin
 end;
 
 {$IFNDEF PUREPASCAL}
-procedure DivModNativeUInts(Dividend, Divisor: NativeUInt; var Quotient, Remainder: NativeUint);
+procedure DivModNativeUInts(Dividend, Divisor: NativeUInt; var Quotient, Remainder: NativeUInt);
 {$IFDEF WIN32}
 asm
         PUSH    EBX

@@ -539,7 +539,7 @@ var
   Exponent: Integer;
   Mantissa: Int64;
 begin
-  if IsInfinite(Value) or IsNaN(Value) then
+  if IsInfinite(Value) or IsNan(Value) then
     Error(ecInvalidArg, ['Double']);
 
   if Value = 0.0 then //FI:W542 Direct floating-point comparison
@@ -609,7 +609,7 @@ begin
   Ratio := 0.0;
   LQuot := 0.0;
 
-  if IsInfinite(Value) or IsNaN(Value) then
+  if IsInfinite(Value) or IsNan(Value) then
     Error(ecInvalidArg, ['Double']);
 
   LNegative := Value < 0;

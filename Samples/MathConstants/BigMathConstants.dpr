@@ -21,7 +21,9 @@ uses
 function CheckDigits(const Digits1, Digits2: string): UInt64;
 begin
   for var idx := 1 to Length(Digits1) do
-    if Digits1[idx] <> Digits2[idx] then exit(idx);
+    if Digits1[idx] <> Digits2[idx] then 
+			Exit(idx);
+			
   Result := 0;
 end;
 

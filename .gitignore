@@ -91,3 +91,7 @@ AndroidManifest.template.xml
 dcu/**
 bin/**
 *.zip
+Samples/Pi/BigPiFMX.delphilsp.json
+Samples/Pi/BigPiConsole.delphilsp.json
+/Samples/Pi/.vscode
+Samples/Pi/Tests/BigPiTests.delphilsp.json

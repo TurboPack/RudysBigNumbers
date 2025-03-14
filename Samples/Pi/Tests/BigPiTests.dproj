@@ -2,12 +2,13 @@
     <PropertyGroup>
         <Base>True</Base>
         <AppType>Console</AppType>
-        <Config Condition="'$(Config)'==''">Release</Config>
+        <Config Condition="'$(Config)'==''">Debug</Config>
         <FrameworkType>None</FrameworkType>
         <MainSource>BigPiTests.dpr</MainSource>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <ProjectGuid>{A7030375-0BDF-4DD6-A6E0-A37D572D6275}</ProjectGuid>
-        <ProjectVersion>20.1</ProjectVersion>
+        <ProjectName Condition="'$(ProjectName)'==''">BigPiTests</ProjectName>
+        <ProjectVersion>20.3</ProjectVersion>
         <TargetedPlatforms>1</TargetedPlatforms>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
@@ -43,7 +44,6 @@
     <PropertyGroup Condition="'$(Base)'!=''">
         <SanitizedProjectName>BigPiTests</SanitizedProjectName>
         <DCC_DcuOutput>..\..\..\dcu\$(Platform)\$(Config)</DCC_DcuOutput>
-        <DCC_Define>TESTINSIGHT;$(DCC_Define)</DCC_Define>
         <DCC_ExeOutput>..\..\..\bin\$(Platform)\$(Config)</DCC_ExeOutput>
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;$(DCC_Namespace)</DCC_Namespace>
         <DCC_UnitSearchPath>$(DUnitX);..\..\..\source;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>

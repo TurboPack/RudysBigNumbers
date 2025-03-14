@@ -12,7 +12,8 @@ uses
   FMX.Skia,
   BigPiFMXMain in 'BigPiFMXMain.pas' {BigPiGui},
   BigPi in 'BigPi.pas',
-  BackgroundPi in 'BackgroundPi.pas';
+  BackgroundPi in 'BackgroundPi.pas',
+  ThreadSafeQueue in 'ThreadSafeQueue.pas';
 
 {$R *.res}
 

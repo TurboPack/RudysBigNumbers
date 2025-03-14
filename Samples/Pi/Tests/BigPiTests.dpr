@@ -23,7 +23,9 @@ uses
   BBPpiTests in 'BBPpiTests.pas',
   BigPiHashTestCaseProvider in 'BigPiHashTestCaseProvider.pas',
   BigPiTestsCommon in 'BigPiTestsCommon.pas',
-  BigPi in '..\BigPi.pas';
+  BigPi in '..\BigPi.pas',
+  ThreadSafeQueue in '..\ThreadSafeQueue.pas',
+  ThreadSafeQueueTests in 'ThreadSafeQueueTests.pas';
 
 { keep comment here to protect the following conditional from being removed by the IDE when adding a unit }
 {$IFNDEF TESTINSIGHT}

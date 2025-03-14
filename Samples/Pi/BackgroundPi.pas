@@ -20,50 +20,29 @@ type
     FDigitCount: NativeUInt;
     FUIUpdate: TUIUpdate;
     FGetDelay: TGetDelay;
-    FNextChunk: TDigits;
-    procedure QueueUpdate(digit: Char; count: UInt64);
-    procedure QueueUpdates(digits: string);
-
   protected
     procedure DoTerminate; override;
+
   public
     procedure Execute; override;
+    procedure AfterConstruction; override;
+    procedure BeforeDestruction; override;
     property OnUIUpdate: TUIUpdate read FUIUpdate write FUIUpdate;
     property OnGetDelay: TGetDelay read FGetDelay write FGetDelay;
   end;
 
 implementation
 
-procedure TBackgroundPi.QueueUpdate(digit: Char; count: UInt64);
+procedure TBackgroundPi.AfterConstruction;
 begin
-  TThread.Queue(nil,
-    procedure begin
-      FUIUpdate(digit, count);
+  inherited;
 
-      var Delay := 1;
-      if Assigned(FGetDelay) then
-      begin
-        Delay := Round(FGetDelay);
-        if Delay < 1 then
-          Delay := 1;
-      end;
-
-      Sleep(Round(Delay));
-
-    end);
 end;
 
-procedure TBackgroundPi.QueueUpdates(digits: string);
+procedure TBackgroundPi.BeforeDestruction;
 begin
-  for var idx := low(Digits) to High(Digits) do
-  begin
-    if TThread.CheckTerminated then Exit;
-    Inc(FDigitCount);
+  inherited;
 
-    var digit := Digits[idx];
-
-    QueueUpdate(digit, FDigitCount);
-  end;
 end;
 
 procedure TBackgroundPi.DoTerminate;
@@ -77,7 +56,7 @@ begin
   FFirstChunk := True;
   FDigitCount := 0;
   BBPpi(MaxInt-1, procedure(chunk: TDigits) begin
-    if TThread.CheckTerminated then Exit;
+    if TThread.CheckTerminated then exit;
     if not Assigned(FUIUpdate) then
       raise
         ENotImplemented.Create(
@@ -90,7 +69,26 @@ begin
       FFirstChunk := False;
     end;
 
-    QueueUpdates(digits);
+    for var idx := low(Digits) to High(Digits) do
+    begin
+      if TThread.CheckTerminated then Abort;
+      Inc(FDigitCount);
+
+      TThread.Queue(nil,
+        procedure begin
+          FUIUpdate(Digits[idx], FDigitCount);
+        end);
+
+      var Delay: Double := 1;
+      if Assigned(FGetDelay) then
+      begin
+        Delay := FGetDelay;
+        if Delay < 1 then
+          Delay := 1;
+      end;
+
+      sleep(Round(Delay * 10));
+    end;
   end);
 
 end;

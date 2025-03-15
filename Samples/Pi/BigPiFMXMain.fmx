@@ -34,11 +34,6 @@ object BigPiGui: TBigPiGui
     TextSettings.Trimming = None
     Text = 'Technically limited to 18,446,744,073,709,551,615 digits.'
     TabOrder = 0
-    object Label3: TLabel
-      Position.Y = -8.000000000000000000
-      Text = 'Label3'
-      TabOrder = 3
-    end
   end
   object Layout1: TLayout
     Align = Top

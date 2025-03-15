@@ -30,7 +30,6 @@ type
     StyleBook1: TStyleBook;
     labelDigit: TLabel;
     Timer1: TTimer;
-    Label3: TLabel;
     procedure FormShow(Sender: TObject);
     function GetDelay: Double;
     procedure delayTrackBarChange(Sender: TObject);

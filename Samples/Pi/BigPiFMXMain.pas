@@ -13,7 +13,7 @@ uses
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
   FMX.Controls.Presentation, FMX.StdCtrls, FMX.Edit, FMX.Memo.Types,
   FMX.ScrollBox, FMX.Memo, FMX.EditBox, FMX.SpinBox, FMX.Layouts,
-  FMX.Objects, System.Skia, FMX.Skia;
+  FMX.Objects, System.Skia, FMX.Skia, ThreadedCharacterQueue;
 
 type
   TBigPiGui = class(TForm)
@@ -29,16 +29,20 @@ type
     captionLabel: TLabel;
     StyleBook1: TStyleBook;
     labelDigit: TLabel;
+    Timer1: TTimer;
+    Label3: TLabel;
     procedure FormShow(Sender: TObject);
-    procedure UpdateUI(digit: char; count: Integer);
     function GetDelay: Double;
     procedure delayTrackBarChange(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
   private
     { Private declarations }
-    var background: TThread;
-    var lastCount: UInt64;
+    background: TThread;
+    lastCount: UInt64;
+    fQueue: TCharacterQueue;
   public
     { Public declarations }
   end;
@@ -51,7 +55,8 @@ implementation
 {$R *.fmx}
 
 uses
-  BackgroundPi, FMX.Text;
+  FMX.Text,
+  BigPi;
 
 procedure TBigPiGui.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
@@ -61,17 +66,40 @@ end;
 procedure TBigPiGui.FormCreate(Sender: TObject);
 begin
   lastCount := 0;
+  fQueue := TCharacterQueue.Create(10000);
+end;
+
+procedure TBigPiGui.FormDestroy(Sender: TObject);
+begin
+  fQueue.Free;
 end;
 
 procedure TBigPiGui.FormShow(Sender: TObject);
 begin
   captionLabel.Text := Caption;
   captionLabel.Visible := True;
-  background := TBackgroundPi.Create(True);
-  TBackgroundPi(background).OnUIUpdate := UpdateUI;
-  TBackgroundPi(background).OnGetDelay := GetDelay;
-  background.FreeOnTerminate := False;
+
+  background := TThread.CreateAnonymousThread(
+    procedure
+    begin
+      while not TThread.CheckTerminated do
+      begin
+        var FFirstChunk := True;
+        BBPpi(MaxInt-1, procedure(chunk: TDigits) begin
+          if TThread.CheckTerminated then exit;
+          var Digits := DigitsToString(Chunk);
+          if FFirstChunk then
+          begin
+            Digits := Digits.Insert(1,'.');
+            FFirstChunk := False;
+          end;
+
+          fQueue.EnqueueBatch(Digits);
+        end);
+      end;
+    end);
   background.Start;
+
 end;
 
 function TBigPiGui.GetDelay: Double;
@@ -81,28 +109,41 @@ begin
   Result := delayTrackBar.Value;
 end;
 
+procedure TBigPiGui.Timer1Timer(Sender: TObject);
+var
+  digit: Char;
+begin
+  if FQueue.Count > 0 then
+  begin
+    Timer1.Enabled := False;
+    try
+      // This would block if queue was empty, but we checked count
+      FQueue.DequeueChar(digit);
+      if Application.Terminated then exit;
+      if not assigned(Application.MainForm) then exit;
+
+      inc(lastCount);
+
+      labelCount.Text := Format('%.0n', [lastCount + 0.0]);
+      labelDigit.Text := digit;
+      piMemo.GoToTextEnd;
+      piMemo.InsertAfter(piMemo.CaretPosition, digit, [TInsertOption.MoveCaret]);
+      piMemo.Repaint;
+    finally
+      Timer1.Enabled := True;
+    end;
+  end;
+end;
+
 procedure TBigPiGui.delayTrackBarChange(Sender: TObject);
 begin
   if delayTrackBar.Value < delayTrackBar.Max/2 then
     delayLabel.Align := TAlignLayout.Right
   else
     delayLabel.Align := TAlignLayout.Left;
-end;
-
-procedure TBigPiGui.UpdateUI(digit: char; count: Integer);
-begin
-  if Application.Terminated then exit;
-  if not assigned(Application.MainForm) then exit;
-
-  Assert(count = lastcount+1,
-    Format('Digits out of order. Exepcting digit # %d but received # %d.',[lastcount+1, count]));
-  lastCount := count;
-
-  labelCount.Text := Format('%.0n', [count + 0.0]);
-  labelDigit.Text := digit;
-  piMemo.GoToTextEnd;
-  piMemo.InsertAfter(piMemo.CaretPosition, digit, [TInsertOption.MoveCaret]);
-  piMemo.Repaint;
+  Timer1.Enabled := False;
+  Timer1.Interval := trunc(delayTrackBar.Value*10);
+  Timer1.Enabled := True;
 end;
 
 end.

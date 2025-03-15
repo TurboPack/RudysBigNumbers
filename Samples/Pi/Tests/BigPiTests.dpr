@@ -16,16 +16,13 @@ uses
   TestInsight.DUnitX,
   {$ELSE}
   DUnitX.Loggers.Console,
-  DUnitX.Loggers.Xml.NUnit,
   {$ENDIF }
   DUnitX.TestFramework,
   BigPiChudnovskyTests in 'BigPiChudnovskyTests.pas',
   BBPpiTests in 'BBPpiTests.pas',
   BigPiHashTestCaseProvider in 'BigPiHashTestCaseProvider.pas',
   BigPiTestsCommon in 'BigPiTestsCommon.pas',
-  BigPi in '..\BigPi.pas',
-  ThreadSafeQueue in '..\ThreadSafeQueue.pas',
-  ThreadSafeQueueTests in 'ThreadSafeQueueTests.pas';
+  BigPi in '..\BigPi.pas';
 
 { keep comment here to protect the following conditional from being removed by the IDE when adding a unit }
 {$IFNDEF TESTINSIGHT}

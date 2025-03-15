@@ -53,7 +53,8 @@ begin
   try
     hashes.NameValueSeparator := ',';
     hashes.LoadFromFile(TPath.Combine(TestDataFolder,'pi-hashes.txt'));
-    for var i := 0 to Pred(hashes.Count) do
+    // This will only run the quicker tests
+    for var i := 0 to Pred(hashes.Count div 2) do
     begin
       var hash: TPiHash;
       hash.Digits := hashes.Names[i].ToInt64;

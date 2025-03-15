@@ -93,8 +93,6 @@
         <DCCReference Include="BigPiHashTestCaseProvider.pas"/>
         <DCCReference Include="BigPiTestsCommon.pas"/>
         <DCCReference Include="..\BigPi.pas"/>
-        <DCCReference Include="..\ThreadSafeQueue.pas"/>
-        <DCCReference Include="ThreadSafeQueueTests.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

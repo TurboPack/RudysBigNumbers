@@ -9,26 +9,19 @@ unit BackgroundPi;
 interface
 
 uses
-  System.SysUtils, System.Types, System.Classes, BigPi;
+  System.SysUtils, System.Types, System.Classes, BigPi, ThreadedCharacterQueue;
 
 type
-  TUIUpdate = procedure(digit: char; count: Integer) of object;
-  TGetDelay = function: Double of object;
   TBackgroundPi = Class(TThread)
   private
     FFirstChunk: Boolean;
     FDigitCount: NativeUInt;
-    FUIUpdate: TUIUpdate;
-    FGetDelay: TGetDelay;
   protected
-    procedure DoTerminate; override;
 
   public
     procedure Execute; override;
     procedure AfterConstruction; override;
     procedure BeforeDestruction; override;
-    property OnUIUpdate: TUIUpdate read FUIUpdate write FUIUpdate;
-    property OnGetDelay: TGetDelay read FGetDelay write FGetDelay;
   end;
 
 implementation
@@ -45,22 +38,12 @@ begin
 
 end;
 
-procedure TBackgroundPi.DoTerminate;
-begin
-  inherited;
-
-end;
-
 procedure TBackgroundPi.Execute;
 begin
   FFirstChunk := True;
   FDigitCount := 0;
   BBPpi(MaxInt-1, procedure(chunk: TDigits) begin
     if TThread.CheckTerminated then exit;
-    if not Assigned(FUIUpdate) then
-      raise
-        ENotImplemented.Create(
-          'Must assign an OnUIUpdate handler for TBackgroundPi.');
 
     var Digits := DigitsToString(Chunk);
     if FFirstChunk then
@@ -69,30 +52,23 @@ begin
       FFirstChunk := False;
     end;
 
+    FUIUpdater.WaitUntilBelowThreshold;
     for var idx := low(Digits) to High(Digits) do
     begin
       if TThread.CheckTerminated then Abort;
       Inc(FDigitCount);
 
-      TThread.Queue(nil,
-        procedure begin
-          FUIUpdate(Digits[idx], FDigitCount);
-        end);
-
-      var Delay: Double := 1;
-      if Assigned(FGetDelay) then
-      begin
-        Delay := FGetDelay;
-        if Delay < 1 then
-          Delay := 1;
-      end;
-
-      sleep(Round(Delay * 10));
+      FUIUpdater.Enqueue(Digits[idx]);
     end;
   end);
 
 end;
 
-
+procedure TBackgroundPi.Init(AUIUpdater: TUIUpdate; AGetDelay: TGetDelay);
+begin
+  FUIUpdater.OnUIUpdate := AUIUpdater;
+  FUIUpdater.OnGetDelay := AGetDelay;
+  FUIUpdater.Start;
+end;
 
 end.

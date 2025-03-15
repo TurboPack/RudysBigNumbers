@@ -15,6 +15,7 @@ object BigPiGui: TBigPiGui
   FormFactor.Devices = [Desktop]
   OnCreate = FormCreate
   OnClose = FormClose
+  OnDestroy = FormDestroy
   OnShow = FormShow
   DesignerMasterStyle = 3
   object Label2: TLabel
@@ -24,15 +25,20 @@ object BigPiGui: TBigPiGui
     Margins.Top = 2.000000000000000000
     Margins.Bottom = 2.000000000000000000
     Position.X = 10.000000000000000000
-    Position.Y = 533.200012207031300000
+    Position.Y = 533.333312988281300000
     Size.Width = 568.000000000000000000
-    Size.Height = 12.799987792968750000
+    Size.Height = 12.666687011718750000
     Size.PlatformDefault = False
     TextSettings.Font.Size = 10.000000000000000000
     TextSettings.HorzAlign = Center
     TextSettings.Trimming = None
     Text = 'Technically limited to 18,446,744,073,709,551,615 digits.'
     TabOrder = 0
+    object Label3: TLabel
+      Position.Y = -8.000000000000000000
+      Text = 'Label3'
+      TabOrder = 3
+    end
   end
   object Layout1: TLayout
     Align = Top
@@ -65,6 +71,7 @@ object BigPiGui: TBigPiGui
     object delayTrackBar: TTrackBar
       Align = Top
       CanParentFocus = True
+      Min = 1.000000000000000000
       Orientation = Horizontal
       Size.Width = 568.000000000000000000
       Size.Height = 24.000000000000000000
@@ -90,7 +97,7 @@ object BigPiGui: TBigPiGui
   object Layout2: TLayout
     Align = Client
     Size.Width = 568.000000000000000000
-    Size.Height = 458.200012207031300000
+    Size.Height = 458.333312988281300000
     Size.PlatformDefault = False
     TabOrder = 2
     object piMemo: TMemo
@@ -100,25 +107,25 @@ object BigPiGui: TBigPiGui
       TextSettings.WordWrap = True
       Align = Client
       Size.Width = 568.000000000000000000
-      Size.Height = 458.200012207031300000
+      Size.Height = 458.333312988281300000
       Size.PlatformDefault = False
       TabOrder = 1
       Viewport.Width = 562.000000000000000000
-      Viewport.Height = 452.200000000000000000
+      Viewport.Height = 452.300000000000000000
     end
     object ScaledLayout1: TScaledLayout
       Align = Fit
       Opacity = 0.500000000000000000
-      OriginalWidth = 318.441528320312500000
-      OriginalHeight = 458.200012207031300000
-      Size.Width = 318.441528320312500000
-      Size.Height = 458.200012207031300000
+      OriginalWidth = 318.534179687500000000
+      OriginalHeight = 458.333312988281300000
+      Size.Width = 318.534179687500000000
+      Size.Height = 458.333312988281300000
       Size.PlatformDefault = False
       object labelDigit: TLabel
         Align = Client
         StyledSettings = [Family, FontColor]
-        Size.Width = 318.441528320312500000
-        Size.Height = 458.200012207031300000
+        Size.Width = 318.534179687500000000
+        Size.Height = 458.333312988281300000
         Size.PlatformDefault = False
         TextSettings.Font.Size = 512.000000000000000000
         TextSettings.Font.StyleExt = {00070000000000000004000000}
@@ -13120,5 +13127,11 @@ object BigPiGui: TBigPiGui
       end>
     Left = 31
     Top = 273
+  end
+  object Timer1: TTimer
+    Interval = 100
+    OnTimer = Timer1Timer
+    Left = 175
+    Top = 241
   end
 end

@@ -5,7 +5,7 @@
         <Config Condition="'$(Config)'==''">Debug</Config>
         <FrameworkType>FMX</FrameworkType>
         <MainSource>BigPiFMX.dpr</MainSource>
-        <Platform Condition="'$(Platform)'==''">Win32</Platform>
+        <Platform Condition="'$(Platform)'==''">Win64</Platform>
         <ProjectGuid>{FCF93126-F947-4890-BCFF-7C4FB0CE9BF6}</ProjectGuid>
         <ProjectName Condition="'$(ProjectName)'==''">BigPiFMX</ProjectName>
         <ProjectVersion>20.3</ProjectVersion>
@@ -437,8 +437,7 @@
             <FormType>fmx</FormType>
         </DCCReference>
         <DCCReference Include="BigPi.pas"/>
-        <DCCReference Include="BackgroundPi.pas"/>
-        <DCCReference Include="ThreadSafeQueue.pas"/>
+        <DCCReference Include="ThreadedCharacterQueue.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

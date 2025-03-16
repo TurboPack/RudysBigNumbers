@@ -1,4 +1,13 @@
-﻿unit ThreadedCharacterQueue;
+﻿{===============================================
+
+ Included with Rudy's Big Numbers Library
+ https://github.com/TurboPack/RudysBigNumbers/
+
+ Licensed under BSD 2-Clause License
+ Copyright © 2025 by Jim McKeeth
+
+================================================}
+unit ThreadedCharacterQueue;
 
 interface
 
@@ -17,15 +26,28 @@ type
     constructor Create(AThreshold: Integer);
     destructor Destroy; override;
 
-    // Add a batch of characters to the queue
-    // Will block if queue is at or above threshold
+    /// <summary>
+    /// Adds a batch of characters to the queue.
+    /// </summary>
+    /// <param name="ABatch">The batch of characters to add to the queue.</param>
+    /// <remarks>
+    /// This method will block if the queue is at or above the threshold.
+    /// </remarks>
     procedure EnqueueBatch(const ABatch: string);
 
-    // Get next character from queue
-    // Will block if queue is empty
-    function DequeueChar(out AChar: Char): Boolean;
+    /// <summary>
+    /// Retrieves the next character from the queue.
+    /// </summary>
+    /// <returns>The character retrieved from the queue.</returns>
+    /// <remarks>
+    /// This method will block if the queue is empty.
+    /// </remarks>
+    function DequeueChar: Char;
 
-    // Non-blocking check of queue size
+    /// <summary>
+    /// Gets the current size of the queue without blocking.
+    /// </summary>
+    /// <returns>Returns the number of characters currently in the queue.</returns>
     function Count: Integer;
   end;
 
@@ -88,10 +110,8 @@ begin
   end;
 end;
 
-function TCharacterQueue.DequeueChar(out AChar: Char): Boolean;
+function TCharacterQueue.DequeueChar: Char;
 begin
-  Result := False;
-
   // Wait until queue has items
   while True do
   begin
@@ -110,8 +130,7 @@ begin
   // Get character from queue
   FLock.Acquire;
   try
-    AChar := FQueue.Dequeue;
-    Result := True;
+    Result := FQueue.Dequeue;
 
     // If queue is now empty, reset the not empty event
     if FQueue.Count = 0 then

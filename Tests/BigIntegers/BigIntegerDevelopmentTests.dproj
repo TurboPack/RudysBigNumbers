@@ -7,7 +7,8 @@
         <MainSource>BigIntegerDevelopmentTests.dpr</MainSource>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <ProjectGuid>{DA578521-538C-4077-A0D0-7EE7F73A19C6}</ProjectGuid>
-        <ProjectVersion>20.1</ProjectVersion>
+        <ProjectName Condition="'$(ProjectName)'==''">BigIntegerDevelopmentTests</ProjectName>
+        <ProjectVersion>20.3</ProjectVersion>
         <TargetedPlatforms>3</TargetedPlatforms>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
@@ -97,6 +98,7 @@
         <DCC_Optimize>true</DCC_Optimize>
         <DCC_OutputDependencies>true</DCC_OutputDependencies>
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
+        <Debugger_DebugSourcePath>C:\Users\jim\Desktop\Delphi12Source\DUnit\src\;$(Debugger_DebugSourcePath)</Debugger_DebugSourcePath>
         <ILINK_FullDebugInfo>true</ILINK_FullDebugInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
     </PropertyGroup>
@@ -141,6 +143,7 @@
         <DCCReference Include="..\..\Source\Velthuis.XorShifts.pas"/>
         <DCCReference Include="..\..\Source\Velthuis.BigIntegers.Primes.pas"/>
         <DCCReference Include="..\..\Source\CompilerAndRTLVersions.pas"/>
+        <DCCReference Include="TestBigIntegersIssues.pas"/>
         <None Include="BigIntegerDevelopmentTests.todo"/>
         <None Include="BigIntegerArithmeticResults.inc"/>
         <None Include="BigIntegerBitwiseResults.inc"/>

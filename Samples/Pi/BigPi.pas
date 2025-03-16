@@ -1,7 +1,10 @@
-{===============================================
+﻿{===============================================
 
  Included with Rudy's Big Numbers Library
  https://github.com/TurboPack/RudysBigNumbers/
+
+ Licensed under BSD 2-Clause License
+ Copyright © 2025 by Jim McKeeth
 
 ================================================}
 unit BigPi;
@@ -9,24 +12,44 @@ unit BigPi;
 interface
 
 uses
-  SysUtils,
-  Math,
-  Velthuis.BigDecimals,
-  Velthuis.BigIntegers;
+  SysUtils, Math, Velthuis.BigDecimals, Velthuis.BigIntegers;
 
+/// <summary>
+/// A type representing an array of digits (bytes).
+/// </summary>
 type TDigits = Array of Byte;
 //const MaxUnit64 = 18_446_744_073_709_551_615;
 const CallBackChunkSize = 64;
+/// <summary>
+/// A callback type for receiving chunks of computed digits.
+/// </summary>
 type TChunkCallBack = reference to Procedure(Chunk: TDigits);
 
+/// <summary>
+/// Computes the value of Pi to a specified number of decimal places using the Bailey-Borwein-Plouffe (BBP) formula. 
+/// Which is an integer based spigot algorithm that allows for the extraction of individual digits of Pi.
+/// </summary>
+/// <param name="Places">The number of decimal places to compute.</param>
+/// <param name="CallBack">An optional callback function that will be called with chunks of computed digits.</param>
+/// <returns>A BigInteger representing the computed value of Pi.</returns>  
 function BBPpi(Places: UInt64; CallBack: TChunkCallBack = nil): BigInteger;
+/// <summary>
+/// Computes the value of Pi to a specified number of decimal places using the Chudnovsky (floating point based) algorithm.
+/// </summary>
+/// <param name="Places">The number of decimal places to compute.</param>
+/// <returns>A BigDecimal representing the computed value of Pi.</returns>
 function Chudnovsky(Places: Integer): BigDecimal;
+/// <summary>
+/// Converts an array of digits (bytes) to a string representation.
+/// </summary>
+/// <param name="digits">An array of digits (bytes).</param>
 function DigitsToString(digits: TDigits): String;
 
 implementation
 
 function BBPpi(Places: UInt64; CallBack: TChunkCallback = nil): BigInteger;
-// Bailey-Borwein-Plouffe
+// Bailey-Borwein-Plouffe algorithm to calculate Pi
+// https://en.wikipedia.org/wiki/Bailey%E2%80%93Borwein%E2%80%93Plouffe_formula
 begin
   Result := 0;
 
@@ -90,6 +113,8 @@ begin
 end;
 
 function Chudnovsky(Places: Integer):BigDecimal;
+// Chudnovsky algorithm to caluclate Pi
+// https://en.wikipedia.org/wiki/Chudnovsky_algorithm
 begin
   // Use +6 internally for calculations
   var internalPrecision := MaxInt;

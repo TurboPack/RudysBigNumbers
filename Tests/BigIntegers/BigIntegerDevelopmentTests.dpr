@@ -37,7 +37,8 @@ uses
   Velthuis.StrConsts in '..\..\Source\Velthuis.StrConsts.pas',
   Velthuis.XorShifts in '..\..\Source\Velthuis.XorShifts.pas',
   Velthuis.BigIntegers.Primes in '..\..\Source\Velthuis.BigIntegers.Primes.pas',
-  CompilerAndRTLVersions in '..\..\Source\CompilerAndRTLVersions.pas';
+  CompilerAndRTLVersions in '..\..\Source\CompilerAndRTLVersions.pas',
+  TestBigIntegersIssues in 'TestBigIntegersIssues.pas';
 
 {$R *.RES}
 

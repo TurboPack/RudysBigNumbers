@@ -1,7 +1,10 @@
-{===============================================
+﻿{===============================================
 
  Included with Rudy's Big Numbers Library
  https://github.com/TurboPack/RudysBigNumbers/
+
+ Licensed under BSD 2-Clause License
+ Copyright © 2025 by Jim McKeeth
 
 ================================================}
 program BigPiConsole;

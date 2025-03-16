@@ -1,7 +1,10 @@
-{===============================================
+﻿{===============================================
 
  Included with Rudy's Big Numbers Library
  https://github.com/TurboPack/RudysBigNumbers/
+
+ Licensed under BSD 2-Clause License
+ Copyright © 2025 by Jim McKeeth
 
 ================================================}
 unit BigPiFMXMain;
@@ -9,11 +12,12 @@ unit BigPiFMXMain;
 interface
 
 uses
-  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
-  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
-  FMX.Controls.Presentation, FMX.StdCtrls, FMX.Edit, FMX.Memo.Types,
-  FMX.ScrollBox, FMX.Memo, FMX.EditBox, FMX.SpinBox, FMX.Layouts,
-  FMX.Objects, System.Skia, FMX.Skia, ThreadedCharacterQueue;
+  System.SysUtils, System.Types, System.UITypes, System.Classes,
+  System.Variants, FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics,
+  FMX.Dialogs, FMX.Controls.Presentation, FMX.StdCtrls, FMX.Edit,
+  FMX.Memo.Types, FMX.ScrollBox, FMX.Memo, FMX.EditBox, FMX.SpinBox,
+  FMX.Layouts, FMX.Objects, System.Skia, FMX.Skia,
+  ThreadedCharacterQueue;
 
 type
   TBigPiGui = class(TForm)
@@ -33,10 +37,10 @@ type
     procedure FormShow(Sender: TObject);
     function GetDelay: Double;
     procedure delayTrackBarChange(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
+    procedure Label1Click(Sender: TObject);
   private
     { Private declarations }
     background: TThread;
@@ -54,22 +58,18 @@ implementation
 {$R *.fmx}
 
 uses
-  FMX.Text,
-  BigPi;
-
-procedure TBigPiGui.FormClose(Sender: TObject; var Action: TCloseAction);
-begin
-  background.Terminate;
-end;
+  FMX.Text, BigPi;
 
 procedure TBigPiGui.FormCreate(Sender: TObject);
 begin
   lastCount := 0;
+  labelDigit.Text := '';
   fQueue := TCharacterQueue.Create(10000);
 end;
 
 procedure TBigPiGui.FormDestroy(Sender: TObject);
 begin
+  background.Terminate;
   fQueue.Free;
 end;
 
@@ -79,8 +79,7 @@ begin
   captionLabel.Visible := True;
 
   background := TThread.CreateAnonymousThread(
-    procedure
-    begin
+    procedure begin
       while not TThread.CheckTerminated do
       begin
         var FFirstChunk := True;
@@ -108,6 +107,11 @@ begin
   Result := delayTrackBar.Value;
 end;
 
+procedure TBigPiGui.Label1Click(Sender: TObject);
+begin
+  Timer1.Enabled := True;
+end;
+
 procedure TBigPiGui.Timer1Timer(Sender: TObject);
 var
   digit: Char;
@@ -117,7 +121,7 @@ begin
     Timer1.Enabled := False;
     try
       // This would block if queue was empty, but we checked count
-      FQueue.DequeueChar(digit);
+      digit := FQueue.DequeueChar;
       if Application.Terminated then exit;
       if not assigned(Application.MainForm) then exit;
 

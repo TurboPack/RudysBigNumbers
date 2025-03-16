@@ -5,7 +5,7 @@
         <Config Condition="'$(Config)'==''">Debug</Config>
         <FrameworkType>None</FrameworkType>
         <MainSource>BigNumbers.dpk</MainSource>
-        <Platform Condition="'$(Platform)'==''">Win32</Platform>
+        <Platform Condition="'$(Platform)'==''">Win64</Platform>
         <ProjectGuid>{EC46209C-32FB-4D2B-83B2-7834EE26545F}</ProjectGuid>
         <ProjectName Condition="'$(ProjectName)'==''">BigNumbers</ProjectName>
         <ProjectVersion>20.3</ProjectVersion>

@@ -1,6 +1,6 @@
-# Rudy's Big Numbers <a href="https://github.com/TurboPack/RudysBigNumbers/"><img src="https://user-images.githubusercontent.com/821930/230476405-ebf33117-139a-4895-8d00-70e30186e3fa.jpg" align="Right" alt="Logo for Rudy's Big Numbers Library"></a>
+# Rudy's Big Numbers 
 
-[Rudy Velthuis](http://rvelthuis.de) is the orignal author of this library. He unfortunately passed away a while back. In an effort to keep this valuable library alive we've done the following:
+<a href="https://github.com/TurboPack/RudysBigNumbers/"><img src="https://user-images.githubusercontent.com/821930/230476405-ebf33117-139a-4895-8d00-70e30186e3fa.jpg" align="Right" alt="Logo for Rudy's Big Numbers Library"></a>[Rudy Velthuis](http://rvelthuis.de) is the orignal author of this library. He unfortunately passed away a while back. In an effort to keep this valuable library alive we've done the following:
 
 * Pulled changes from [all the other branches](https://github.com/TurboPack/RudysBigNumbers/network) into this repository
 * Created [Wiki articles](https://github.com/TurboPack/RudysBigNumbers/wiki) based on his original documentation (with some updates)
@@ -15,7 +15,11 @@
 
 These are implementations of the multi-precision `BigInteger`, `BigDecimal` and `BigRational` types, built from scratch by Rudy Velthuis and now maintained by [TurboPack](https://github.com/TurboPack).
 
+![RudysBigNumbers - Wide Banner](https://github.com/user-attachments/assets/b7655ef4-93b4-4b54-aedc-13b994db0b4f)
+
 ## BigInteger
+
+<img src="https://github.com/user-attachments/assets/07d88eae-9c86-4d54-aa6b-bbd4e129dd72" alt="Rudy Velthuis' BigIntegers Logo" width="250" align="right">
 
 `BigInteger` is a multi-precision integer. Its size is only limited by available memory.
 
@@ -23,11 +27,13 @@ These are implementations of the multi-precision `BigInteger`, `BigDecimal` and 
 
 ## BigDecimal
 
+<img src="https://github.com/user-attachments/assets/0efa7aff-50c1-4c5b-a7c0-3f45907cbfe0" alt="Rudy Velthuis' BigDecimals Logo" width="250" align="right">
+
 `BigDecimal` is a multi-precision decimal floating point type. It can have an almost unlimited precision.
 
 `BigDecimal` is equally built for ease of use and reliability. It builds on top of BigInteger: the internal representation is a BigInteger for the significant digits, and a scale to indicate the decimals. It also offers overloaded operators and all the usual functions. This is modelled after the `BigDecimal` type in Java, but the interface is more in line with Delphi. More information about this type can be found on the [BigDecimals unit](https://github.com/TurboPack/RudysBigNumbers/wiki/BigDecimals) wiki page.
 
-## BigRational
+## BigRational <img src="https://github.com/user-attachments/assets/e320934f-88c6-4f2b-a6fb-2528cf436ab5" alt="Rudy Velthuis' BigRationals Logo" width="175" align="right">
 
 A type that holds a number as fraction (ratio) of two `BigIntegers`, a numerator and a denominator, i.e. `1/7` or `100/3`. 
 This type is very good at simple arithmetic (`+`, `-`, `*`, `/`), since it doesn't lose precision or need any rounding. Still a work in progress...

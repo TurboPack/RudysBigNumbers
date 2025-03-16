@@ -23,7 +23,20 @@ These are implementations of the multi-precision `BigInteger`, `BigDecimal` and 
 
 `BigInteger` is a multi-precision integer. Its size is only limited by available memory.
 
-`BigInteger` is built for ease of use, speed and reliability. It is written in plain Object Pascal and x86-32/x86-64 assembler, but every assembler function has a so called "pure Pascal" equivalent as well. It is modelled after the `BigInteger` type in .NET, but is far more optimized than that and provides an interface that is more in line with Delphi. It uses higher level algorithms like *Burnikel-Ziegler*, *Karatsuba*, *Toom-Cook*, etc. to make things fast even for very large integers. It offers overloaded operators and all the usual functions. More information can be found on the [BigIntegers unit](https://github.com/TurboPack/RudysBigNumbers/wiki/BigIntegers) wiki page.
+`BigInteger` is built for ease of use, speed and reliability. It is written in plain Object Pascal and x86-32/x86-64 assembler, but every assembler function has a so called "pure Pascal" equivalent as well. It is modelled after the `BigInteger` type in .NET, but is far more optimized than that and provides an interface that is more in line with Delphi. It uses higher level algorithms like *Burnikel-Ziegler*, *Karatsuba*, *Toom-Cook*, etc. to make things fast even for very large integers. It offers overloaded operators and all the usual functions. More information can be found on the [BigIntegers unit wiki page](https://github.com/TurboPack/RudysBigNumbers/wiki/BigIntegers).
+
+Simple usage:
+
+```Delphi
+var
+  A, B, C, D: BigInteger;
+begin
+  A := 3141592653589793238462643383279;
+  B := 1414213562373095 shl 10;
+  C := 2718281828459045235360287471352;
+  D := A + B * C;
+  Writeln(D.ToString);
+```
 
 ## BigDecimal
 
@@ -31,7 +44,19 @@ These are implementations of the multi-precision `BigInteger`, `BigDecimal` and 
 
 `BigDecimal` is a multi-precision decimal floating point type. It can have an almost unlimited precision.
 
-`BigDecimal` is equally built for ease of use and reliability. It builds on top of BigInteger: the internal representation is a BigInteger for the significant digits, and a scale to indicate the decimals. It also offers overloaded operators and all the usual functions. This is modelled after the `BigDecimal` type in Java, but the interface is more in line with Delphi. More information about this type can be found on the [BigDecimals unit](https://github.com/TurboPack/RudysBigNumbers/wiki/BigDecimals) wiki page.
+`BigDecimal` is equally built for ease of use and reliability. It builds on top of BigInteger: the internal representation is a BigInteger for the significant digits, and a scale to indicate the decimals. It also offers overloaded operators and all the usual functions. This is modelled after the `BigDecimal` type in Java, but the interface is more in line with Delphi. More information about this type can be found on the [BigDecimals unit wiki page](https://github.com/TurboPack/RudysBigNumbers/wiki/BigDecimals).
+
+Simple usage:
+
+```Delphi
+var
+  A, B, C: BigDecimal;
+begin
+  A := '1.3456e-17';        // exact
+  B := 1234.197;            // floating point approximation
+  C := A + B * '3.0';
+  Writeln(string(C));
+```
 
 ## BigRational <img src="https://github.com/user-attachments/assets/e320934f-88c6-4f2b-a6fb-2528cf436ab5" alt="Rudy Velthuis' BigRationals Logo" width="175" align="right">
 
@@ -43,17 +68,18 @@ This type is very good at simple arithmetic (`+`, `-`, `*`, `/`), since it doesn
 The newest version of BigIntegers has additional overloaded operators and additional constructors that are compatible
 with C++Builder. So now you simply include:
 
+```C++
     #include "Velthuis.BigIntegers.hpp"
-
+```
 and then you can do things like:
-
+```C++
     BigInteger a = 17;
     BigInteger b = "123";
     BigInteger c = a + b;
-
+```
 ## Directory structure
 
-```
+```text
 RudysBigNumbers
    Source                      --- Sources for units and for bases.inc
    Tests

@@ -95,3 +95,8 @@ Samples/Pi/BigPiFMX.delphilsp.json
 Samples/Pi/BigPiConsole.delphilsp.json
 /Samples/Pi/.vscode
 Samples/Pi/Tests/BigPiTests.delphilsp.json
+Visualizers/BigNumVisualizers.delphilsp.json
+Visualizers/BigNumberVisualizers.delphilsp.json
+Tests/BigIntegers/BigIntegerDevelopmentTests.delphilsp.json
+Samples/MathConstants/BigMathConstants.delphilsp.json
+BigNumbers.delphilsp.json

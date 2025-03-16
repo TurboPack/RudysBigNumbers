@@ -107,7 +107,7 @@ type
     procedure Destroyed;
     procedure Modified;
     // IOTAThreadNotifier160
-    procedure EvaluateComplete(const ExprStr, ResultStr: string; CanModify: Boolean; ResultAddress: TOTAAddress; ResultSize: Longword; ReturnCode: Integer); overload;
+    procedure EvaluateComplete(const ExprStr, ResultStr: string; CanModify: Boolean; ResultAddress: TOTAAddress; ResultSize: LongWord; ReturnCode: Integer); overload;
     procedure EvaluateComplete(const ExprStr, ResultStr: string; CanModify: Boolean; ResultAddress, ResultSize: LongWord; ReturnCode: Integer); overload;
   end;
 
@@ -148,7 +148,7 @@ begin
 end;
 
 procedure TDebuggerBigIntegerVisualizer.EvaluateComplete(const ExprStr, ResultStr: string; CanModify: Boolean;
-  ResultAddress: TOTAAddress; ResultSize: Longword; ReturnCode: Integer);
+  ResultAddress: TOTAAddress; ResultSize: LongWord; ReturnCode: Integer);
 begin
   FCompleted := True;
   if ReturnCode = 0 then
@@ -162,7 +162,7 @@ var
   CurThread: IOTAThread;
   ResultStr: array[0..255] of Char;
   CanModify: Boolean;
-  ResultAddr, ResultSize, ResultVal: Longword;
+  ResultAddr, ResultSize, ResultVal: LongWord;
   EvalRes: TOTAEvaluateResult;
   Services: IOTADebuggerServices;
   Done: Boolean;

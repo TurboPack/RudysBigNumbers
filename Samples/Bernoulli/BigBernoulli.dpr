@@ -35,9 +35,7 @@ begin
   begin
     a[m] := BigRational.Create(1, m + 1);
     for var j := m downto 1 do
-    begin
       a[j - 1] := (a[j - 1] - a[j]) * j;
-    end;
   end;
   Result := a[0];
 end;

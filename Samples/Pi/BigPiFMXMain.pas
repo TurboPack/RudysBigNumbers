@@ -132,7 +132,7 @@ begin
       if Application.Terminated then 
         Exit;
         
-      if not assigned(Application.MainForm) then 
+      if not Assigned(Application.MainForm) then 
         Exit;
 
       Inc(lastCount);

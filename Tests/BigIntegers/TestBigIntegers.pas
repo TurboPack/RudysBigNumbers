@@ -35,7 +35,6 @@ type
   public
     procedure Error(const Msg: string);
     procedure SetUp; override;
-    procedure TearDown; override;
   published
     procedure TestParse;
     procedure TestTryParse;
@@ -161,10 +160,6 @@ begin
 {$IFDEF TESTPARTIALFLAGCODE}
   BigInteger.AvoidPartialFlagsStall(True);
 {$ENDIF}
-end;
-
-procedure TTestBigInteger.TearDown;
-begin
 end;
 
 procedure TTestBigInteger.TestIsZero;

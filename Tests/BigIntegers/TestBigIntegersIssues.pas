@@ -90,9 +90,9 @@ begin
   NumBits := Random(100)*1000;
   N := BigInteger.Create(NumBits, R);
   BigInteger.Base := 12;
-  NS := N.ToString();
+  NS := N.ToString;
   BigInteger.TryParse(NS, M);
-  MS := M.ToString();
+  MS := M.ToString;
   CheckEquals(NS, MS, 'Parsed value differs from the original!');
 end;
 

@@ -1695,7 +1695,7 @@ end;
 
 function BigDecimal.Frac: BigDecimal;
 begin
-  Result := BigDecimal.Abs(Self - Self.Int());
+  Result := BigDecimal.Abs(Self - Self.Int);
 end;
 
 function BigDecimal.Floor: BigDecimal;

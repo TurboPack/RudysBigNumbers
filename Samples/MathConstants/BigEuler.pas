@@ -29,7 +29,8 @@ begin
   var lastFactorial := BigInteger.One;
   var lastResult := BigDecimal.Zero;
   var iteration: UInt64 := 1;
-  while true do
+  
+  while True do
   begin
     lastResult := Result;
     lastFactorial := lastFactorial * iteration;

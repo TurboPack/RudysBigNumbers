@@ -25,7 +25,7 @@ begin
   if Digits <= MaxInt - 2 then
     InternalPrecision := Digits + 2;
 
-  Result.DefaultPrecision :=InternalPrecision;
+  Result.DefaultPrecision := InternalPrecision;
   var lastFactorial := BigInteger.One;
   var lastResult := BigDecimal.Zero;
   var iteration: UInt64 := 1;

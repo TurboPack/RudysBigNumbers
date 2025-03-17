@@ -1609,7 +1609,7 @@ begin
         except
           on E: Exception do
           begin
-            Check(TR.Info <> triOk, Format('%d: Unexpect exception on ModPow(%s, %s, %s): %s -- %s', [N, string(Base), string(Exponent), string(Modulus), E.ClassName, E.Message]));
+            Check(TR.Info <> triOk, Format('%d: Unexpected exception on ModPow(%s, %s, %s): %s -- %s', [N, string(Base), string(Exponent), string(Modulus), E.ClassName, E.Message]));
             HadException := True;
           end;
         end;

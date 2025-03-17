@@ -41,15 +41,15 @@ end;
 procedure ChudnovskyPiTest.HashCheck(const Digits: Integer;  const Hash: String);
 begin
   if digits > 5000 then 
-	  Exit;
+    Exit;
 
   var pi := Chudnovsky(Digits).ToString;
-	
+
   Assert.AreEqual(Succ(Digits), Length(pi));
-  
-	var calcHash := THashMD5.GetHashString(pi);
-  
-	Assert.AreEqual(hash, calcHash, Format('Incorrect hash for %d digits with Chudnovsky. ',[digits]))
+
+  var calcHash := THashMD5.GetHashString(pi);
+
+  Assert.AreEqual(hash, calcHash, Format('Incorrect hash for %d digits with Chudnovsky. ',[digits]))
 end;
 
 initialization

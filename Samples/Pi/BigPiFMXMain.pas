@@ -83,17 +83,23 @@ begin
       while not TThread.CheckTerminated do
       begin
         var FFirstChunk := True;
-        BBPpi(MaxInt-1, procedure(chunk: TDigits) begin
-          if TThread.CheckTerminated then exit;
-          var Digits := DigitsToString(Chunk);
-          if FFirstChunk then
+        
+        BBPpi(MaxInt-1, procedure(chunk: TDigits) 
           begin
-            Digits := Digits.Insert(1,'.');
-            FFirstChunk := False;
-          end;
-
-          fQueue.EnqueueBatch(Digits);
-        end);
+            if TThread.CheckTerminated then 
+              Exit;
+              
+            var Digits := DigitsToString(Chunk);
+            
+            if FFirstChunk then
+            begin
+              Digits := Digits.Insert(1, '.');
+              FFirstChunk := False;
+            end;
+  
+            fQueue.EnqueueBatch(Digits);
+          end
+        );
       end;
     end);
   background.Start;
@@ -122,10 +128,14 @@ begin
     try
       // This would block if queue was empty, but we checked count
       digit := FQueue.DequeueChar;
-      if Application.Terminated then exit;
-      if not assigned(Application.MainForm) then exit;
 
-      inc(lastCount);
+      if Application.Terminated then 
+        Exit;
+        
+      if not assigned(Application.MainForm) then 
+        Exit;
+
+      Inc(lastCount);
 
       labelCount.Text := Format('%.0n', [lastCount + 0.0]);
       labelDigit.Text := digit;
@@ -140,12 +150,12 @@ end;
 
 procedure TBigPiGui.delayTrackBarChange(Sender: TObject);
 begin
-  if delayTrackBar.Value < delayTrackBar.Max/2 then
+  if delayTrackBar.Value < delayTrackBar.Max / 2 then
     delayLabel.Align := TAlignLayout.Right
   else
     delayLabel.Align := TAlignLayout.Left;
   Timer1.Enabled := False;
-  Timer1.Interval := trunc(delayTrackBar.Value*10);
+  Timer1.Interval := Trunc(delayTrackBar.Value * 10);
   Timer1.Enabled := True;
 end;
 

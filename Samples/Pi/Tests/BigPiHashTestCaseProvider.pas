@@ -19,7 +19,7 @@ uses
 type
   TPiHash = record
     Digits: UInt64;
-    Hash: String;
+    Hash: string;
   end;
 
   TPiHashProvider = Class(TTestDataProvider)

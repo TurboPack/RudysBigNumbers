@@ -145,7 +145,7 @@ begin
   Result := sum.RoundToPrecision(Places);
 end;
 
-function DigitsToString(digits: TDigits): String;
+function DigitsToString(digits: TDigits): string;
 begin
   SetLength(Result, Length(digits));
   for var idx := Low(digits) to High(digits) do

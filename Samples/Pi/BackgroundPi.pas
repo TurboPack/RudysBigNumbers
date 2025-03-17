@@ -43,19 +43,22 @@ begin
   FFirstChunk := True;
   FDigitCount := 0;
   BBPpi(MaxInt-1, procedure(chunk: TDigits) begin
-    if TThread.CheckTerminated then exit;
+    if TThread.CheckTerminated then 
+      Exit;
 
     var Digits := DigitsToString(Chunk);
     if FFirstChunk then
     begin
-      Digits := Digits.Insert(1,'.');
+      Digits := Digits.Insert(1, '.');
       FFirstChunk := False;
     end;
 
     FUIUpdater.WaitUntilBelowThreshold;
-    for var idx := low(Digits) to High(Digits) do
+    for var idx := Low(Digits) to High(Digits) do
     begin
-      if TThread.CheckTerminated then Abort;
+      if TThread.CheckTerminated then 
+        Abort;
+        
       Inc(FDigitCount);
 
       FUIUpdater.Enqueue(Digits[idx]);

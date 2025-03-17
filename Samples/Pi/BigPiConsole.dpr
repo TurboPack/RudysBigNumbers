@@ -60,7 +60,9 @@ begin
   Assert(Length(Digits1) = Length(Digits2),
     'Calls to Check Digits should include two strings with the same length.');
   for var idx := 1 to Length(Digits1) do
-    if Digits1[idx] <> Digits2[idx] then exit(idx);
+    if Digits1[idx] <> Digits2[idx] then 
+      Exit(idx);
+      
   Result := 0;
 end;
 
@@ -89,7 +91,7 @@ end;
 var firstChunk: Boolean = True;
 procedure WritelnCallBack(Chunk: TDigits);
 begin
-  var digits: String;
+  var digits: string;
   if firstChunk then
   begin
     digits := DigitsToString(Chunk).Insert(1,'.');
@@ -99,10 +101,10 @@ begin
     digits := DigitsToString(Chunk);
 
   // slow down the output for demonstration purposes
-  for var i := low(digits) to High(digits) do
+  for var i := Low(digits) to High(digits) do
   begin
     Write(digits[i]);
-    sleep(10);
+    Sleep(10);
   end;
 end;
 

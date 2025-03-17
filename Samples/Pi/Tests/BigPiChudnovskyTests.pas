@@ -19,7 +19,7 @@ type
   public
     [Test(True)]
     [TestCaseProvider(TPiHashProvider)]
-    procedure HashCheck(const Digits : Integer;const Hash : String);
+    procedure HashCheck(const Digits : Integer; const Hash: string);
     [Test]
     procedure Check1000Digits();
   end;
@@ -33,12 +33,12 @@ uses IOUtils, BigPi, Hash, BigPiTestsCommon;
 procedure ChudnovskyPiTest.Check1000Digits;
 begin
   var calcPi := Chudnovsky(1000).ToString;
-  var readPi := TFile.ReadAllText(TPath.Combine(TestDataFolder,'pi-100k.txt'));
+  var readPi := TFile.ReadAllText(TPath.Combine(TestDataFolder, 'pi-100k.txt'));
   for var idx := 1 to Length(calcPi) do
-     Assert.AreEqual(readPi[idx], calcPi[idx], Format('Incorrect digit # %d with Chudnovsky: %s.',[idx, calcPi]));
+     Assert.AreEqual(readPi[idx], calcPi[idx], Format('Incorrect digit # %d with Chudnovsky: %s.', [idx, calcPi]));
 end;
 
-procedure ChudnovskyPiTest.HashCheck(const Digits: Integer;  const Hash: String);
+procedure ChudnovskyPiTest.HashCheck(const Digits: Integer;  const Hash: string);
 begin
   if digits > 5000 then 
     Exit;
@@ -49,7 +49,7 @@ begin
 
   var calcHash := THashMD5.GetHashString(pi);
 
-  Assert.AreEqual(hash, calcHash, Format('Incorrect hash for %d digits with Chudnovsky. ',[digits]))
+  Assert.AreEqual(hash, calcHash, Format('Incorrect hash for %d digits with Chudnovsky. ', [digits]))
 end;
 
 initialization

@@ -21,7 +21,7 @@ type
     [TestCaseProvider(TPiHashProvider)]
     procedure HashCheck(const Digits : Integer; const Hash: string);
     [Test]
-    procedure Check1000Digits();
+    procedure Check1000Digits;
     [Test]
     procedure CompareCallbackToResult;
   end;

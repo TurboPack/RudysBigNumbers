@@ -35,7 +35,6 @@ type
   public
     procedure Error(const Msg: string);
     procedure SetUp; override;
-    procedure TearDown; override;
   published
     procedure TestParse;
     procedure TestTryParse;
@@ -161,10 +160,6 @@ begin
 {$IFDEF TESTPARTIALFLAGCODE}
   BigInteger.AvoidPartialFlagsStall(True);
 {$ENDIF}
-end;
-
-procedure TTestBigInteger.TearDown;
-begin
 end;
 
 procedure TTestBigInteger.TestIsZero;
@@ -1614,7 +1609,7 @@ begin
         except
           on E: Exception do
           begin
-            Check(TR.Info <> triOk, Format('%d: Unexpect exception on ModPow(%s, %s, %s): %s -- %s', [N, string(Base), string(Exponent), string(Modulus), E.ClassName, E.Message]));
+            Check(TR.Info <> triOk, Format('%d: Unexpected exception on ModPow(%s, %s, %s): %s -- %s', [N, string(Base), string(Exponent), string(Modulus), E.ClassName, E.Message]));
             HadException := True;
           end;
         end;

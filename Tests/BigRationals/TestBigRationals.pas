@@ -20,8 +20,6 @@ type
   // Test methods for class BigRational
   TestBigRational = class(TTestCase)
   public
-    procedure SetUp; override;
-    procedure TearDown; override;
   published
     procedure TestCtorNumDenom;
     procedure TestCtorDouble;
@@ -41,14 +39,6 @@ type
   end;
 
 implementation
-
-procedure TestBigRational.SetUp;
-begin
-end;
-
-procedure TestBigRational.TearDown;
-begin
-end;
 
 {$I 'BigRationalTestData.inc'}
 
@@ -162,7 +152,7 @@ begin
         XR := Int64(Reslt.Denominator);
         YR := Int64(Reslt.Numerator);
         Check(((XR = X) and (YR = Y)) or (Abs(YR / XR - Dbl) <= BigRational.MinEpsilon),
-          Format('(%d,%d) %d / %d (%.15g) --> %d / %d, (%.15g)', [I, J, Y, X, Y/X, YR, XR, YR/XR]));
+          Format('(%d,%d) %d / %d (%.15g) --> %d / %d, (%.15g)', [I, J, Y, X, Y / X, YR, XR, YR / XR]));
       end;
     end;
   end;

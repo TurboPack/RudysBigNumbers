@@ -17,7 +17,7 @@ uses
 /// <summary>
 /// A type representing an array of digits (bytes).
 /// </summary>
-type TDigits = Array of Byte;
+type TDigits = array of Byte;
 //const MaxUnit64 = 18_446_744_073_709_551_615;
 const CallBackChunkSize = 64;
 /// <summary>
@@ -43,7 +43,7 @@ function Chudnovsky(Places: Integer): BigDecimal;
 /// Converts an array of digits (bytes) to a string representation.
 /// </summary>
 /// <param name="digits">An array of digits (bytes).</param>
-function DigitsToString(digits: TDigits): String;
+function DigitsToString(digits: TDigits): string;
 
 implementation
 
@@ -65,18 +65,18 @@ begin
   SetLength(buffer, CallbackChunkSize);
   var bufferIdx: Integer := 0;
 
-  while true do
+  while True do
   begin
-    if 4*q+r-t < n*t then
+    if 4 * q + r - t < n * t then
     begin
       Result := Result * 10 + n.AsInt64; // It is just a byte
       //result[idx] :=
-      inc(idx);
+      Inc(idx);
 
       if Assigned(Callback) then
       begin
         buffer[bufferIdx] := n.AsInt64;
-        inc(bufferIdx);
+        Inc(bufferIdx);
         // Check if buffer is full, then call callback and reset bufferIdx
         if bufferIdx = CallbackChunkSize then
         begin
@@ -85,7 +85,9 @@ begin
         end;
       end;
 
-      if idx >= places then break;
+      if idx >= places then 
+        Break;
+        
       var newR := 10 * (r - n * t);
       n := (10 * (3 * q + r)) div t - 10 * n;
       q := q * 10;
@@ -94,7 +96,7 @@ begin
     else
     begin
       var newR := (2 * q + r) * l;
-      var newN := (q * (7 * k)+2+(r * l)) div (t * l);
+      var newN := (q * (7 * k) + 2 + (r * l)) div (t * l);
       q := q * k;
       t := t * l;
       l := l + 2;
@@ -113,7 +115,7 @@ begin
 end;
 
 function Chudnovsky(Places: Integer):BigDecimal;
-// Chudnovsky algorithm to caluclate Pi
+// Chudnovsky algorithm to calculate Pi
 // https://en.wikipedia.org/wiki/Chudnovsky_algorithm
 begin
   // Use +6 internally for calculations
@@ -137,13 +139,13 @@ begin
     na := na + 8;
     d := d + da;
     da := da + 32;
-    t := ((t * n)/d);
+    t := ((t * n) / d);
     sum := (sum + t).RoundToPrecision(internalPrecision);
   end;
   Result := sum.RoundToPrecision(Places);
 end;
 
-function DigitsToString(digits: TDigits): String;
+function DigitsToString(digits: TDigits): string;
 begin
   SetLength(Result, Length(digits));
   for var idx := Low(digits) to High(digits) do

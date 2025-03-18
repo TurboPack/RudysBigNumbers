@@ -25,7 +25,6 @@ type
   public
     procedure Error(const Msg: string);
     procedure SetUp; override;
-    procedure TearDown; override;
   published
     // https://github.com/rvelthuis/DelphiBigNumbers/issues/17
     procedure TestParseHugeBase12;
@@ -75,10 +74,6 @@ begin
 {$ENDIF}
 end;
 
-procedure TTestBigIntegerIssues.TearDown;
-begin
-end;
-
 procedure TTestBigIntegerIssues.TestParseHugeBase12;
 var
   N,M : BigInteger;
@@ -87,12 +82,12 @@ var
   NumBits: Integer;
 begin
   R := TDelphiRandom.Create(-332888001);
-  NumBits := Random(100)*1000;
+  NumBits := Random(100) * 1000;
   N := BigInteger.Create(NumBits, R);
   BigInteger.Base := 12;
-  NS := N.ToString();
+  NS := N.ToString;
   BigInteger.TryParse(NS, M);
-  MS := M.ToString();
+  MS := M.ToString;
   CheckEquals(NS, MS, 'Parsed value differs from the original!');
 end;
 

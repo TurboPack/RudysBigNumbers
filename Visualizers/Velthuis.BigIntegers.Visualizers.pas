@@ -138,13 +138,13 @@ procedure TDebuggerBigIntegerVisualizer.EvaluateComplete(const ExprStr,
   ResultStr: string; CanModify: Boolean; ResultAddress,
   ResultSize: LongWord; ReturnCode: Integer);
 begin
-  EvaluateComplete(ExprStr, ResultStr, CanModify, TOTAAddress(ResultAddress), Longword(ResultSize), ReturnCode);
+  EvaluateComplete(ExprStr, ResultStr, CanModify, TOTAAddress(ResultAddress), LongWord(ResultSize), ReturnCode);
 end;
 
 procedure TDebuggerBigIntegerVisualizer.EvaluteComplete(const ExprStr, ResultStr: string; CanModify: Boolean;
   ResultAddress, ResultSize: Cardinal; ReturnCode: Integer);
 begin
-  EvaluateComplete(ExprStr, ResultStr, CanModify, TOTAAddress(ResultAddress), Longword(ResultSize), ReturnCode);
+  EvaluateComplete(ExprStr, ResultStr, CanModify, TOTAAddress(ResultAddress), LongWord(ResultSize), ReturnCode);
 end;
 
 procedure TDebuggerBigIntegerVisualizer.EvaluateComplete(const ExprStr, ResultStr: string; CanModify: Boolean;

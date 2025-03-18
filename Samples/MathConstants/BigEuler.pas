@@ -25,20 +25,21 @@ begin
   if Digits <= MaxInt - 2 then
     InternalPrecision := Digits + 2;
 
-  Result.DefaultPrecision :=InternalPrecision;
+  Result.DefaultPrecision := InternalPrecision;
   var lastFactorial := BigInteger.One;
   var lastResult := BigDecimal.Zero;
   var iteration: UInt64 := 1;
-  while true do
+  
+  while True do
   begin
     lastResult := Result;
     lastFactorial := lastFactorial * iteration;
     Result := (Result + BigDecimal.One / lastFactorial).RoundToPrecision(InternalPrecision);
-    
-		if lastResult = Result then 
-			Break;
-    
-		Inc(Iteration);
+
+    if lastResult = Result then 
+      Break;
+
+    Inc(Iteration);
   end;
   //Writeln(Format('%d digits took %d iterations',[Digits, iteration]));
   Result.DefaultRoundingMode := rmFloor;

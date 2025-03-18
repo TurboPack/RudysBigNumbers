@@ -294,8 +294,8 @@ begin
   for I := 0 to High(Arguments) do
   begin
     A := Arguments[I];
-    A := A.Abs();
-    B := A.Sqrt();
+    A := A.Abs;
+    B := A.Sqrt;
     C := (B * B).RoundToScale(A.Scale, BigDecimal.DefaultRoundingMode);
     Check(C = A, Format('(%d) Sqrt(%s) = %s, squared = %s', [I, A.ToPlainString, B.ToPlainString, C.ToPlainString]));
   end;

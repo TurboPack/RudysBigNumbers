@@ -103,13 +103,24 @@ end;
 
 function TRandom.Next(Bits: Integer): UInt32;
 begin
-{$IFOPT Q+}
+{$IFOPT R+}
 {$DEFINE HasRangeChecks}
 {$ENDIF}
-  FSeed := (FSeed * CMultiplier + CIncrement);
-  Result := UInt32(FSeed shr (64 - Bits)); // Use the highest bits; Lower bits have lower period.
+{$IFOPT Q+}
+{$DEFINE HasOverflowChecks}
+{$ENDIF}
+
+{$RANGECHECKS OFF}
+{$OVERFLOWCHECKS OFF}
+
+  FSeed := Int64(FSeed * CMultiplier + CIncrement);
+  Result:= UInt32(FSeed shr (64 - Bits)); // Use the highest bits; Lower bits have lower period.
+
 {$IFDEF HasRangeChecks}
 {$RANGECHECKS ON}
+{$ENDIF}
+{$IFDEF HasOverflowChecks}
+{$OVERFLOWCHECKS ON}
 {$ENDIF}
 end;
 
@@ -161,7 +172,8 @@ end;
 procedure TRandomBase.NextBytes(var Bytes: array of Byte);
 var
   Head, Tail: Integer;
-  N, Rnd, I: Integer;
+  N, I: Integer;
+  Rnd: UInt32;
 begin
   Head := Length(Bytes) div SizeOf(Int32);
   Tail := Length(Bytes) mod SizeOf(Int32);

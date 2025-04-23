@@ -106,6 +106,8 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
+        <DCCReference Include="..\..\Source\Velthuis.RandomNumbers.pas"/>
+        <DCCReference Include="..\..\Source\Velthuis.BigIntegers.pas"/>
         <DCCReference Include="TestVelthuisBigIntRandom.pas"/>
         <DCCReference Include="U_Random_2.pas"/>
         <BuildConfiguration Include="Base">

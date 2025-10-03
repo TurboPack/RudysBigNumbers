@@ -1,3 +1,13 @@
+// Delphi 13 Florence
+{$IFDEF VER370}
+{$LIBSUFFIX '370'}
+{$ENDIF}
+
+// Delphi 12 Athens
+{$IFDEF VER360}
+{$LIBSUFFIX '290'}
+{$ENDIF}
+
 // Delphi 11 Alexandria
 {$IFDEF VER350}
 {$LIBSUFFIX '280'}

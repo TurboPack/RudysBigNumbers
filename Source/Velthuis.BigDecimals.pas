@@ -607,8 +607,8 @@ type
 
     // -- Comparison functions --
 
-    /// <summary>Returns 1 if Left is matehamtically greater than Right, 0 if Left is mathematically equal to Right and
-    ///  -1 is Left is matheamtically less than Right.</summary>
+    /// <summary>Returns 1 if Left is matehamatically greater than Right, 0 if Left is mathematically equal to Right and
+    ///  -1 is Left is mathematically less than Right.</summary>
     class function Compare(const Left, Right: BigDecimal): TValueSign; static;
 
     /// <summary>Returns the maximum of the two given BigDecimal values.</summary>

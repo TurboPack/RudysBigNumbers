@@ -17,7 +17,7 @@ const
   CompilerVersionDelphiXE3        = 24.0;
   CompilerVersionDelphiXE4        = 25.0;
   CompilerVersionDelphiXE5        = 26.0;
-  ComplierVersionAppMethod1       = 26.5;
+  CompilerVersionAppMethod1       = 26.5;
   CompilerVersionDelphiXE6        = 27.0;
   CompilerVersionDelphiXE7        = 28.0;
   CompilerVersionDelphiXE8        = 29.0;

@@ -387,7 +387,7 @@ type
     /// <param name="Left">The first operand</param>
     /// <param name="Right">The second operand</param>
     /// <returns><code>Result := Left &lt; Right;</code></returns>
-    class operator LessThan(const left, Right: BigDecimal): Boolean;
+    class operator LessThan(const Left, Right: BigDecimal): Boolean;
 
     /// <summary>Returns True if Left is mathematically greater than or equal to Right.</summary>
     /// <param name="Left">The first operand</param>
@@ -405,7 +405,7 @@ type
     /// <param name="Left">The first operand</param>
     /// <param name="Right">The second operand</param>
     /// <returns><code>Result := Left = Right;</code></returns>
-    class operator Equal(const left, Right: BigDecimal): Boolean;
+    class operator Equal(const Left, Right: BigDecimal): Boolean;
 
     /// <summary>Returns True if Left is mathematically not equal to Right.</summary>
     /// <param name="Left">The first operand</param>
@@ -607,8 +607,8 @@ type
 
     // -- Comparison functions --
 
-    /// <summary>Returns 1 if Left is matehamtically greater than Right, 0 if Left is mathematically equal to Right and
-    ///  -1 is Left is matheamtically less than Right.</summary>
+    /// <summary>Returns 1 if Left is matehamatically greater than Right, 0 if Left is mathematically equal to Right and
+    ///  -1 is Left is mathematically less than Right.</summary>
     class function Compare(const Left, Right: BigDecimal): TValueSign; static;
 
     /// <summary>Returns the maximum of the two given BigDecimal values.</summary>
@@ -1695,7 +1695,7 @@ end;
 
 function BigDecimal.Frac: BigDecimal;
 begin
-  Result := BigDecimal.Abs(Self - Self.Int());
+  Result := BigDecimal.Abs(Self - Self.Int);
 end;
 
 function BigDecimal.Floor: BigDecimal;
@@ -1981,7 +1981,7 @@ begin
   Result := FValue.IsNegative;
 end;
 
-class operator BigDecimal.LessThan(const left, Right: BigDecimal): Boolean;
+class operator BigDecimal.LessThan(const Left, Right: BigDecimal): Boolean;
 begin
   Result := Compare(Left, Right) < 0;
 end;
@@ -2064,7 +2064,7 @@ end;
 
 class operator BigDecimal.NotEqual(const Left, Right: BigDecimal): Boolean;
 begin
-  Result := Compare(left, Right) <> 0;
+  Result := Compare(Left, Right) <> 0;
 end;
 
 class function BigDecimal.Parse(const S: string; const Settings: TFormatSettings): BigDecimal;

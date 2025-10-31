@@ -19,7 +19,7 @@ uses
 type
   TPiHash = record
     Digits: UInt64;
-    Hash: String;
+    Hash: string;
   end;
 
   TPiHashProvider = Class(TTestDataProvider)
@@ -85,8 +85,8 @@ end;
 function TPiHashProvider.GetCaseParams(const methodName: string;
   const caseNumber: Integer): TValuearray;
 begin
-  SetLength(Result,2);
-	
+  SetLength(Result, 2);
+
   Result[0] := fHashes[caseNumber].Digits;
   Result[1] := fHashes[caseNumber].Hash;
 end;

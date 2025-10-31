@@ -35,9 +35,7 @@ begin
   begin
     a[m] := BigRational.Create(1, m + 1);
     for var j := m downto 1 do
-    begin
       a[j - 1] := (a[j - 1] - a[j]) * j;
-    end;
   end;
   Result := a[0];
 end;
@@ -49,7 +47,7 @@ end;
 
 function PrintBernoulli(n: UInt64; bb: BigRational): string;
 begin
-  Result :=FormatBernoulli(n,bb);
+  Result := FormatBernoulli(n,bb);
   Writeln(Result);
 end;
 
@@ -61,7 +59,7 @@ begin
       lines.Add(PrintBernoulli(0, Bernoulli(0)));
       lines.Add(PrintBernoulli(1, Bernoulli(1)));
       for var n := 1 to 30 do
-        lines.Add(PrintBernoulli(n*2, Bernoulli(n*2)));
+        lines.Add(PrintBernoulli(n * 2, Bernoulli(n * 2)));
 
       var BernoulliCheck := '..\..\BernoulliCheck.txt';
       if TFile.Exists(BernoulliCheck) then
@@ -70,9 +68,9 @@ begin
         check.LoadFromFile(BernoulliCheck);
         var checkCount := check.Count;
         var currentCount := lines.Count;
-        Assert(checkCount = currentCount, Format('Expected %d results but received %d results.',[checkCount, currentCount]));
+        Assert(checkCount = currentCount, Format('Expected %d results but received %d results.', [checkCount, currentCount]));
         for var n := 0 to pred(check.Count) do
-          Assert(check[n] = lines[n],'Error on the line: ' + lines[n]);
+          Assert(check[n] = lines[n], 'Error on the line: ' + lines[n]);
       end;
     finally
       lines.Free;

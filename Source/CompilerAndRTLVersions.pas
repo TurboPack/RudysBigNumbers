@@ -35,6 +35,10 @@ const
   CompilerVersionDelphiSydney     = 34.0;
   CompilerVersionDelphi110        = 35.0;
   CompilerVersionDelphiAlexandria = 35.0;
+  CompilerVersionDelphi120        = 36.0;
+  CompilerVersionDelphiAthens     = 36.0;
+  CompilerVersionDelphi130        = 37.0;
+  CompilerVersionDelphiFlorence   = 37.0;
 
   // RTL versions
 
@@ -64,6 +68,10 @@ const
   RTLVersionDelphiSydney        = 34.0;
   RTLVersionDelphi110           = 35.0;
   RTLVersionDelphiAlexandria    = 35.0;
+  RTLVersionDelphi120           = 36.0;
+  RTLVersionDelphiAthens        = 36.0;
+  RTLVersionDelphi130           = 37.0;
+  RTLVersionDelphiFlorence      = 37.0;
 
 implementation
 

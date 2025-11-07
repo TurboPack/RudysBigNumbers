@@ -76,9 +76,9 @@ end;
 
 procedure TTestBigIntegerIssues.TestParseHugeBase12;
 var
-  N,M : BigInteger;
+  N,M: BigInteger;
   NS, MS: string;
-  R : IRandom;
+  R: IRandom;
   NumBits: Integer;
 begin
   R := TDelphiRandom.Create(-332888001);

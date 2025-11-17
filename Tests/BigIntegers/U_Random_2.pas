@@ -75,7 +75,7 @@ end;
 function TDelphiRandom2.Next(Bits: Integer): UInt32;
 begin
   var a := UInt32(System.RandSeed);
- result := a shr (32 - Bits);
+  Result := a shr (32 - Bits);
 
   //Result := UInt32(System.RandSeed) shr (32 - Bits);
   System.Random;

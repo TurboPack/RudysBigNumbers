@@ -76,7 +76,7 @@ end;
 
 procedure TTestBigIntegerIssues.TestParseHugeBase12;
 var
-  N,M: BigInteger;
+  N, M: BigInteger;
   NS, MS: string;
   R: IRandom;
   NumBits: Integer;

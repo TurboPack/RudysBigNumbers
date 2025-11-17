@@ -91,7 +91,7 @@ var
 begin
   R := TRandom2.Create(0);
 
-  for i:= 1 to 6 do
+  for i := 1 to 6 do
     BigInteger.Create(20, R);
 end;
 

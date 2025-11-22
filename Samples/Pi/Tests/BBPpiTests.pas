@@ -29,7 +29,7 @@ type
 implementation
 
 uses
-  IOUtils, BigPi,Hash, BigPiTestsCommon;
+  IOUtils, BigPi, Hash, BigPiTestsCommon;
 
 { BBPpiTest }
 

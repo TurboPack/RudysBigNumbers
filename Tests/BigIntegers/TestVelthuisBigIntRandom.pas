@@ -38,36 +38,36 @@ uses System.SysUtils, Velthuis.BigIntegers, U_Random_2;
 
 procedure TestBigIntRandom.TestParseHugeBase12;
 var
-  N,M : BigInteger;
+  N, M : BigInteger;
   NS, MS: string;
   R : IRandom;
   NumBits: Integer;
 begin
   R := TDelphiRandom.Create(-332888001);
-  NumBits := Random(100)*1000;
+  NumBits := Random(100) * 1000;
   N := BigInteger.Create(NumBits, R);
   BigInteger.Base := 12;
-  NS := N.ToString();
+  NS := N.ToString;
   BigInteger.TryParse(NS, M);
-  MS := M.ToString();
+  MS := M.ToString;
   CheckEquals(NS, MS, 'Parsed value differs from the original!');
 end;
 
 
 procedure TestBigIntRandom.TestParseHugeBase12_UInt32;
 var
-  N,M : BigInteger;
+  N, M : BigInteger;
   NS, MS: string;
   R : IRandom;
   NumBits: Integer;
 begin
   R := TDelphiRandom2.Create(-332888001);
-  NumBits := Random(100)*1000;
+  NumBits := Random(100) * 1000;
   N := BigInteger2.Create(NumBits, R).BigInt;
   BigInteger.Base := 12;
-  NS := N.ToString();
+  NS := N.ToString;
   BigInteger.TryParse(NS, M);
-  MS := M.ToString();
+  MS := M.ToString;
   CheckEquals(NS, MS, 'Parsed value differs from the original!');
 end;
 
@@ -77,9 +77,10 @@ var
   R : IRandom;
   i : Integer;
 begin
-    R := TRandom.Create(0);
-    for i:= 1 to 6 do
-        BigInteger.Create(20,R);
+  R := TRandom.Create(0);
+  
+  for i := 1 to 6 do
+    BigInteger.Create(20, R);
 end;
 
 
@@ -88,9 +89,10 @@ var
   R : IRandom;
   i : Integer;
 begin
-    R := TRandom2.Create(0);
-    for i:= 1 to 6 do
-        BigInteger.Create(20,R);
+  R := TRandom2.Create(0);
+
+  for i := 1 to 6 do
+    BigInteger.Create(20, R);
 end;
 
 

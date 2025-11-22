@@ -27,7 +27,7 @@ begin
   var sw := TStopwatch.StartNew;
   var pi := Chudnovsky(digits);
   sw.Stop;
-  writeln(Format('%6d'#9'%d',[digits,sw.ElapsedTicks]));
+  writeln(Format('%6d'#9'%d',[digits, sw.ElapsedTicks]));
   Result := sw.ElapsedTicks;
 end;
 
@@ -36,7 +36,7 @@ begin
   var sw := TStopwatch.StartNew;
   var pi := BBPpi(digits);
   sw.Stop;
-  writeln(Format('%6d'#9'%d',[digits,sw.ElapsedTicks]));
+  writeln(Format('%6d'#9'%d',[digits, sw.ElapsedTicks]));
   Result := sw.ElapsedTicks;
 end;
 
@@ -71,7 +71,7 @@ begin
   Write('Digits    : ', digits);
   var BBP := BBPpi(digits).ToString.Insert(1,'.');
   var chud := Chudnovsky(digits).ToString;
-  var firstError := CheckDigits(BBP,Chud);
+  var firstError := CheckDigits(BBP, Chud);
   if firstError = 0 then
     Writeln(' = Match')
   else

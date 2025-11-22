@@ -47,7 +47,7 @@ end;
 
 function PrintBernoulli(n: UInt64; bb: BigRational): string;
 begin
-  Result := FormatBernoulli(n,bb);
+  Result := FormatBernoulli(n, bb);
   Writeln(Result);
 end;
 

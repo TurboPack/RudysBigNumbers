@@ -115,7 +115,7 @@ begin
 {$OVERFLOWCHECKS OFF}
 
   FSeed := Int64(FSeed * CMultiplier + CIncrement);
-  Result:= UInt32(FSeed shr (64 - Bits)); // Use the highest bits; Lower bits have lower period.
+  Result := UInt32(FSeed shr (64 - Bits)); // Use the highest bits; Lower bits have lower period.
 
 {$IFDEF HasRangeChecks}
 {$RANGECHECKS ON}

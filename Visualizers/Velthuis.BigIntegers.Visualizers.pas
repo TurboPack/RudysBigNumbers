@@ -75,8 +75,8 @@ type
     // IOTADebuggerVisualizerValueReplacer
     function GetReplacementValue(const Expression, TypeName, EvalResult: string): string;
     // IOTAThreadNotifier
-    // Note: it is called Evalute, not Evaluate, here!
-    procedure EvaluteComplete(const ExprStr, ResultStr: string; CanModify: Boolean; ResultAddress, ResultSize: Cardinal; ReturnCode: Integer);
+    // Note: it is called Evaluate, not Evaluate, here!
+    procedure EvaluateComplete(const ExprStr, ResultStr: string; CanModify: Boolean; ResultAddress, ResultSize: Cardinal; ReturnCode: Integer);
     procedure ModifyComplete(const ExprStr, ResultStr: string; ReturnCode: Integer);
     procedure ThreadNotify(Reason: TOTANotifyReason);
 
@@ -119,7 +119,7 @@ begin
   EvaluateComplete(ExprStr, ResultStr, CanModify, TOTAAddress(ResultAddress), LongWord(ResultSize), ReturnCode);
 end;
 
-procedure TDebuggerBigIntegerVisualizer.EvaluteComplete(const ExprStr, ResultStr: string; CanModify: Boolean;
+procedure TDebuggerBigIntegerVisualizer.EvalutaeComplete(const ExprStr, ResultStr: string; CanModify: Boolean;
   ResultAddress, ResultSize: Cardinal; ReturnCode: Integer);
 begin
   EvaluateComplete(ExprStr, ResultStr, CanModify, TOTAAddress(ResultAddress), LongWord(ResultSize), ReturnCode);

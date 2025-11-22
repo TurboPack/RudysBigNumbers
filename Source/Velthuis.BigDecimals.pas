@@ -1346,7 +1346,7 @@ begin
   Exponent := GetExponent(E) - 63;
   Sign := System.Math.Sign(E);
 
-  ConvertFromFloatComponents(Sign,Exponent, Significand, Self);
+  ConvertFromFloatComponents(Sign, Exponent, Significand, Self);
 end;
 {$ENDIF}
 

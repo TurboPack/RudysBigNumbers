@@ -33,17 +33,17 @@ begin
   try
     Writeln(Format('Precision: %d',[Precision]));
     Writeln('√2, Square root of 2, Pythagoras constant:');
-    Writeln(BigDecimal.Sqrt(2,Precision).ToString);
+    Writeln(BigDecimal.Sqrt(2, Precision).ToString);
     Writeln('√3, Square root of 3, Theodorus'' constant:');
-    Writeln(BigDecimal.Sqrt(3,Precision).ToString);
+    Writeln(BigDecimal.Sqrt(3, Precision).ToString);
     Writeln('√5, Square root of 5:');
-    var sqrt5 := BigDecimal.Sqrt(5,Precision);
+    var sqrt5 := BigDecimal.Sqrt(5, Precision);
     Writeln(sqrt5.ToString);
     Writeln('φ, Phi, Golden ratio, (1 + √5)/2:');
     var phi := BigDecimal.Divide((1 + Sqrt5), 2, Precision);
     Writeln(phi.ToString);
     Writeln('Common logarithm of 2:');
-    Writeln(BigInteger.Log(2,10).ToString);
+    Writeln(BigInteger.Log(2, 10).ToString);
     Writeln('Natural logarithm of 2:');
     Writeln(BigInteger.Ln(2).ToString);
     Writeln('------');

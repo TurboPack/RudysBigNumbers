@@ -33,32 +33,32 @@ uses
   System.Math;
 
   // Return the number of set (1) bits in the given integers.
-  function BitCount(const U: UInt8): Integer; overload;
-  function BitCount(const U: UInt16): Integer; overload;
-  function BitCount(const S: Int32): Integer; overload;
-  function BitCount(const U: UInt32): Integer; overload;
-  function BitCount(const S: Int64): Integer; overload;
-  function BitCount(const S: UInt64): Integer; overload;
-  
+  function BitCount(U: UInt8): Integer; overload;
+  function BitCount(U: UInt16): Integer; overload;
+  function BitCount(S: Int32): Integer; overload;
+  function BitCount(U: UInt32): Integer; overload;
+  function BitCount(S: Int64): Integer; overload;
+  function BitCount(S: UInt64): Integer; overload;
+
   // Return the number of significant bits, excluding the sign bit.
   function BitLength(const S: Int32): Integer; overload;
   function BitLength(const U: UInt32): Integer; overload;
   function BitLength(const S: Int64): Integer; overload;
   function BitLength(const U: UInt64): Integer; overload;
-  
+
   // Return the number of significant digits.
   function DigitCount(const S: Int32): Int32; overload;
   function DigitCount(U: UInt32): UInt32; overload;
-  
+
   // Return an integer value with at most a single one-bit, in the position
   // of the most significant one-bit in the specified integer value.
   function HighestOneBit(const S: Int32): Int32; overload;
   function HighestOneBit(const U: UInt32): UInt32; overload;
-  
+
   // Checks if the given integer is a power of two.
   function IsPowerOfTwo(const S: Int32): Boolean; overload;
   function IsPowerOfTwo(const U: UInt32): Boolean; overload;
-  
+
   // Return an integer value with at most a single one-bit, in the position
   // of the least significant one-bit in the given integers value.
   function LowestOneBit(const S: Int32): Int32; overload;
@@ -153,12 +153,12 @@ const
 
   BitCounts: array[0..15] of Byte = (0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4);
 
-function BitCount(const U: UInt8): Integer;
+function BitCount(U: UInt8): Integer;
 begin
   Result := BitCounts[U and $0F] + BitCounts[U shr 4];
 end;
 
-function BitCount(const U: UInt16): Integer;
+function BitCount(U: UInt16): Integer;
 {$IF DEFINED(WIN32)}
 asm
         MOV     DX, AX
@@ -207,18 +207,18 @@ begin
   U := (U and $3333) + ((U shr 2) and $3333);
   U := (U + (U shr 4)) and $0F0F;
   U := U + (U shr 8);
-  
+
   Result := U and $7F;
 end;
 {$IFEND PUREPASCAL}
 
-function BitCount(const S: Int32): Integer;
+function BitCount(S: Int32): Integer;
 begin
   Result := BitCount(UInt32(S));
 end;
 
 // Faster than 16 bit table lookups
-function BitCount(const U: UInt32): Integer;
+function BitCount(U: UInt32): Integer;
 {$IF DEFINED(WIN32)}
 asm
         MOV     EDX, EAX
@@ -278,12 +278,12 @@ begin
 end;
 {$IFEND PUREPASCAL}
 
-function BitCount(const S: Int64): Integer; overload;
+function BitCount(S: Int64): Integer; overload;
 begin
   Result := BitCount(UInt32(S)) + BitCount(Int32(S shr 32));
 end;
 
-function BitCount(const S: UInt64): Integer; overload;
+function BitCount(S: UInt64): Integer; overload;
 begin
   Result := BitCount(UInt32(S)) + BitCount(UInt32(S shr 32));
 end;

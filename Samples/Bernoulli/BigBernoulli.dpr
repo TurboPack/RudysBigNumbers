@@ -74,7 +74,7 @@ begin
       end;
     finally
       lines.Free;
-      check.Free
+      check.Free;
     end;
 
   except

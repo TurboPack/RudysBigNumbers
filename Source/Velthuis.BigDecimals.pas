@@ -1135,11 +1135,12 @@ begin
   if (LScale > TargetScale) and (LValue >= BigInteger.Ten) then
   begin
     BigInteger.DivMod(LValue, BigInteger.Ten, LQuotient, LRemainder);
+    
     if LRemainder.IsZero then
     begin
       LValue := LQuotient;
       Dec(LScale);
-    end
+    end;
   end;
 
   LValue.Sign := LSign;

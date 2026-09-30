@@ -1553,7 +1553,7 @@ end;
 procedure TTestBigInteger.TestMin;
 var
   I, J, N: Integer;
-  A, B, Mimimum, CheckMin: BigInteger;
+  A, B, Minimum, CheckMin: BigInteger;
 begin
   N := 0;
   for I := 0 to High(Arguments) do
@@ -1564,10 +1564,10 @@ begin
     begin
       B := Arguments[J];
 
-      Mimimum := BigInteger.Min(A, B);
+      Minimum := BigInteger.Min(A, B);
       CheckMin := MinResults[N].val;
       Inc(N);
-      Check(Mimimum = CheckMin);
+      Check(Minimum = CheckMin);
     end;
   end;
 end;

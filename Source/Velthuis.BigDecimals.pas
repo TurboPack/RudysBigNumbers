@@ -1139,7 +1139,7 @@ begin
     begin
       LValue := LQuotient;
       Dec(LScale);
-    end
+    end;
   end;
 
   LValue.Sign := LSign;
